@@ -1,8 +1,7 @@
-﻿using Dalamud.Game.ClientState.Conditions;
-using ECommons.Logging;
+﻿using ECommons.DalamudServices;
 using XIVSlothCombo.Combos.JobHelpers.Enums;
 using XIVSlothCombo.CustomComboNS.Functions;
-using XIVSlothCombo.Services;
+using XIVSlothCombo.Data;
 
 namespace XIVSlothCombo.Combos.JobHelpers
 {
@@ -10,21 +9,27 @@ namespace XIVSlothCombo.Combos.JobHelpers
     {
         private static bool HasCooldowns()
         {
-            if (CustomComboFunctions.GetRemainingCharges(SoulSlice) < 2) return false;
-            if (!CustomComboFunctions.ActionReady(ArcaneCircle)) return false;
-            if (!CustomComboFunctions.ActionReady(Gluttony)) return false;
+            if (CustomComboFunctions.GetRemainingCharges(SoulSlice) < 2)
+                return false;
+            if (!CustomComboFunctions.ActionReady(ArcaneCircle))
+                return false;
+            if (!CustomComboFunctions.ActionReady(Gluttony))
+                return false;
+
             return true;
         }
 
         private static uint OpenerLevel => 90;
-        public uint PrePullStep = 1;
+
+        public uint PrePullStep = 0;
+
         public uint OpenerStep = 1;
 
         public static bool LevelChecked => CustomComboFunctions.LocalPlayer.Level >= OpenerLevel;
 
-        private bool CanOpener => HasCooldowns() && LevelChecked;
+        private static bool CanOpener => HasCooldowns() && LevelChecked;
 
-        private OpenerState currentState = OpenerState.OpenerFinished;
+        private OpenerState currentState = OpenerState.PrePull;
 
         public OpenerState CurrentState
         {
@@ -32,14 +37,24 @@ namespace XIVSlothCombo.Combos.JobHelpers
             {
                 return currentState;
             }
+
             set
             {
                 if (value != currentState)
                 {
-                    if (value == OpenerState.PrePull) PrePullStep = 1;
+                    if (value == OpenerState.PrePull)
+                    {
+                        Svc.Log.Debug($"Entered PrePull Opener");
+                    }
                     if (value == OpenerState.InOpener) OpenerStep = 1;
-                    if (value == OpenerState.OpenerFinished || value == OpenerState.FailedOpener) { PrePullStep = 0; OpenerStep = 0; }
-                    if (value == OpenerState.OpenerFinished) DuoLog.Information("Opener Finished");
+                    if (value == OpenerState.OpenerFinished || value == OpenerState.FailedOpener)
+                    {
+                        if (value == OpenerState.FailedOpener)
+                            Svc.Log.Information("Opener Failed");
+
+                        ResetOpener();
+                    }
+                    if (value == OpenerState.OpenerFinished) Svc.Log.Information("Opener Finished");
 
                     currentState = value;
                 }
@@ -50,15 +65,29 @@ namespace XIVSlothCombo.Combos.JobHelpers
         {
             if (!LevelChecked) return false;
 
-            if (CanOpener && PrePullStep == 0 && !CustomComboFunctions.InCombat()) { CurrentState = OpenerState.PrePull; }
+            if (CanOpener && PrePullStep == 0)
+            {
+                PrePullStep = 1;
+            }
 
-            if (CurrentState == OpenerState.PrePull)
+            if (!HasCooldowns())
+            {
+                PrePullStep = 0;
+            }
+
+            if (CurrentState == OpenerState.PrePull && PrePullStep > 0)
             {
                 if (CustomComboFunctions.WasLastAction(Soulsow) && PrePullStep == 1) PrePullStep++;
                 else if (PrePullStep == 1) actionID = Soulsow;
 
                 if (CustomComboFunctions.LocalPlayer.CastActionId == Harpe && CustomComboFunctions.HasEffect(Buffs.Soulsow) && PrePullStep == 2) CurrentState = OpenerState.InOpener;
                 else if (PrePullStep == 2) actionID = Harpe;
+
+                if (PrePullStep == 2 && !CustomComboFunctions.HasEffect(Buffs.Soulsow))
+                    CurrentState = OpenerState.FailedOpener;
+
+                if (ActionWatching.CombatActions.Count > 2 && CustomComboFunctions.InCombat())
+                    CurrentState = OpenerState.FailedOpener;
 
                 return true;
             }
@@ -128,6 +157,14 @@ namespace XIVSlothCombo.Combos.JobHelpers
 
                     if (CustomComboFunctions.WasLastAction(Gallows) && OpenerStep == 18) CurrentState = OpenerState.OpenerFinished;
                     else if (OpenerStep == 18) actionID = Gallows;
+
+                    if ((actionID == SoulSlice && CustomComboFunctions.GetRemainingCharges(SoulSlice) < 2) ||
+                       (actionID == ArcaneCircle && CustomComboFunctions.IsOnCooldown(ArcaneCircle)) ||
+                       (actionID == Gluttony && CustomComboFunctions.IsOnCooldown(Gluttony)))
+                    {
+                        CurrentState = OpenerState.FailedOpener;
+                        return false;
+                    }
                 }
 
                 else
@@ -185,6 +222,17 @@ namespace XIVSlothCombo.Combos.JobHelpers
 
                     if (CustomComboFunctions.WasLastAction(Gallows) && OpenerStep == 18) CurrentState = OpenerState.OpenerFinished;
                     else if (OpenerStep == 18) actionID = Gallows;
+                }
+
+                if (ActionWatching.TimeSinceLastAction.TotalSeconds >= 5)
+                    CurrentState = OpenerState.FailedOpener;
+
+                if ((actionID == SoulSlice && CustomComboFunctions.GetRemainingCharges(SoulSlice) < 2) ||
+                       (actionID == ArcaneCircle && CustomComboFunctions.IsOnCooldown(ArcaneCircle)) ||
+                       (actionID == Gluttony && CustomComboFunctions.IsOnCooldown(Gluttony)))
+                {
+                    CurrentState = OpenerState.FailedOpener;
+                    return false;
                 }
 
                 return true;
@@ -253,6 +301,17 @@ namespace XIVSlothCombo.Combos.JobHelpers
                 if (CustomComboFunctions.WasLastAction(Gibbet) && OpenerStep == 18) CurrentState = OpenerState.OpenerFinished;
                 else if (OpenerStep == 18) actionID = Gibbet;
 
+                if (ActionWatching.TimeSinceLastAction.TotalSeconds >= 5)
+                    CurrentState = OpenerState.FailedOpener;
+
+                if ((actionID == SoulSlice && CustomComboFunctions.GetRemainingCharges(SoulSlice) < 2) ||
+                       (actionID == ArcaneCircle && CustomComboFunctions.IsOnCooldown(ArcaneCircle)) ||
+                       (actionID == Gluttony && CustomComboFunctions.IsOnCooldown(Gluttony)))
+                {
+                    CurrentState = OpenerState.FailedOpener;
+                    return false;
+                }
+
                 return true;
             }
 
@@ -261,18 +320,15 @@ namespace XIVSlothCombo.Combos.JobHelpers
 
         private void ResetOpener()
         {
-            CurrentState = OpenerState.FailedOpener;
+            PrePullStep = 0;
+            OpenerStep = 0;
         }
-
-        private bool openerEventsSetup = false;
 
         public bool DoFullOpener(ref uint actionID, bool simpleMode)
         {
             if (!LevelChecked) return false;
 
-            if (!openerEventsSetup) { Service.Condition.ConditionChange += CheckCombatStatus; openerEventsSetup = true; }
-
-            if (CurrentState == OpenerState.PrePull || CurrentState == OpenerState.FailedOpener)
+            if (CurrentState == OpenerState.PrePull)
                 if (DoPrePullSteps(ref actionID)) return true;
 
             if (CurrentState == OpenerState.InOpener)
@@ -287,21 +343,14 @@ namespace XIVSlothCombo.Combos.JobHelpers
                 }
             }
 
-            if (CurrentState == OpenerState.OpenerFinished && !CustomComboFunctions.InCombat())
+            if (!CustomComboFunctions.InCombat())
+            {
                 ResetOpener();
+                CurrentState = OpenerState.PrePull;
+            }
+
 
             return false;
         }
-
-        private void CheckCombatStatus(ConditionFlag flag, bool value)
-        {
-            if (flag == ConditionFlag.InCombat && value == false) ResetOpener();
-        }
-
-        internal void Dispose()
-        {
-            Service.Condition.ConditionChange -= CheckCombatStatus;
-        }
     }
-
 }
