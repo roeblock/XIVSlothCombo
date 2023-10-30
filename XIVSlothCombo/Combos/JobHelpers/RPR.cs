@@ -37,7 +37,6 @@ namespace XIVSlothCombo.Combos.JobHelpers
             {
                 return currentState;
             }
-
             set
             {
                 if (value != currentState)
@@ -50,7 +49,7 @@ namespace XIVSlothCombo.Combos.JobHelpers
                     if (value == OpenerState.OpenerFinished || value == OpenerState.FailedOpener)
                     {
                         if (value == OpenerState.FailedOpener)
-                            Svc.Log.Information("Opener Failed");
+                            Svc.Log.Information($"Opener Failed at step {OpenerStep}");
 
                         ResetOpener();
                     }
@@ -77,7 +76,7 @@ namespace XIVSlothCombo.Combos.JobHelpers
 
             if (CurrentState == OpenerState.PrePull && PrePullStep > 0)
             {
-                if (CustomComboFunctions.WasLastAction(Soulsow) && PrePullStep == 1) PrePullStep++;
+                if (CustomComboFunctions.HasEffect(Buffs.Soulsow) && PrePullStep == 1) PrePullStep++;
                 else if (PrePullStep == 1) actionID = Soulsow;
 
                 if (CustomComboFunctions.LocalPlayer.CastActionId == Harpe && CustomComboFunctions.HasEffect(Buffs.Soulsow) && PrePullStep == 2) CurrentState = OpenerState.InOpener;
@@ -157,6 +156,7 @@ namespace XIVSlothCombo.Combos.JobHelpers
 
                     if (CustomComboFunctions.WasLastAction(Gallows) && OpenerStep == 18) CurrentState = OpenerState.OpenerFinished;
                     else if (OpenerStep == 18) actionID = Gallows;
+
                 }
 
                 else
@@ -219,9 +219,9 @@ namespace XIVSlothCombo.Combos.JobHelpers
                 if (CustomComboFunctions.InCombat() && ActionWatching.TimeSinceLastAction.TotalSeconds >= 3)
                     CurrentState = OpenerState.FailedOpener;
 
-                if ((actionID == SoulSlice && CustomComboFunctions.GetRemainingCharges(SoulSlice) == 0) ||
+                if (((actionID == SoulSlice && CustomComboFunctions.GetRemainingCharges(SoulSlice) == 0) ||
                        (actionID == ArcaneCircle && CustomComboFunctions.IsOnCooldown(ArcaneCircle)) ||
-                       (actionID == Gluttony && CustomComboFunctions.IsOnCooldown(Gluttony)))
+                       (actionID == Gluttony && CustomComboFunctions.IsOnCooldown(Gluttony))) && ActionWatching.TimeSinceLastAction.TotalSeconds >= 3)
                 {
                     CurrentState = OpenerState.FailedOpener;
                     return false;
@@ -296,9 +296,9 @@ namespace XIVSlothCombo.Combos.JobHelpers
                 if (CustomComboFunctions.InCombat() && ActionWatching.TimeSinceLastAction.TotalSeconds >= 3)
                     CurrentState = OpenerState.FailedOpener;
 
-                if ((actionID == SoulSlice && CustomComboFunctions.GetRemainingCharges(SoulSlice) == 0) ||
+                if (((actionID == SoulSlice && CustomComboFunctions.GetRemainingCharges(SoulSlice) == 0) ||
                        (actionID == ArcaneCircle && CustomComboFunctions.IsOnCooldown(ArcaneCircle)) ||
-                       (actionID == Gluttony && CustomComboFunctions.IsOnCooldown(Gluttony)))
+                       (actionID == Gluttony && CustomComboFunctions.IsOnCooldown(Gluttony))) && ActionWatching.TimeSinceLastAction.TotalSeconds >= 3)
                 {
                     CurrentState = OpenerState.FailedOpener;
                     return false;
@@ -332,6 +332,7 @@ namespace XIVSlothCombo.Combos.JobHelpers
                     if (DoOpenerSimple(ref actionID))
                         return true;
                 }
+
                 else
                 {
                     if (DoOpener(ref actionID))
