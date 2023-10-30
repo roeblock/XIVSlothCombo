@@ -2270,7 +2270,7 @@ namespace XIVSlothCombo.Combos
 
         #region Single Target (Slice) Combo Section
         [ReplaceSkill(RPR.Slice, RPR.Harpe)]
-        [CustomComboInfo("Slice Combo Feature", "Replace Slice with its combo chain.\nIf all sub options are toggled will turn into a full one button rotation (Advanced Reaper)", RPR.JobID, 0, "", "")]
+        [CustomComboInfo("Advanced Mode - Single Target", "Replace Slice with its combo chain.\nIf all sub options are toggled will turn into a full one button rotation (Advanced Reaper)", RPR.JobID, 0, "", "")]
         RPR_ST_AdvancedMode = 12001,
 
         [ParentCombo(RPR_ST_AdvancedMode)]
@@ -2349,7 +2349,7 @@ namespace XIVSlothCombo.Combos
 
         #region AoE (Scythe) Combo Section
         [ReplaceSkill(RPR.SpinningScythe)]
-        [CustomComboInfo("Scythe Combo Feature", "Replace Spinning Scythe with its combo chain.\nIf all sub options are toggled will turn into a full one button rotation (Simple AoE)", RPR.JobID, 0, "", "")]
+        [CustomComboInfo("Advanced Mode - AoE", "Replace Spinning Scythe with its combo chain.\nIf all sub options are toggled will turn into a full one button rotation (Simple AoE)", RPR.JobID, 0, "", "")]
         RPR_AoE_ScytheCombo = 12020,
 
         [ParentCombo(RPR_AoE_ScytheCombo)]
@@ -2451,22 +2451,26 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Enshroud to Communio Feature", "Turns Enshroud to Communio when available to use.", RPR.JobID, 0, "", "")]
         RPR_EnshroudCommunio = 12059,
 
-        [ReplaceSkill(RPR.Slice, RPR.ShadowOfDeath, RPR.Enshroud)]
-        [CustomComboInfo("True North Feature", "Adds True North to Slice, Shadow of Death, Enshroud, and Blood Stalk when under Gluttony and if Gibbet/Gallows options are selected to replace those skills.", RPR.JobID, 0)]
-        RPR_TrueNorth = 12061,
+        [ParentCombo(RPR_EnshroudProtection)]
+        [CustomComboInfo("True North Feature", "Adds True North when under Gluttony and if Gibbet/Gallows options are selected to replace those skills.", RPR.JobID, 0)]
+        RPR_TrueNorthEnshroud = 12061,
 
         [ReplaceSkill(RPR.Harpe)]
         [ParentCombo(RPR_Soulsow)]
         [CustomComboInfo("Soulsow Reminder during Combat", "Adds Soulsow to Harpe during combat when no target is selected.", RPR.JobID, 0, "", "")]
         RPR_Soulsow_Combat = 12062,
 
-        [ReplaceSkill(RPR.Gibbet, RPR.Gallows)]
-        [CustomComboInfo("Dynamic True North Feature", "Adds True North to Slice before Gibbet/Gallows when you are not in the correct position for the enhanced potency bonus.", RPR.JobID, 0, "", "")]
+        [ParentCombo(RPR_ST_AdvancedMode)]
+        [CustomComboInfo("Dynamic True North Feature", "Adds True North to Slice before Gibbet/Gallows when you are not in the correct position for the enhanced potency bonus.", RPR.JobID, 99, "", "")]
         RPR_TrueNorthDynamic = 12063,
 
         [ParentCombo(RPR_TrueNorthDynamic)]
         [CustomComboInfo("Hold True North for Gluttony Option", "Will hold the last charge of True North for use with Gluttony, even when out of position for Gibbet/Gallows potency bonuses.", RPR.JobID, 0, "", "")]
         RPR_TrueNorthDynamic_HoldCharge = 12064,
+
+        [ParentCombo(RPR_GluttonyBloodSwathe)]
+        [CustomComboInfo("True North Feature", "Adds True North when under Gluttony and if Gibbet/Gallows options are selected to replace those skills.", RPR.JobID, 0)]
+        RPR_TrueNorthGluttony = 12069,
 
         [Variant]
         [VariantParent(RPR_ST_AdvancedMode, RPR_AoE_ScytheCombo)]

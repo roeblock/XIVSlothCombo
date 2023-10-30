@@ -1707,6 +1707,11 @@ namespace XIVSlothCombo.Window.Functions
                 UserConfig.DrawSliderInt(0, 100, RPR.Config.RPR_STBloodbathThreshold, "Bloodbath HP percentage threshold (0 = Disabled)", 150, SliderIncrements.Ones);
             }
 
+            if (preset == CustomComboPreset.RPR_TrueNorthDynamic)
+            {
+                UserConfig.DrawAdditionalBoolChoice(RPR.Config.RPR_ST_TrueNorth_Moving, "Only When Not Moving", "");
+            }
+
             if (preset == CustomComboPreset.RPR_Variant_Cure)
                 UserConfig.DrawSliderInt(1, 100, RPR.Config.RPR_VariantCure, "HP% to be at or under", 200);
 
