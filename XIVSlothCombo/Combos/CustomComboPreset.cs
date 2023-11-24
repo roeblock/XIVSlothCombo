@@ -1163,7 +1163,6 @@ namespace XIVSlothCombo.Combos
         #region DRAGOON
 
         [ReplaceSkill(DRG.FullThrust)]
-        [ConflictingCombos(DRG_ST_AdvancedMode)]
         [CustomComboInfo("Basic Combo", "Replaces Full Thrust with basic rotation", DRG.JobID)]
         DRG_BasicCombo = 6000,
 
@@ -1745,7 +1744,7 @@ namespace XIVSlothCombo.Combos
 
         #region ST
 
-        [ReplaceSkill(MNK.Bootshine)]
+        [ReplaceSkill(MNK.DragonKick)]
         [CustomComboInfo("Basic Rotation - Single Target", "Replaces Bootshine with Monk's basic single target combo on one button.", MNK.JobID, 1, "", "")]
         MNK_ST_BasicCombo = 9002,
 
