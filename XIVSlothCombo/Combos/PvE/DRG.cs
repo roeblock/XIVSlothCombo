@@ -1,6 +1,5 @@
 using Dalamud.Game.ClientState.JobGauge.Types;
 using Dalamud.Game.ClientState.Statuses;
-using ECommons.DalamudServices;
 using XIVSlothCombo.Combos.JobHelpers;
 using XIVSlothCombo.Combos.PvE.Content;
 using XIVSlothCombo.CustomComboNS;
@@ -98,6 +97,55 @@ namespace XIVSlothCombo.Combos.PvE
                 DRG_ST_DivesOption_Spineshatter = new("DRG_ST_DivesOption_Spineshatter"),
                 DRG_AoE_DivesOption_Dragonfire = new("DRG_AoE_DivesOption_Dragonfire"),
                 DRG_AoE_DivesOption_Spineshatter = new("DRG_AoE_DivesOption_Spineshatter");
+        }
+
+        internal class DRG_BasicCombo : CustomCombo
+        {
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DRG_BasicCombo;
+
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+            {
+                Status? ChaosDoTDebuff;
+                if (LevelChecked(ChaoticSpring)) ChaosDoTDebuff = FindTargetEffect(Debuffs.ChaoticSpring);
+                else ChaosDoTDebuff = FindTargetEffect(Debuffs.ChaosThrust);
+
+                if (actionID is FullThrust)
+                {
+                    // 1 -2-3 Combo
+                    if (HasEffect(Buffs.SharperFangAndClaw))
+                    {
+                        return OriginalHook(FangAndClaw);
+                    }
+
+                    if (HasEffect(Buffs.EnhancedWheelingThrust))
+                    {
+                        return OriginalHook(WheelingThrust);
+                    }
+
+                    if (comboTime > 0)
+                    {
+                        if ((LevelChecked(OriginalHook(ChaosThrust)) && (ChaosDoTDebuff is null || ChaosDoTDebuff.RemainingTime < 6)) ||
+                            GetBuffRemainingTime(Buffs.PowerSurge) < 10)
+                        {
+                            if (lastComboMove is TrueThrust or RaidenThrust && LevelChecked(Disembowel))
+                                return Disembowel;
+
+                            if (lastComboMove is Disembowel && LevelChecked(OriginalHook(ChaosThrust)))
+                                return OriginalHook(ChaosThrust);
+                        }
+
+                        if (lastComboMove is TrueThrust or RaidenThrust && LevelChecked(VorpalThrust))
+                            return VorpalThrust;
+
+                        if (lastComboMove is VorpalThrust && LevelChecked(FullThrust))
+                            return OriginalHook(FullThrust);
+                    }
+
+                    return OriginalHook(TrueThrust);
+                }
+
+                return actionID;
+            }
         }
 
         internal class DRG_ST_SimpleMode : CustomCombo
@@ -748,3 +796,4 @@ namespace XIVSlothCombo.Combos.PvE
         }
     }
 }
+

@@ -1162,6 +1162,11 @@ namespace XIVSlothCombo.Combos
 
         #region DRAGOON
 
+        [ReplaceSkill(DRG.FullThrust)]
+        [ConflictingCombos(DRG_ST_AdvancedMode)]
+        [CustomComboInfo("Basic Combo", "Replaces Full Thrust with basic rotation", DRG.JobID)]
+        DRG_BasicCombo = 6000,
+
         [ReplaceSkill(DRG.TrueThrust)]
         [ConflictingCombos(DRG_ST_AdvancedMode)]
         [CustomComboInfo("Simple Mode - Single Target", "Replaces True Thrust with a full one-button single target rotation.\nThis is the ideal option for newcomers to the job.", DRG.JobID)]
@@ -1735,7 +1740,6 @@ namespace XIVSlothCombo.Combos
         // Last value = 8058
 
         #endregion
-
 
         #region MONK
 
