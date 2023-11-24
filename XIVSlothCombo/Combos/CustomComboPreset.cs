@@ -176,7 +176,7 @@ namespace XIVSlothCombo.Combos
         #region ASTROLOGIAN
 
         #region DPS
-        [ReplaceSkill(AST.Malefic, AST.Malefic2, AST.Malefic3, AST.Malefic4, AST.FallMalefic, AST.Combust, AST.Combust2, AST.Combust3, AST.Gravity, AST.Gravity2)]
+        [ReplaceSkill(AST.Malefic, AST.Malefic2, AST.Malefic3, AST.Malefic4, AST.Combust, AST.Combust2, AST.Combust3, AST.Gravity, AST.Gravity2)]
         [CustomComboInfo("DPS Feature", "Replaces Malefic or Combust with options below", AST.JobID)]
         AST_ST_DPS = 1004,
 
@@ -3195,7 +3195,7 @@ namespace XIVSlothCombo.Combos
         */
 
         #region DPS
-        [ReplaceSkill(SCH.Ruin, SCH.Broil, SCH.Broil2, SCH.Broil3, SCH.Broil4, SCH.Bio, SCH.Bio2, SCH.Biolysis)]
+        [ReplaceSkill(SCH.Ruin, SCH.Broil, SCH.Broil2, SCH.Broil3, SCH.Bio, SCH.Bio2, SCH.Biolysis)]
         [CustomComboInfo("Single Target DPS Feature", "Replaces Ruin I / Broils with options below", SCH.JobID, 1)]
         SCH_DPS = 16100,
 
