@@ -780,7 +780,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 return Thunder2;
                         }
 
-                        if (currentMP < 9400 && !TraitLevelChecked(Traits.EnhancedFreeze) && Freeze.LevelChecked() && currentMP >= MP.Freeze)
+                        if (currentMP < 9400 && !TraitLevelChecked(Traits.EnhancedFreeze) && LevelChecked(Freeze) && currentMP >= MP.Freeze)
                             return Freeze;
                         
                         if (currentMP >= 9400 && !TraitLevelChecked(Traits.AspectMasteryIII))
