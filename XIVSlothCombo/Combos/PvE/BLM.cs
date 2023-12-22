@@ -465,6 +465,19 @@ namespace XIVSlothCombo.Combos.PvE
                                 return All.Swiftcast;
                         }
 
+                        // Sharpcast
+                        if (Config.BLM_Adv_Cooldowns_Choice[1] &&
+                            ActionReady(Sharpcast) && !HasEffect(Buffs.Sharpcast) &&
+                            !WasLastAction(Thunder3) && CanSpellWeave(actionID))
+                            return Sharpcast;
+
+                        // Use Triplecast only with Astral Fire/Umbral Hearts, and we have enough MP to cast Fire IV twice
+                        if (IsEnabled(CustomComboPreset.BLM_Adv_Casts) &&
+                            ((IsNotEnabled(CustomComboPreset.BLM_Adv_Triplecast_Pooling) && GetRemainingCharges(Triplecast) > 0) || GetRemainingCharges(Triplecast) is 2) &&
+                            LevelChecked(Triplecast) && !HasEffect(Buffs.Triplecast) && !HasEffect(All.Buffs.Swiftcast) &&
+                            (gauge.InAstralFire) &&
+                            currentMP >= MP.FireI * 2)
+                            return Triplecast;
                         // Use Xenoglossy to weave ogcd
                         if (rotationSelection is 0 && IsEnabled(CustomComboPreset.BLM_Adv_UsePolyglotStacks) &&
                             gauge.HasPolyglotStacks() && !HasEffect(Buffs.Triplecast) && !HasEffect(All.Buffs.Swiftcast) &&
@@ -767,9 +780,9 @@ namespace XIVSlothCombo.Combos.PvE
                                 return Thunder2;
                         }
 
-                        if (currentMP < 9400 && !TraitLevelChecked(Traits.EnhancedFreeze) && currentMP >= MP.Freeze)
+                        if (currentMP < 9400 && !TraitLevelChecked(Traits.EnhancedFreeze) && Freeze.LevelChecked() && currentMP >= MP.Freeze)
                             return Freeze;
-
+                        
                         if (currentMP >= 9400 && !TraitLevelChecked(Traits.AspectMasteryIII))
                             return Transpose;
 

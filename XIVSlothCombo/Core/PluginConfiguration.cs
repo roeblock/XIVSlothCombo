@@ -69,10 +69,6 @@ namespace XIVSlothCombo.Core
         [JsonProperty("EnabledActionsV5")]
         public HashSet<CustomComboPreset> EnabledActions { get; set; } = new();
 
-        /// <summary> Gets or sets the collection of enabled combos. </summary>
-        [JsonProperty("EnabledActionsV4")]
-        public HashSet<CustomComboPreset> EnabledActions4 { get; set; } = new();
-
         #endregion
 
         #region Settings Options
@@ -183,6 +179,27 @@ namespace XIVSlothCombo.Core
 
         /// <summary> Sets a custom integer value. </summary>
         public static void SetCustomIntValue(string config, int value) => CustomIntValues[config] = value;
+
+        #endregion
+
+        #region Custom Int Array Values
+        [JsonProperty]
+        internal static Dictionary<string, int[]> CustomIntArrayValues { get; set; } = new Dictionary<string, int[]>();
+
+        /// <summary> Gets a custom integer array value. </summary>
+        public static int[] GetCustomIntArrayValue(string config)
+        {
+            if (!CustomIntArrayValues.TryGetValue(config, out int[]? configValue))
+            {
+                SetCustomIntArrayValue(config, []);
+                return [];
+            }
+
+            return configValue;
+        }
+
+        /// <summary> Sets a custom integer array value. </summary>
+        public static void SetCustomIntArrayValue(string config, int[] value) => CustomIntArrayValues[config] = value;
 
         #endregion
 

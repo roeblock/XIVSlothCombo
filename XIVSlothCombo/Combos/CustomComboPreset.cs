@@ -1537,7 +1537,7 @@ namespace XIVSlothCombo.Combos
         GNB_NoMercy_Cooldowns_SonicBreakBowShock = 7502,
         #endregion
 
-        [CustomComboInfo("Aurora Protection Feature", "Turns Aurora into Nascent Flash if Aurora's effect is on the player.", GNB.JobID)]
+        [CustomComboInfo("Aurora Protection Feature", "Locks out Aurora if Aurora's effect is on the target.", GNB.JobID, 0, "", "")]
         GNB_AuroraProtection = 7600,
 
         [Variant]
@@ -1576,7 +1576,7 @@ namespace XIVSlothCombo.Combos
 
         #region Advanced ST
 
-        [ReplaceSkill(MCH.SplitShot)]
+        [ReplaceSkill(MCH.SplitShot, MCH.HeatedSplitShot)]
         [ConflictingCombos(MCH_ST_SimpleMode)]
         [CustomComboInfo("Advanced Mode - Single Target", "Replaces Split Shot with a one-button full single target rotation.\nThese features are ideal if you want to customize the rotation.", MCH.JobID)]
         MCH_ST_AdvancedMode = 8100,
@@ -1591,7 +1591,7 @@ namespace XIVSlothCombo.Combos
 
         [ParentCombo(MCH_ST_AdvancedMode)]
         [CustomComboInfo("Reassemble Option", "Adds Reassemble to the rotation.", MCH.JobID)]
-        MCH_ST_Adv_Reassembled = 8103,
+        MCH_ST_Adv_Reassemble = 8103,
 
         [ParentCombo(MCH_ST_AdvancedMode)]
         [CustomComboInfo("Gauss Round / Ricochet Option", "Adds Gauss Round and Ricochet to the rotation.\nWill prevent overcapping.", MCH.JobID)]
@@ -1651,7 +1651,7 @@ namespace XIVSlothCombo.Combos
 
         #region Advanced AoE
 
-        [ReplaceSkill(MCH.SpreadShot)]
+        [ReplaceSkill(MCH.SpreadShot, MCH.Scattergun)]
         [ConflictingCombos(MCH_AoE_SimpleMode)]
         [CustomComboInfo("Advanced Mode - AoE", "Replaces Spread Shot with a one-button full single target rotation.\nThese features are ideal if you want to customize the rotation.", MCH.JobID)]
         MCH_AoE_AdvancedMode = 8300,
@@ -1717,24 +1717,32 @@ namespace XIVSlothCombo.Combos
         MCH_HotShotDrillChainSaw = 8004,
 
         [ReplaceSkill(MCH.HeatBlast)]
-        [CustomComboInfo("Single Button Heat Blast Feature", "Switches Heat Blast to Hypercharge.", MCH.JobID)]
-        MCH_HeatblastGaussRicochet = 8006,
+        [CustomComboInfo("Single Button Heat Blast Feature", "Turns Heat Blast into Hypercharge when at or above 50 heat.", MCH.JobID)]
+        MCH_Heatblast = 8006,
 
-        [ParentCombo(MCH_HeatblastGaussRicochet)]
-        [CustomComboInfo("Barrel Feature", "Adds Barrel Stabilizer to Single Button Heat Blast Feature when below 50 Heat Gauge and it is off cooldown", MCH.JobID)]
-        MCH_HeatblastGaussRicochet_AutoBarrel = 8052,
+        [ParentCombo(MCH_Heatblast)]
+        [CustomComboInfo("Barrel Option", "Adds Barrel Stabilizer to the feature when below 50 Heat Gauge.", MCH.JobID)]
+        MCH_Heatblast_AutoBarrel = 8052,
 
-        [ParentCombo(MCH_HeatblastGaussRicochet)]
-        [CustomComboInfo("Wildfire Option", "Adds Wildfire to the Single Button Heat Blast Feature if Wildfire is off cooldown and you have enough Heat Gauge for Hypercharge then Hypercharge will be replaced with Wildfire.\nAlso weaves Ricochet/Gauss Round on Heat Blast when necessary.", MCH.JobID)]
-        MCH_HeatblastGaussRicochetWildfire = 8015,
+        [ParentCombo(MCH_Heatblast)]
+        [CustomComboInfo("Wildfire Option", "Adds Wildfire to the feature when at or above 50 heat.", MCH.JobID)]
+        MCH_Heatblast_Wildfire = 8015,
+
+        [ParentCombo(MCH_Heatblast)]
+        [CustomComboInfo("Gauss Round / Ricochet Option", "Switches between Heat Blast and either Gauss Round or Ricochet, depending on cooldown timers.", MCH.JobID)]
+        MCH_Heatblast_GaussRound = 8016,
 
         [ReplaceSkill(MCH.AutoCrossbow)]
-        [CustomComboInfo("Single Button Auto Crossbow Feature", "Switches Auto Crossbow to Hypercharge and weaves Gauss Round/Ricochet.", MCH.JobID)]
-        MCH_AutoCrossbowGaussRicochet = 8018,
+        [CustomComboInfo("Single Button Auto Crossbow Feature", "Turns Auto Crossbow into Hypercharge when at or above 50 heat.", MCH.JobID)]
+        MCH_AutoCrossbow = 8018,
 
-        [ParentCombo(MCH_AutoCrossbowGaussRicochet)]
-        [CustomComboInfo("Barrel Feature", "Adds Barrel Stabilizer to Single Button Auto Crossbow Feature when below 50 Heat Gauge and it is off cooldown", MCH.JobID)]
-        MCH_AutoCrossbowGaussRicochet_AutoBarrel = 8019,
+        [ParentCombo(MCH_AutoCrossbow)]
+        [CustomComboInfo("Barrel Option", "Adds Barrel Stabilizer to the feature when below 50 Heat Gauge.", MCH.JobID)]
+        MCH_AutoCrossbow_AutoBarrel = 8019,
+
+        [ParentCombo(MCH_AutoCrossbow)]
+        [CustomComboInfo("Gauss Round / Ricochet Option", "Switches between Auto Crossbow and either Gauss Round or Ricochet, depending on cooldown timers.", MCH.JobID)]
+        MCH_AutoCrossbow_GaussRound = 8020,
 
         [ReplaceSkill(MCH.Dismantle)]
         [CustomComboInfo("Physical Ranged DPS: Double Dismantle Protection", "Prevents the use of Dismantle when target already has the effect by replacing it with Fire.", MCH.JobID)]
@@ -2177,10 +2185,6 @@ namespace XIVSlothCombo.Combos
         [ReplaceSkill(NIN.Hide)]
         [CustomComboInfo("Hide to Mug/Trick Attack Feature", "Replaces Hide with Mug while in combat and Trick Attack whilst Hidden.", NIN.JobID)]
         NIN_HideMug = 10057,
-
-        [ReplaceSkill(NIN.AeolianEdge)]
-        [CustomComboInfo("Aeolian to Ninjutsu Feature", "Replaces Aeolian Edge (combo) with Ninjutsu if any Mudra are used.", NIN.JobID)]
-        NIN_AeolianNinjutsu = 10058,
 
         [ReplaceSkill(NIN.Huraijin)]
         [CustomComboInfo("Huraijin / Raiju Feature", "Replaces Huraijin with Forked and Fleeting Raiju when available.", NIN.JobID)]
@@ -2831,47 +2835,47 @@ namespace XIVSlothCombo.Combos
         SGE_ST_Heal = 14300,
 
         [ParentCombo(SGE_ST_Heal)]
-        [CustomComboInfo("Esuna Option", "Applies Esuna to your target if there is a cleansable debuff.", SGE.JobID, 301, "", "")]
+        [CustomComboInfo("Esuna Option", "Applies Esuna to your target if there is a cleansable debuff.", SGE.JobID, 11, "", "")]
         SGE_ST_Heal_Esuna = 14301,
 
         [ParentCombo(SGE_ST_Heal)]
-        [CustomComboInfo("Apply Kardia Option", "Applies Kardia to your target if it's not applied to anyone else.", SGE.JobID, 305, "", "")]
+        [CustomComboInfo("Apply Kardia Option", "Applies Kardia to your target if it's not applied to anyone else.", SGE.JobID, 1, "", "")]
         SGE_ST_Heal_Kardia = 14310,
 
         [ParentCombo(SGE_ST_Heal)]
-        [CustomComboInfo("Eukrasian Diagnosis Option", "Diagnosis becomes Eukrasian Diagnosis if the shield is not applied to the target.", SGE.JobID, 313, "", "")]
+        [CustomComboInfo("Eukrasian Diagnosis Option", "Diagnosis becomes Eukrasian Diagnosis if the shield is not applied to the target.", SGE.JobID, 2, "", "")]
         SGE_ST_Heal_EDiagnosis = 14320,
 
         [ParentCombo(SGE_ST_Heal)]
-        [CustomComboInfo("Soteria Option", "Applies Soteria.", SGE.JobID, 306, "", "")]
+        [CustomComboInfo("Soteria Option", "Applies Soteria.", SGE.JobID, 3, "", "")]
         SGE_ST_Heal_Soteria = 14330,
 
         [ParentCombo(SGE_ST_Heal)]
-        [CustomComboInfo("Zoe Option", "Applies Zoe.", SGE.JobID, 307, "", "")]
+        [CustomComboInfo("Zoe Option", "Applies Zoe.", SGE.JobID, 4, "", "")]
         SGE_ST_Heal_Zoe = 14340,
 
         [ParentCombo(SGE_ST_Heal)]
-        [CustomComboInfo("Pepsis Option", "Triggers Pepsis if a shield is present.", SGE.JobID, 309, "", "")]
+        [CustomComboInfo("Pepsis Option", "Triggers Pepsis if a shield is present.", SGE.JobID, 5, "", "")]
         SGE_ST_Heal_Pepsis = 14350,
 
         [ParentCombo(SGE_ST_Heal)]
-        [CustomComboInfo("Taurochole Option", "Adds Taurochole.", SGE.JobID, 303, "", "")]
+        [CustomComboInfo("Taurochole Option", "Adds Taurochole.", SGE.JobID, 6, "", "")]
         SGE_ST_Heal_Taurochole = 14360,
 
         [ParentCombo(SGE_ST_Heal)]
-        [CustomComboInfo("Haima Option", "Applies Haima.", SGE.JobID, 310, "", "")]
+        [CustomComboInfo("Haima Option", "Applies Haima.", SGE.JobID, 7, "", "")]
         SGE_ST_Heal_Haima = 14370,
 
         [ParentCombo(SGE_ST_Heal)]
-        [CustomComboInfo("Rhizomata Option", "Adds Rhizomata when Addersgall is 0.", SGE.JobID, 304, "", "")]
+        [CustomComboInfo("Rhizomata Option", "Adds Rhizomata when Addersgall is 0.", SGE.JobID, 10, "", "")]
         SGE_ST_Heal_Rhizomata = 14380,
 
         [ParentCombo(SGE_ST_Heal)]
-        [CustomComboInfo("Krasis Option", "Applies Krasis.", SGE.JobID, 308, "", "")]
+        [CustomComboInfo("Krasis Option", "Applies Krasis.", SGE.JobID, 8, "", "")]
         SGE_ST_Heal_Krasis = 14390,
 
         [ParentCombo(SGE_ST_Heal)]
-        [CustomComboInfo("Druochole Option", "Applies Druochole.", SGE.JobID, 302, "", "")]
+        [CustomComboInfo("Druochole Option", "Applies Druochole.", SGE.JobID, 9, "", "")]
         SGE_ST_Heal_Druochole = 14400,
         #endregion
 
@@ -3514,7 +3518,7 @@ namespace XIVSlothCombo.Combos
         #region WARRIOR
 
         [ReplaceSkill(WAR.StormsPath)]
-        [CustomComboInfo("Advanced Mode - Single Target", "Replaces Storm's Path with a one-button full single target rotation.\nThese features are ideal if you want to customize the rotation.", WAR.JobID)]
+        [CustomComboInfo("Advanced Mode - Single Target", "Replaces Storm's Path with a one-button full single target rotation.\nThese features are ideal if you want to customize the rotation.", WAR.JobID, 1)]
         WAR_ST_StormsPath = 18000,
 
         [ParentCombo(WAR_ST_StormsPath)]
@@ -3550,11 +3554,11 @@ namespace XIVSlothCombo.Combos
         WAR_ST_StormsPath_PrimalRend = 18008,
 
         [ReplaceSkill(WAR.StormsEye)]
-        [CustomComboInfo("Storm's Eye Combo Feature", "Replace Storm's Eye with its combo chain.", WAR.JobID, 2, "", "")]
+        [CustomComboInfo("Storm's Eye Combo Feature", "Replace Storm's Eye with its combo chain.", WAR.JobID, 3, "", "")]
         War_ST_StormsEye = 18001,
 
         [ReplaceSkill(WAR.Overpower)]
-        [CustomComboInfo("Advanced Mode - AoE", "Replaces Overpower with a one-button full AoE rotation.\nThese features are ideal if you want to customize the rotation.", WAR.JobID, 1, "", "")]
+        [CustomComboInfo("Advanced Mode - AoE", "Replaces Overpower with a one-button full AoE rotation.\nThese features are ideal if you want to customize the rotation.", WAR.JobID, 2, "", "")]
         WAR_AoE_Overpower = 18002,
 
         [ReplaceSkill(WAR.NascentFlash)]
@@ -3693,32 +3697,36 @@ namespace XIVSlothCombo.Combos
         WHM_AoEHeals = 19007,
 
         [ParentCombo(WHM_AoEHeals)]
-        [CustomComboInfo("Afflatus Rapture Option", "Uses Afflatus Rapture when available.", WHM.JobID, 61, "", "")]
+        [CustomComboInfo("Afflatus Rapture Option", "Uses Afflatus Rapture when available.", WHM.JobID, 2, "", "")]
         WHM_AoEHeals_Rapture = 19011,
 
         [ParentCombo(WHM_AoEHeals)]
-        [CustomComboInfo("Afflatus Misery Option", "Uses Afflatus Misery when available.", WHM.JobID, 62, "", "")]
+        [CustomComboInfo("Afflatus Misery Option", "Uses Afflatus Misery when available.", WHM.JobID, 3, "", "")]
         WHM_AoEHeals_Misery = 19010,
 
         [ParentCombo(WHM_AoEHeals)]
-        [CustomComboInfo("Thin Air Option", "Uses Thin Air when available.", WHM.JobID, 63, "", "")]
-        WHM_AoeHeals_ThinAir = 19200,
+        [CustomComboInfo("Thin Air Option", "Uses Thin Air when available.", WHM.JobID, 4, "", "")]
+        WHM_AoEHeals_ThinAir = 19200,
 
         [ParentCombo(WHM_AoEHeals)]
-        [CustomComboInfo("Cure III Option", "Replaces Medica with Cure III when available.", WHM.JobID)]
+        [CustomComboInfo("Cure III Option", "Replaces Medica with Cure III when available.", WHM.JobID, 5)]
         WHM_AoEHeals_Cure3 = 19201,
 
         [ParentCombo(WHM_AoEHeals)]
-        [CustomComboInfo("Assize Option", "Uses Assize when available.", WHM.JobID)]
+        [CustomComboInfo("Assize Option", "Uses Assize when available.", WHM.JobID, 6)]
         WHM_AoEHeals_Assize = 19202,
 
         [ParentCombo(WHM_AoEHeals)]
-        [CustomComboInfo("Plenary Indulgence Option", "Uses Plenary Indulgence when available.", WHM.JobID)]
+        [CustomComboInfo("Plenary Indulgence Option", "Uses Plenary Indulgence when available.", WHM.JobID, 7)]
         WHM_AoEHeals_Plenary = 19203,
 
         [ParentCombo(WHM_AoEHeals)]
-        [CustomComboInfo("Lucid Dreaming Option", "Uses Lucid Dreaming when available.", WHM.JobID)]
+        [CustomComboInfo("Lucid Dreaming Option", "Uses Lucid Dreaming when available.", WHM.JobID, 8)]
         WHM_AoEHeals_Lucid = 19204,
+
+        [ParentCombo(WHM_AoEHeals)]
+        [CustomComboInfo("Medica II Option", "Uses Medica II when current target doesn't have Medica II buff.", WHM.JobID, 1)]
+        WHM_AoEHeals_Medica2 = 19205,
 
         #endregion
 
@@ -4102,7 +4110,12 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Riddle of Earth Option", "Adds Riddle of Earth and Earth's Reply to Burst Mode when in combat.", MNK.JobID)]
         MNKPvP_Burst_RiddleOfEarth = 119002,
 
-        // Last value = 119002
+        [ParentCombo(MNKPvP_Burst)]
+        [SecretCustomCombo]
+        [CustomComboInfo("Six-sided Star Option", "Adds Six-sided Star to Burst Mode.", MNK.JobID)]
+        MNKPvP_Burst_SixSidedStar = 119003,
+
+        // Last value = 119003
 
         #endregion
 
