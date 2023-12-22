@@ -364,6 +364,10 @@ namespace XIVSlothCombo.Combos
         BLM_Adv_Cooldowns = 2042,
 
         [ParentCombo(BLM_ST_AdvancedMode)]
+        [CustomComboInfo("Foul/Xenoglossy", "Adds Foul / Xenoglossy to the rotation.", BLM.JobID, -8, "", "")]
+        BLM_Adv_UsePolyglotStacks = 2058,
+
+        [ParentCombo(BLM_ST_AdvancedMode)]
         [CustomComboInfo("Opener Option", "Adds the Lv.90 opener." +
             "\nWill default to the Standard opener when nothing is selected.", BLM.JobID, -10, "", "")]
         BLM_Adv_Opener = 2043,
@@ -455,7 +459,7 @@ namespace XIVSlothCombo.Combos
         BLM_Aetherial_Manipulation = 2046,
         #endregion
 
-        // Last value = 2057
+        // Last value = 2058
 
         #endregion
 
@@ -1559,10 +1563,14 @@ namespace XIVSlothCombo.Combos
 
         #region Simple ST
 
+        [ReplaceSkill(MCH.CleanShot)]
+        [CustomComboInfo("Simple Combo", "Replaces Clean shot with the 1-2-3 combo", MCH.JobID)]
+        MCH_ST_SimpleCombo = 8000,
+
         [ReplaceSkill(MCH.SplitShot)]
         [ConflictingCombos(MCH_ST_AdvancedMode)]
         [CustomComboInfo("Simple Mode - Single Target", "Replaces Split Shot with a one-button full single target rotation.\nThis is ideal for newcomers to the job.", MCH.JobID)]
-        MCH_ST_SimpleMode = 8000,
+        MCH_ST_SimpleMode = 8001,
 
         #endregion
 
@@ -1704,7 +1712,7 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Gauss Round/Ricochet Feature", "Replace Gauss Round and Ricochet with one or the other depending on which has more charges.", MCH.JobID)]
         MCH_GaussRoundRicochet = 8003,
 
-        [ReplaceSkill(MCH.Drill, MCH.AirAnchor, MCH.HotShot)]
+        [ReplaceSkill(MCH.Drill, MCH.AirAnchor, MCH.HotShot, MCH.ChainSaw)]
         [CustomComboInfo("Drill/Air Anchor (Hot Shot) Feature", "Replace Drill and Air Anchor (Hot Shot) with one or the other (or Chain Saw) depending on which is on cooldown.", MCH.JobID)]
         MCH_HotShotDrillChainSaw = 8004,
 
@@ -1718,7 +1726,7 @@ namespace XIVSlothCombo.Combos
 
         [ParentCombo(MCH_HeatblastGaussRicochet)]
         [CustomComboInfo("Wildfire Option", "Adds Wildfire to the Single Button Heat Blast Feature if Wildfire is off cooldown and you have enough Heat Gauge for Hypercharge then Hypercharge will be replaced with Wildfire.\nAlso weaves Ricochet/Gauss Round on Heat Blast when necessary.", MCH.JobID)]
-        MCH_ST_Wildfire = 8015,
+        MCH_HeatblastGaussRicochetWildfire = 8015,
 
         [ReplaceSkill(MCH.AutoCrossbow)]
         [CustomComboInfo("Single Button Auto Crossbow Feature", "Switches Auto Crossbow to Hypercharge and weaves Gauss Round/Ricochet.", MCH.JobID)]
