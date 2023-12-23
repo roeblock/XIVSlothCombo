@@ -347,7 +347,7 @@ namespace XIVSlothCombo.Combos.PvE
                     if (IsEnabled(CustomComboPreset.MCH_ST_Adv_Interrupt) && interruptReady)
                         return All.HeadGraze;
 
-                    if (IsEnabled(CustomComboPreset.MCH_ST_Adv_QueenOverdrive) && gauge.IsRobotActive && GetTargetHPPercent() <= Config.MCH_ST_QueenOverDrive && CanWeave(actionID))
+                    if (IsEnabled(CustomComboPreset.MCH_ST_Adv_QueenOverdrive) && gauge.IsRobotActive && GetTargetHPPercent() <= Config.MCH_ST_QueenOverDrive && CanWeave(actionID) && ActionReady(QueenOverdrive))
                         return OriginalHook(QueenOverdrive);
 
                     // Wildfire
@@ -362,10 +362,6 @@ namespace XIVSlothCombo.Combos.PvE
                         return BarrelStabilizer;
 
 
-                    //Queen
-                    if (UseQueen(gauge))
-                        return OriginalHook(RookAutoturret);
-
                     //gauss and ricochet overcap protection
                     if (IsEnabled(CustomComboPreset.MCH_ST_Adv_GaussRicochet) &&
                         CanWeave(actionID) && !gauge.IsOverheated && !HasEffect(Buffs.Wildfire) && !ActionWatching.WasLast2ActionsAbilities())
@@ -379,15 +375,19 @@ namespace XIVSlothCombo.Combos.PvE
 
 
                     if (IsEnabled(CustomComboPreset.MCH_ST_Adv_Hypercharge) &&
-                            CanWeave(actionID) && gauge.Heat >= 50 && ActionReady(Hypercharge) && !gauge.IsOverheated)
+                        CanDelayedWeave(actionID) && gauge.Heat >= 50 && 
+                        ActionReady(Hypercharge) && 
+                        !gauge.IsOverheated)
                     {
                         //Protection & ensures Hyper charged is double weaved with WF during reopener
                         if (HasEffect(Buffs.Wildfire) || !LevelChecked(Wildfire))
                             return Hypercharge;
 
-                        var drillCD = !Drill.LevelChecked() || (Drill.LevelChecked() && GetCooldownRemainingTime(Drill) > 8);
-                        var anchorCD = !OriginalHook(AirAnchor).LevelChecked() || (OriginalHook(AirAnchor).LevelChecked() && GetCooldownRemainingTime(OriginalHook(AirAnchor)) > 8);
-                        var sawCD = !ChainSaw.LevelChecked() || (ChainSaw.LevelChecked() && GetCooldownRemainingTime(ChainSaw) > 8);
+                        var heatblastRC = 1.5;
+
+                        var drillCD = !Drill.LevelChecked() || (Drill.LevelChecked() && GetCooldownRemainingTime(Drill) > heatblastRC * 6);
+                        var anchorCD = !OriginalHook(AirAnchor).LevelChecked() || (OriginalHook(AirAnchor).LevelChecked() && GetCooldownRemainingTime(OriginalHook(AirAnchor)) > heatblastRC * 6);
+                        var sawCD = !ChainSaw.LevelChecked() || (ChainSaw.LevelChecked() && GetCooldownRemainingTime(ChainSaw) > heatblastRC * 6);
 
                         if (drillCD && anchorCD && sawCD)
                             return Hypercharge;
@@ -411,6 +411,10 @@ namespace XIVSlothCombo.Combos.PvE
                         if (IsEnabled(CustomComboPreset.MCH_ST_Adv_HeatBlast))
                             return HeatBlast;
                     }
+
+                    //Queen
+                    if (UseQueen(gauge))
+                        return OriginalHook(RookAutoturret);
 
                     if (ReassembledTools(ref actionID))
                         return actionID;
@@ -491,10 +495,10 @@ namespace XIVSlothCombo.Combos.PvE
             {
                 if (IsEnabled(CustomComboPreset.MCH_Adv_TurretQueen) && Config.MCH_ST_TurretUsage == 1 && CanWeave(OriginalHook(SplitShot)) && !gauge.IsOverheated && LevelChecked(OriginalHook(RookAutoturret)) && !gauge.IsRobotActive && gauge.Battery >= 50)
                 {
-                    if (gauge.LastSummonBattery() == 0 || gauge.LastSummonBattery() == 100)
+                    if (gauge.LastSummonBattery() == 0 || gauge.LastSummonBattery() >= 90)
                         return true;
 
-                    if (gauge.LastSummonBattery() == 50 && gauge.Battery == 100)
+                    if (gauge.LastSummonBattery() == 50 && gauge.Battery >= 90)
                         return true;
                 }
 
