@@ -1595,12 +1595,12 @@ namespace XIVSlothCombo.Window.Functions
             // ====================================================================================
             #region MACHINIST
 
-            if (preset is CustomComboPreset.MCH_ST_AdvancedMode)
-            {
-                UserConfig.DrawHorizontalRadioButton(MCH.Config.MCH_ST_RotationSelection, "Standard Rotation", "", 0);
-                UserConfig.DrawHorizontalRadioButton(MCH.Config.MCH_ST_RotationSelection, "123 Tools", "", 1);
-                UserConfig.DrawHorizontalRadioButton(MCH.Config.MCH_ST_RotationSelection, "Early Tools", "", 2);
-            }
+            //if (preset is CustomComboPreset.MCH_ST_AdvancedMode)
+            //{
+            //    UserConfig.DrawHorizontalRadioButton(MCH.Config.MCH_ST_RotationSelection, "Standard Rotation", "", 0);
+            //    UserConfig.DrawHorizontalRadioButton(MCH.Config.MCH_ST_RotationSelection, "123 Tools", "", 1);
+            //    UserConfig.DrawHorizontalRadioButton(MCH.Config.MCH_ST_RotationSelection, "Early Tools", "", 2);
+            //}
 
             if (preset is CustomComboPreset.MCH_Adv_TurretQueen)
             {
@@ -1642,6 +1642,9 @@ namespace XIVSlothCombo.Window.Functions
 
             if (preset == CustomComboPreset.MCH_Variant_Cure)
                 UserConfig.DrawSliderInt(1, 100, MCH.Config.MCH_VariantCure, "HP% to be at or under", 200);
+
+            if (preset == CustomComboPreset.MCH_ST_Adv_QueenOverdrive)
+                UserConfig.DrawSliderInt(1, 10, MCH.Config.MCH_ST_QueenOverDrive, "HP% for the target to be at or under");
 
             #endregion
             // ====================================================================================

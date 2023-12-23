@@ -186,7 +186,7 @@ namespace XIVSlothCombo.Combos
 
         [ReplaceSkill(AST.Gravity, AST.Gravity2)]
         [ParentCombo(AST_ST_DPS)]
-        [CustomComboInfo("AoE DPS Feature", "Every option below (Lucid/AutoDraws/Astrodyne/etc) will also be added to Gravity", AST.JobID, 1, "", "")]
+        [CustomComboInfo("AoE DPS Feature", "Every Option below (Lucid/AutoDraws/Astrodyne/etc) will also be added to Gravity", AST.JobID, 1, "", "")]
         AST_AoE_DPS = 1013,
 
         [ParentCombo(AST_ST_DPS)]
@@ -325,7 +325,7 @@ namespace XIVSlothCombo.Combos
 
         [ReplaceSkill(BLM.Fire)]
         [ConflictingCombos(BLM_Scathe_Xeno, BLM_ST_AdvancedMode)]
-        [CustomComboInfo("Simple Mode - Single Target", "Replaces Fire with a full one-button single target rotation.\nThis is the ideal option for newcomers to the job.", BLM.JobID, -10, "", "")]
+        [CustomComboInfo("Simple Mode - Single Target", "Replaces Fire with a full one-button single target rotation.\nThis is the ideal Option for newcomers to the job.", BLM.JobID, -10, "", "")]
         BLM_ST_SimpleMode = 2012,
 
         #region Advanced ST
@@ -377,7 +377,7 @@ namespace XIVSlothCombo.Combos
 
         [ReplaceSkill(BLM.Blizzard2, BLM.HighBlizzard2)]
         [ConflictingCombos(BLM_AoE_AdvancedMode)]
-        [CustomComboInfo("Simple Mode - AoE", "Replaces Blizzard II with a full one-button AoE rotation.\nThis is the ideal option for newcomers to the job.", BLM.JobID, -8, "", "")]
+        [CustomComboInfo("Simple Mode - AoE", "Replaces Blizzard II with a full one-button AoE rotation.\nThis is the ideal Option for newcomers to the job.", BLM.JobID, -8, "", "")]
         BLM_AoE_SimpleMode = 2008,
 
         #region Advanced AoE
@@ -599,7 +599,7 @@ namespace XIVSlothCombo.Combos
 
         [ConflictingCombos(BRD_ST_SimpleMode)]
         [ParentCombo(BRD_StraightShotUpgrade)]
-        [CustomComboInfo("DoT Maintenance Option", "Enabling this option will make Heavy Shot into Straight Shot refresh your DoTs on your current.", BRD.JobID)]
+        [CustomComboInfo("DoT Maintenance Option", "Enabling this Option will make Heavy Shot into Straight Shot refresh your DoTs on your current.", BRD.JobID)]
         BRD_DoTMaintainance = 3002,
 
         [ReplaceSkill(BRD.IronJaws)]
@@ -638,11 +638,11 @@ namespace XIVSlothCombo.Combos
         BRD_ST_SimpleMode = 3009,
 
         [ParentCombo(BRD_ST_SimpleMode)]
-        [CustomComboInfo("Simple Bard DoTs Option", "This option will make Simple Bard apply DoTs if none are present on the target.", BRD.JobID)]
+        [CustomComboInfo("Simple Bard DoTs Option", "This Option will make Simple Bard apply DoTs if none are present on the target.", BRD.JobID)]
         BRD_Simple_DoT = 3010,
 
         [ParentCombo(BRD_ST_SimpleMode)]
-        [CustomComboInfo("Simple Bard Songs Option", "This option adds the Bard's Songs to the Simple Bard Feature.", BRD.JobID)]
+        [CustomComboInfo("Simple Bard Songs Option", "This Option adds the Bard's Songs to the Simple Bard Feature.", BRD.JobID)]
         BRD_Simple_Song = 3011,
 
         [ParentCombo(BRD_AoE_oGCD)]
@@ -877,7 +877,7 @@ namespace XIVSlothCombo.Combos
         [ParentCombo(DNC_ST_SimpleMode)]
         [ConflictingCombos(DNC_ST_Simple_SS)]
         [CustomComboInfo("Simple Standard Fill Option", "Adds ONLY Standard dance steps and Standard Finish to the rotation." +
-        "\nStandard Step itself must be initiated manually when using this option.", DNC.JobID, 1, "", "")]
+        "\nStandard Step itself must be initiated manually when using this Option.", DNC.JobID, 1, "", "")]
         DNC_ST_Simple_StandardFill = 4061,
 
         [ParentCombo(DNC_ST_SimpleMode)]
@@ -888,7 +888,7 @@ namespace XIVSlothCombo.Combos
         [ParentCombo(DNC_ST_SimpleMode)]
         [ConflictingCombos(DNC_ST_Simple_TS)]
         [CustomComboInfo("Simple Tech Fill Option", "Adds ONLY Technical dance steps and Technical Finish to the rotation." +
-        "\nTechnical Step itself must be initiated manually when using this option.", DNC.JobID, 2, "", "")]
+        "\nTechnical Step itself must be initiated manually when using this Option.", DNC.JobID, 2, "", "")]
         DNC_ST_Simple_TechFill = 4054,
 
         [ParentCombo(DNC_ST_SimpleMode)]
@@ -953,7 +953,7 @@ namespace XIVSlothCombo.Combos
         [ParentCombo(DNC_AoE_SimpleMode)]
         [ConflictingCombos(DNC_AoE_Simple_SS)]
         [CustomComboInfo("Simple AoE Standard Fill Option", "Adds ONLY Standard dance steps and Standard Finish to the AoE rotation." +
-        "\nStandard Step itself must be initiated manually when using this option.", DNC.JobID, 2, "", "")]
+        "\nStandard Step itself must be initiated manually when using this Option.", DNC.JobID, 2, "", "")]
         DNC_AoE_Simple_StandardFill = 4081,
 
         [ParentCombo(DNC_AoE_SimpleMode)]
@@ -964,7 +964,7 @@ namespace XIVSlothCombo.Combos
         [ParentCombo(DNC_AoE_SimpleMode)]
         [ConflictingCombos(DNC_AoE_Simple_TS)]
         [CustomComboInfo("Simple AoE Tech Fill Option", "Adds ONLY Technical dance steps and Technical Finish to the AoE rotation." +
-        "\nTechnical Step itself must be initiated manually when using this option.", DNC.JobID, 4, "", "")]
+        "\nTechnical Step itself must be initiated manually when using this Option.", DNC.JobID, 4, "", "")]
         DNC_AoE_Simple_TechFill = 4074,
 
         [ParentCombo(DNC_AoE_SimpleMode)]
@@ -1164,7 +1164,7 @@ namespace XIVSlothCombo.Combos
 
         [ReplaceSkill(DRG.TrueThrust)]
         [ConflictingCombos(DRG_ST_AdvancedMode)]
-        [CustomComboInfo("Simple Mode - Single Target", "Replaces True Thrust with a full one-button single target rotation.\nThis is the ideal option for newcomers to the job.", DRG.JobID)]
+        [CustomComboInfo("Simple Mode - Single Target", "Replaces True Thrust with a full one-button single target rotation.\nThis is the ideal Option for newcomers to the job.", DRG.JobID)]
         DRG_ST_SimpleMode = 6001,
 
         #region Advanced ST Dragoon
@@ -1258,7 +1258,7 @@ namespace XIVSlothCombo.Combos
 
         [ReplaceSkill(DRG.DoomSpike)]
         [ConflictingCombos(DRG_AOE_AdvancedMode)]
-        [CustomComboInfo("Simple Mode - AoE", "Replaces Doom Spike with a full one-button AoE rotation.\nThis is the ideal option for newcomers to the job.", DRG.JobID, 3, "", "")]
+        [CustomComboInfo("Simple Mode - AoE", "Replaces Doom Spike with a full one-button AoE rotation.\nThis is the ideal Option for newcomers to the job.", DRG.JobID, 3, "", "")]
         DRG_AOE_SimpleMode = 6200,
 
         #region Advanced AoE Dragoon
@@ -1570,11 +1570,12 @@ namespace XIVSlothCombo.Combos
         MCH_ST_AdvancedMode = 8100,
 
         [ParentCombo(MCH_ST_AdvancedMode)]
+        [ConflictingCombos(MCH_GaussRoundRicochet, MCH_Heatblast_GaussRound)]
         [CustomComboInfo("Level 90 Opener Option", "Uses the Balance opener depending on which rotation is selected above.", MCH.JobID)]
         MCH_ST_Adv_Opener = 8101,
 
         [ParentCombo(MCH_ST_AdvancedMode)]
-        [CustomComboInfo("Hot Shot / Air Anchor option", "Adds Hot Shot/Air Anchor to the rotation.", MCH.JobID)]
+        [CustomComboInfo("Hot Shot / Air Anchor Option", "Adds Hot Shot/Air Anchor to the rotation.", MCH.JobID)]
         MCH_ST_Adv_AirAnchor = 8102,
 
         [ParentCombo(MCH_ST_AdvancedMode)]
@@ -1582,7 +1583,8 @@ namespace XIVSlothCombo.Combos
         MCH_ST_Adv_Reassemble = 8103,
 
         [ParentCombo(MCH_ST_AdvancedMode)]
-        [CustomComboInfo("Gauss Round / Ricochet Option", "Adds Gauss Round and Ricochet to the rotation.\nWill prevent overcapping.", MCH.JobID)]
+        [ConflictingCombos(MCH_GaussRoundRicochet, MCH_Heatblast_GaussRound)]
+        [CustomComboInfo("Gauss Round / Ricochet Option", "Adds Gauss Round and Ricochet to the rotation. Will prevent overcapping.", MCH.JobID)]
         MCH_ST_Adv_GaussRicochet = 8104,
 
         [ParentCombo(MCH_ST_AdvancedMode)]
@@ -1602,7 +1604,7 @@ namespace XIVSlothCombo.Combos
         MCH_ST_Adv_WildFire = 8108,
 
         [ParentCombo(MCH_ST_AdvancedMode)]
-        [CustomComboInfo("Drill option", "Adds Drill to the rotation.", MCH.JobID)]
+        [CustomComboInfo("Drill Option", "Adds Drill to the rotation.", MCH.JobID)]
         MCH_ST_Adv_Drill = 8109,
 
         [ParentCombo(MCH_ST_AdvancedMode)]
@@ -1614,8 +1616,12 @@ namespace XIVSlothCombo.Combos
         MCH_ST_Adv_Stabilizer_Wildfire_Only = 8111,
 
         [ParentCombo(MCH_ST_AdvancedMode)]
-        [CustomComboInfo("Chain Saw option", "Adds Chain Saw to the rotation.", MCH.JobID)]
+        [CustomComboInfo("Chain Saw Option", "Adds Chain Saw to the rotation.", MCH.JobID)]
         MCH_ST_Adv_ChainSaw = 8112,
+
+        [ParentCombo(MCH_ST_AdvancedMode)]
+        [CustomComboInfo("Rook / Queen Overdrive Option", "Adds Rook / Queen Overdrive to the rotation.", MCH.JobID)]
+        MCH_ST_Adv_QueenOverdrive = 8115,
 
         [ParentCombo(MCH_ST_AdvancedMode)]
         [CustomComboInfo("Head Graze Option", "Uses Head Graze to interrupt during the rotation, where applicable.", MCH.JobID)]
@@ -1649,6 +1655,7 @@ namespace XIVSlothCombo.Combos
         MCH_AoE_Adv_Reassemble = 8301,
 
         [ParentCombo(MCH_AoE_AdvancedMode)]
+        [ConflictingCombos(MCH_GaussRoundRicochet, MCH_Heatblast_GaussRound)]
         [CustomComboInfo("Gauss Round / Ricochet Option", "Adds Gauss Round/Ricochet to the rotation.", MCH.JobID)]
         MCH_AoE_Adv_GaussRicochet = 8302,
 
@@ -1697,6 +1704,7 @@ namespace XIVSlothCombo.Combos
         MCH_Overdrive = 8002,
 
         [ReplaceSkill(MCH.GaussRound, MCH.Ricochet)]
+        [ConflictingCombos(MCH_ST_Adv_Opener, MCH_ST_Adv_GaussRicochet, MCH_AoE_Adv_GaussRicochet, MCH_Heatblast_GaussRound)]
         [CustomComboInfo("Gauss Round/Ricochet Feature", "Replace Gauss Round and Ricochet with one or the other depending on which has more charges.", MCH.JobID)]
         MCH_GaussRoundRicochet = 8003,
 
@@ -1717,6 +1725,7 @@ namespace XIVSlothCombo.Combos
         MCH_Heatblast_Wildfire = 8015,
 
         [ParentCombo(MCH_Heatblast)]
+        [ConflictingCombos(MCH_ST_Adv_Opener, MCH_ST_Adv_GaussRicochet, MCH_AoE_Adv_GaussRicochet, MCH_GaussRoundRicochet)]
         [CustomComboInfo("Gauss Round / Ricochet Option", "Switches between Heat Blast and either Gauss Round or Ricochet, depending on cooldown timers.", MCH.JobID)]
         MCH_Heatblast_GaussRound = 8016,
 
@@ -1882,7 +1891,7 @@ namespace XIVSlothCombo.Combos
 
         [ReplaceSkill(NIN.SpinningEdge)]
         [ConflictingCombos(NIN_ArmorCrushCombo, NIN_ST_AdvancedMode, NIN_KassatsuChiJin, NIN_KassatsuTrick)]
-        [CustomComboInfo("Simple Mode - Single Target", "Replaces Spinning Edge with a one-button full single target rotation.\nThis is the ideal option for newcomers to the job.", NIN.JobID)]
+        [CustomComboInfo("Simple Mode - Single Target", "Replaces Spinning Edge with a one-button full single target rotation.\nThis is the ideal Option for newcomers to the job.", NIN.JobID)]
         NIN_ST_SimpleMode = 10000,
 
         [ParentCombo(NIN_ST_SimpleMode)]
@@ -2285,7 +2294,7 @@ namespace XIVSlothCombo.Combos
 
 
         [ReplaceSkill(PLD.Requiescat)]
-        [CustomComboInfo("Requiescat Spender Option", "Replaces Requiescat with the selected option while having stacks of \"Requiescat\"", PLD.JobID)]
+        [CustomComboInfo("Requiescat Spender Option", "Replaces Requiescat with the selected Option while having stacks of \"Requiescat\"", PLD.JobID)]
         PLD_Requiescat_Options = 11024,
 
         [ReplaceSkill(PLD.SpiritsWithin, PLD.Expiacion)]
@@ -3342,7 +3351,7 @@ namespace XIVSlothCombo.Combos
         SMN_Advanced_Combo_EDFester = 17014,
 
         [ParentCombo(SMN_Advanced_Combo)]
-        [CustomComboInfo("Egi Summons Combo Option", "Adds Egi summons to the single target and AoE combos.\nWill prioritise the Egi selected below.\nIf no option is selected, the feature will default to summoning Titan first.", SMN.JobID, 3, "", "")]
+        [CustomComboInfo("Egi Summons Combo Option", "Adds Egi summons to the single target and AoE combos.\nWill prioritise the Egi selected below.\nIf no Option is selected, the feature will default to summoning Titan first.", SMN.JobID, 3, "", "")]
         SMN_DemiEgiMenu_EgiOrder = 17016,
 
         [ParentCombo(SMN_Advanced_Combo)]
@@ -3417,7 +3426,7 @@ namespace XIVSlothCombo.Combos
         SMN_Advanced_Burst_Delay_Option = 17043,
 
         [ParentCombo(SMN_DemiEgiMenu_oGCDPooling)]
-        [CustomComboInfo("Any Searing Burst Option", "Checks for any Searing light for bursting rather than just your own.\nUse this option if partied with multiple SMN and are worried about your Searing being overwritten.", SMN.JobID, 1, "", "")]
+        [CustomComboInfo("Any Searing Burst Option", "Checks for any Searing light for bursting rather than just your own.\nUse this Option if partied with multiple SMN and are worried about your Searing being overwritten.", SMN.JobID, 1, "", "")]
         SMN_Advanced_Burst_Any_Option = 17044,
 
         [Variant]
@@ -3883,7 +3892,7 @@ namespace XIVSlothCombo.Combos
 
         [SecretCustomCombo]
         [ParentCombo(DNCPvP_BurstMode)]
-        [CustomComboInfo("Honing Dance Option", "Adds Honing Dance to the main combo when in melee range (respects global offset).\nThis option prevents early use of Honing Ovation!\nKeep Honing Dance bound to another key if you want to end early.", DNC.JobID)]
+        [CustomComboInfo("Honing Dance Option", "Adds Honing Dance to the main combo when in melee range (respects global offset).\nThis Option prevents early use of Honing Ovation!\nKeep Honing Dance bound to another key if you want to end early.", DNC.JobID)]
         DNCPvP_BurstMode_HoningDance = 114001,
 
         [SecretCustomCombo]
