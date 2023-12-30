@@ -1,6 +1,5 @@
 ﻿using System.Linq;
 using Dalamud.Game.ClientState.Objects.Types;
-using Dalamud.Game.ClientState.Party;
 using Dalamud.Plugin.Services;
 using XIVSlothCombo.Services;
 

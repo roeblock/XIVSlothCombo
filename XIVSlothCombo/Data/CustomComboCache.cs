@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using Dalamud.Game;
 using Dalamud.Game.ClientState.JobGauge.Types;
 using Dalamud.Game.ClientState.Objects.Types;
 using Dalamud.Game.ClientState.Objects.SubKinds;

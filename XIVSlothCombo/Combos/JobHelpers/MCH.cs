@@ -1,8 +1,6 @@
 ﻿using Dalamud.Game.ClientState.JobGauge.Types;
 using ECommons.DalamudServices;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Windows.Forms;
 using XIVSlothCombo.Combos.JobHelpers.Enums;
 using XIVSlothCombo.Combos.PvE;
 using XIVSlothCombo.CustomComboNS.Functions;

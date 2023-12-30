@@ -1,4 +1,3 @@
-using Dalamud.Game;
 using Dalamud.Game.ClientState.Statuses;
 using Dalamud.Game.Command;
 using Dalamud.Game.Text;
@@ -21,8 +20,6 @@ using XIVSlothCombo.Window;
 using XIVSlothCombo.Window.Tabs;
 using ECommons;
 using Dalamud.Plugin.Services;
-using System.Reflection;
-using ECommons.DalamudServices;
 using Dalamud.Utility;
 using XIVSlothCombo.Attributes;
 

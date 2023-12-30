@@ -1,5 +1,6 @@
 using Dalamud.Game.ClientState.JobGauge.Types;
 using ECommons.DalamudServices;
+using System.Linq;
 using XIVSlothCombo.Combos.JobHelpers;
 using XIVSlothCombo.Combos.PvE.Content;
 using XIVSlothCombo.CustomComboNS;
@@ -379,15 +380,11 @@ namespace XIVSlothCombo.Combos.PvE
                         ActionReady(Hypercharge) && 
                         !gauge.IsOverheated)
                     {
-                        //Protection & ensures Hyper charged is double weaved with WF during reopener
-                        if (HasEffect(Buffs.Wildfire) || !LevelChecked(Wildfire))
-                            return Hypercharge;
-
                         var heatblastRC = 1.5;
 
-                        var drillCD = !Drill.LevelChecked() || (Drill.LevelChecked() && GetCooldownRemainingTime(Drill) > heatblastRC * 6);
-                        var anchorCD = !OriginalHook(AirAnchor).LevelChecked() || (OriginalHook(AirAnchor).LevelChecked() && GetCooldownRemainingTime(OriginalHook(AirAnchor)) > heatblastRC * 6);
-                        var sawCD = !ChainSaw.LevelChecked() || (ChainSaw.LevelChecked() && GetCooldownRemainingTime(ChainSaw) > heatblastRC * 6);
+                        var drillCD = !Drill.LevelChecked() || (Drill.LevelChecked() && GetCooldownRemainingTime(Drill) > heatblastRC * 5);
+                        var anchorCD = !OriginalHook(AirAnchor).LevelChecked() || (OriginalHook(AirAnchor).LevelChecked() && GetCooldownRemainingTime(OriginalHook(AirAnchor)) > heatblastRC * 5);
+                        var sawCD = !ChainSaw.LevelChecked() || (ChainSaw.LevelChecked() && GetCooldownRemainingTime(ChainSaw) > heatblastRC * 5);
 
                         if (drillCD && anchorCD && sawCD)
                             return Hypercharge;
@@ -495,10 +492,14 @@ namespace XIVSlothCombo.Combos.PvE
             {
                 if (IsEnabled(CustomComboPreset.MCH_Adv_TurretQueen) && Config.MCH_ST_TurretUsage == 1 && CanWeave(OriginalHook(SplitShot)) && !gauge.IsOverheated && LevelChecked(OriginalHook(RookAutoturret)) && !gauge.IsRobotActive && gauge.Battery >= 50)
                 {
-                    if (gauge.LastSummonBattery() == 0 || gauge.LastSummonBattery() >= 90)
+                    var queensUsed = ActionWatching.CombatActions.Count(x => x == OriginalHook(RookAutoturret));
+                    if (queensUsed < 2)
                         return true;
 
-                    if (gauge.LastSummonBattery() == 50 && gauge.Battery >= 90)
+                    if (queensUsed >= 2 && queensUsed % 2 == 0 && gauge.Battery == 100)
+                        return true;
+
+                    if (queensUsed >= 2 && queensUsed % 2 == 1 && gauge.Battery >= 80)
                         return true;
                 }
 
