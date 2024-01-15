@@ -475,9 +475,10 @@ namespace XIVSlothCombo.Combos.PvE
                         if (IsEnabled(CustomComboPreset.BLM_Adv_Casts) &&
                             ((IsNotEnabled(CustomComboPreset.BLM_Adv_Triplecast_Pooling) && GetRemainingCharges(Triplecast) > 0) || GetRemainingCharges(Triplecast) is 2) &&
                             LevelChecked(Triplecast) && !HasEffect(Buffs.Triplecast) && !HasEffect(All.Buffs.Swiftcast) &&
-                            (gauge.InAstralFire) &&
+                            gauge.InAstralFire &&
                             currentMP >= MP.FireI * 2)
                             return Triplecast;
+
                         // Use Xenoglossy to weave ogcd
                         if (rotationSelection is 0 && IsEnabled(CustomComboPreset.BLM_Adv_UsePolyglotStacks) &&
                             gauge.HasPolyglotStacks() && !HasEffect(Buffs.Triplecast) && !HasEffect(All.Buffs.Swiftcast) &&
@@ -510,7 +511,7 @@ namespace XIVSlothCombo.Combos.PvE
                             (currentMP >= MP.ThunderST || (HasEffect(Buffs.Sharpcast) && HasEffect(Buffs.Thundercloud))) && !WasLastAction(OriginalHook(Thunder)))
                         {
                             if (LevelChecked(Thunder) &&
-                                (dotDebuff is null || dotDebuff.RemainingTime <= thunderRefreshTime) && 
+                                (dotDebuff is null || dotDebuff.RemainingTime <= thunderRefreshTime) &&
                                 GetTargetHPPercent() > ThunderHP && gauge.ElementTimeRemaining > astralFireRefresh)
                                 return OriginalHook(Thunder);
                         }
@@ -782,7 +783,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                         if (currentMP < 9400 && !TraitLevelChecked(Traits.EnhancedFreeze) && LevelChecked(Freeze) && currentMP >= MP.Freeze)
                             return Freeze;
-                        
+
                         if (currentMP >= 9400 && !TraitLevelChecked(Traits.AspectMasteryIII))
                             return Transpose;
 

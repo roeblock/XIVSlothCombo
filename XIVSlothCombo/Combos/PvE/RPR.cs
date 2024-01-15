@@ -1,6 +1,7 @@
 using Dalamud.Game.ClientState.JobGauge.Types;
 using XIVSlothCombo.Combos.JobHelpers;
 using XIVSlothCombo.Combos.PvE.Content;
+using XIVSlothCombo.Core;
 using XIVSlothCombo.CustomComboNS;
 using XIVSlothCombo.CustomComboNS.Functions;
 
@@ -90,28 +91,6 @@ namespace XIVSlothCombo.Combos.PvE
                RPR_SoulsowOptions = new("RPR_SoulsowOptions");
             public static UserBool
                RPR_ST_TrueNorth_Moving = new("RPR_ST_TrueNorth_Moving");
-        }
-
-        internal class RPR_ST_BasicCombo : CustomCombo
-        {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.RPR_ST_BasicCombo;
-
-            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-            {
-                if (actionID is InfernalSlice)
-                {
-                    if (comboTime > 0)
-                    {
-                        if (lastComboMove is Slice && LevelChecked(WaxingSlice))
-                            return WaxingSlice;
-
-                        if (lastComboMove is WaxingSlice && LevelChecked(InfernalSlice))
-                            return InfernalSlice;
-                    }
-                    return Slice;
-                }
-                return actionID;
-            }
         }
 
         internal class RPR_ST_AdvancedMode : CustomCombo

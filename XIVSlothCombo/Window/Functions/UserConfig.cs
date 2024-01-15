@@ -2,14 +2,18 @@
 using Dalamud.Game.ClientState.Objects.SubKinds;
 using Dalamud.Interface;
 using Dalamud.Interface.Colors;
+using Dalamud.Interface.Utility;
 using Dalamud.Utility;
+using ECommons.ImGuiMethods;
 using ImGuiNET;
 using System;
 using System.Linq;
 using System.Numerics;
+using System.Security.Permissions;
 using XIVSlothCombo.Combos;
 using XIVSlothCombo.Combos.PvE;
 using XIVSlothCombo.Combos.PvP;
+using XIVSlothCombo.Core;
 using XIVSlothCombo.CustomComboNS.Functions;
 using XIVSlothCombo.Data;
 using XIVSlothCombo.Extensions;
@@ -1501,7 +1505,7 @@ namespace XIVSlothCombo.Window.Functions
 
             if (preset == CustomComboPreset.DRG_ST_Opener)
             {
-                UserConfig.DrawHorizontalRadioButton(DRG.Config.DRG_Opener_Choice, "2.5 Skill Speed Opener","", 0);
+                UserConfig.DrawHorizontalRadioButton(DRG.Config.DRG_Opener_Choice, "2.5 Skill Speed Opener", "", 0);
                 UserConfig.DrawHorizontalRadioButton(DRG.Config.DRG_Opener_Choice, "2.46 Skill Speed Opener", "", 1);
             }
 
@@ -1528,11 +1532,11 @@ namespace XIVSlothCombo.Window.Functions
 
             if (preset == CustomComboPreset.DRG_ST_Litany)
                 UserConfig.DrawSliderInt(0, 100, DRG.Config.DRG_ST_LitanyHP, "Stop Using When Target HP% is at or Below (Set to 0 to Disable This Check)");
-            
+
 
             if (preset == CustomComboPreset.DRG_ST_DragonSight)
                 UserConfig.DrawSliderInt(0, 100, DRG.Config.DRG_ST_SightHP, "Stop Using When Target HP% is at or Below (Set to 0 to Disable This Check)");
-            
+
 
             if (preset == CustomComboPreset.DRG_ST_Lance)
                 UserConfig.DrawSliderInt(0, 100, DRG.Config.DRG_ST_LanceChargeHP, "Stop Using When Target HP% is at or Below (Set to 0 to Disable This Check)");
@@ -1583,12 +1587,12 @@ namespace XIVSlothCombo.Window.Functions
             // ====================================================================================
             #region MACHINIST
 
-            //if (preset is CustomComboPreset.MCH_ST_AdvancedMode)
-            //{
-            //    UserConfig.DrawHorizontalRadioButton(MCH.Config.MCH_ST_RotationSelection, "Standard Rotation", "", 0);
-            //    UserConfig.DrawHorizontalRadioButton(MCH.Config.MCH_ST_RotationSelection, "123 Tools", "", 1);
-            //    UserConfig.DrawHorizontalRadioButton(MCH.Config.MCH_ST_RotationSelection, "Early Tools", "", 2);
-            //}
+            if (preset is CustomComboPreset.MCH_ST_AdvancedMode)
+            {
+                UserConfig.DrawHorizontalRadioButton(MCH.Config.MCH_ST_RotationSelection, "Standard Rotation", "", 0);
+                UserConfig.DrawHorizontalRadioButton(MCH.Config.MCH_ST_RotationSelection, "123 Tools", "", 1);
+                UserConfig.DrawHorizontalRadioButton(MCH.Config.MCH_ST_RotationSelection, "Early Tools", "", 2);
+            }
 
             if (preset is CustomComboPreset.MCH_Adv_TurretQueen)
             {
@@ -2367,9 +2371,6 @@ namespace XIVSlothCombo.Window.Functions
                 UserConfig.DrawHorizontalMultiChoice(SMN.Config.SMN_ST_Egi_AstralFlow, "Add Mountain Buster", "", 3, 0);
                 UserConfig.DrawHorizontalMultiChoice(SMN.Config.SMN_ST_Egi_AstralFlow, "Add Crimson Cyclone", "", 3, 1);
                 UserConfig.DrawHorizontalMultiChoice(SMN.Config.SMN_ST_Egi_AstralFlow, "Add Slipstream", "", 3, 2);
-
-                if (SMN.Config.SMN_ST_Egi_AstralFlow[1])
-                    UserConfig.DrawAdditionalBoolChoice(SMN.Config.SMN_ST_CrimsonCycloneMelee, "Enforced Crimson Cyclone Melee Check", "Only uses Crimson Cyclone within melee range.");
             }
 
 
