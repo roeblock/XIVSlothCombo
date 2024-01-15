@@ -61,5 +61,7 @@ namespace XIVSlothCombo.CustomComboNS.Functions
         /// <param name="actionID"> Action ID to check</param>
         /// <returns> If the action is currently enabled.</returns>
         public unsafe static bool IsEnabled(uint actionID) => ActionManager.Instance()->GetActionStatus(ActionType.Action, actionID) == 0;
+
+        public unsafe static float GetRecastTimer(uint actionID) => ActionManager.Instance()->GetRecastTime(ActionType.Action, actionID);  
     }
 }

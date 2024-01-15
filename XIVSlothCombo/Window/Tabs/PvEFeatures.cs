@@ -1,6 +1,5 @@
 ﻿using System.Linq;
 using System.Numerics;
-using Dalamud.Interface;
 using ImGuiNET;
 using System.Collections.Generic;
 using XIVSlothCombo.Attributes;
@@ -10,7 +9,6 @@ using XIVSlothCombo.Services;
 using XIVSlothCombo.Window.Functions;
 using XIVSlothCombo.Window.MessagesNS;
 using Dalamud.Interface.Utility;
-using System.Reflection.Metadata.Ecma335;
 
 namespace XIVSlothCombo.Window.Tabs
 {

@@ -1,7 +1,6 @@
 using Dalamud.Game.ClientState.JobGauge.Types;
 using System;
 using XIVSlothCombo.Combos.PvE.Content;
-using XIVSlothCombo.Core;
 using XIVSlothCombo.CustomComboNS;
 using XIVSlothCombo.CustomComboNS.Functions;
 
@@ -136,6 +135,9 @@ namespace XIVSlothCombo.Combos.PvE
 
             public static UserBoolArray
                 SMN_ST_Egi_AstralFlow = new("SMN_ST_Egi_AstralFlow");
+
+            public static UserBool
+                SMN_ST_CrimsonCycloneMelee = new("SMN_ST_CrimsonCycloneMelee");
         }
 
         internal class SMN_Raise : CustomCombo
@@ -623,8 +625,8 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if ((Config.SMN_ST_Egi_AstralFlow[2] && HasEffect(Buffs.GarudasFavor) && (IsNotEnabled(CustomComboPreset.SMN_DemiEgiMenu_SwiftcastEgi) || swiftcastPhase == 2)) ||                 // Garuda
                         (Config.SMN_ST_Egi_AstralFlow[0] && HasEffect(Buffs.TitansFavor) && lastComboMove is TopazRite or TopazCata && CanSpellWeave(actionID)) ||                                  // Titan
-                        (Config.SMN_ST_Egi_AstralFlow[1] && HasEffect(Buffs.IfritsFavor) && IsNotEnabled(CustomComboPreset.SMN_ST_CrimsonCycloneMelee) && (IsMoving || gauge.Attunement == 0 || (lastComboMove is CrimsonCyclone && InMeleeRange()))) ||
-                        (Config.SMN_ST_Egi_AstralFlow[1] && HasEffect(Buffs.IfritsFavor) && IsEnabled(CustomComboPreset.SMN_ST_CrimsonCycloneMelee) && InMeleeRange()) || lastComboMove is CrimsonCyclone)  // Ifrit
+                        (Config.SMN_ST_Egi_AstralFlow[1] && HasEffect(Buffs.IfritsFavor) && !Config.SMN_ST_CrimsonCycloneMelee && (IsMoving || gauge.Attunement == 0 || (lastComboMove is CrimsonCyclone && InMeleeRange()))) ||
+                        (Config.SMN_ST_Egi_AstralFlow[1] && HasEffect(Buffs.IfritsFavor) && Config.SMN_ST_CrimsonCycloneMelee && InMeleeRange()) || lastComboMove is CrimsonCyclone)  // Ifrit
                         return OriginalHook(AstralFlow);
 
                     // Gemshine/Precious Brilliance

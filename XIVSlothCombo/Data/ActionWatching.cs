@@ -1,5 +1,4 @@
 ﻿using Dalamud.Game.ClientState.Conditions;
-using Dalamud.Game.ClientState.Objects;
 using Dalamud.Hooking;
 using ECommons.DalamudServices;
 using FFXIVClientStructs.FFXIV.Client.Game;

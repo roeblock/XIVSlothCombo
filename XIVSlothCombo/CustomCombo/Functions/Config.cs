@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using XIVSlothCombo.Core;
 using XIVSlothCombo.Services;
 
 namespace XIVSlothCombo.CustomComboNS.Functions

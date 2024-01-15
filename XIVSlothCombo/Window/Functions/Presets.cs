@@ -9,7 +9,6 @@ using System.Text;
 using XIVSlothCombo.Attributes;
 using XIVSlothCombo.Combos;
 using XIVSlothCombo.Combos.PvE;
-using XIVSlothCombo.Core;
 using XIVSlothCombo.Data;
 using XIVSlothCombo.Extensions;
 using XIVSlothCombo.Services;

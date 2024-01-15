@@ -2,16 +2,12 @@
 using Dalamud.Interface.Colors;
 using Dalamud.Interface.Internal;
 using Dalamud.Interface.Utility;
-using Dalamud.Plugin;
-using Dalamud.Utility;
 using ECommons.ImGuiMethods;
 using ImGuiNET;
-using ImGuiScene;
 using System;
 using System.Collections.Generic;
 using System.Numerics;
 using System.Reflection;
-using XIVSlothCombo.Services;
 
 namespace XIVSlothCombo.Window.Tabs
 {

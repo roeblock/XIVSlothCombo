@@ -6,6 +6,7 @@ using Dalamud.Game.ClientState.Objects.Types;
 using Dalamud.Game.ClientState.Statuses;
 using ImGuiNET;
 using XIVSlothCombo.Combos;
+using XIVSlothCombo.Combos.PvE;
 using XIVSlothCombo.CustomComboNS;
 using XIVSlothCombo.CustomComboNS.Functions;
 using XIVSlothCombo.Data;
@@ -63,7 +64,7 @@ namespace XIVSlothCombo.Window.Tabs
                 ImGui.BeginChild("BLUSPELLS", new Vector2(250, 100), false);
                 ImGui.TextUnformatted($"SELECTED BLU SPELLS:\n{string.Join("\n", Service.Configuration.ActiveBLUSpells.Select(x => ActionWatching.GetActionName(x)).OrderBy(x => x))}");
                 ImGui.EndChild();
-                ImGui.Text($"{ActionWatching.CombatActions.Count}");
+                ImGui.Text($"{CustomComboFunctions.ActionReady(All.HeadGraze)}");
             }
 
             else

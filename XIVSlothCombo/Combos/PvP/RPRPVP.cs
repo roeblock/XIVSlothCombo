@@ -1,5 +1,4 @@
 using XIVSlothCombo.Combos.PvE;
-using XIVSlothCombo.Core;
 using XIVSlothCombo.CustomComboNS;
 
 namespace XIVSlothCombo.Combos.PvP
