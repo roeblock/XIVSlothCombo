@@ -432,6 +432,7 @@ namespace XIVSlothCombo.Combos
         #endregion
 
         #region Miscellaneous
+
         [ReplaceSkill(BLM.Transpose)]
         [CustomComboInfo("Umbral Soul/Transpose Feature", "Replaces Transpose with Umbral Soul when Umbral Soul is available.", BLM.JobID)]
         BLM_UmbralSoul = 2001,
@@ -1769,10 +1770,6 @@ namespace XIVSlothCombo.Combos
 
         #region ST
 
-        [ReplaceSkill(MNK.DragonKick)]
-        [CustomComboInfo("Basic Rotation - Single Target", "Replaces Bootshine with Monk's basic single target combo on one button.", MNK.JobID, 1, "", "")]
-        MNK_ST_BasicCombo = 9002,
-
         [ReplaceSkill(MNK.Bootshine)]
         [ConflictingCombos(MNK_ST_AdvancedMode)]
         [CustomComboInfo("Simple Mode - Single Target", "Replaces Bootshine Thrust with a full one-button single target rotation.\nThis is the ideal option for newcomers to the job.", MNK.JobID, 2, "", "")]
@@ -1838,10 +1835,6 @@ namespace XIVSlothCombo.Combos
         #endregion
 
         #region AoE
-
-        [ReplaceSkill(MNK.Rockbreaker)]
-        [CustomComboInfo("Basic Rotation - AoE", "Replace  with Monk's basic AoE Combo on one button.", MNK.JobID, 30, "", "")]
-        MNK_AOE_BasicCombo = 9034,
 
         [ReplaceSkill(MNK.ArmOfTheDestroyer)]
         [ConflictingCombos(MNK_AOE_AdvancedMode)]
@@ -1909,6 +1902,8 @@ namespace XIVSlothCombo.Combos
 
         #endregion
 
+        #region Miscellaneous
+
         [ReplaceSkill(MNK.DragonKick)]
         [CustomComboInfo("Dragon Kick --> Bootshine Feature", "Replaces Dragon Kick with Bootshine if both a form and Leaden Fist are up.", MNK.JobID, 61, "", "")]
         MNK_DragonKick_Bootshine = 9001,
@@ -1940,6 +1935,8 @@ namespace XIVSlothCombo.Combos
         [ReplaceSkill(MNK.RiddleOfFire)]
         [CustomComboInfo("Riddle of Fire/Brotherhood Feature", "Replaces Riddle of Fire with Brotherhood when Riddle of Fire is on cooldown.", MNK.JobID, 36, "", "")]
         MNK_Riddle_Brotherhood = 9012,
+
+        #endregion
 
         // Last value = 9039
 

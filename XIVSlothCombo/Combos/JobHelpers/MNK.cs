@@ -119,8 +119,8 @@ namespace XIVSlothCombo.Combos.JobHelpers
                     if (CustomComboFunctions.WasLastAction(Demolish) && OpenerStep == 4) OpenerStep++;
                     else if (OpenerStep == 4) actionID = Demolish;
 
-                    if (CustomComboFunctions.WasLastAction(ForbiddenChakra) && OpenerStep == 5) OpenerStep++;
-                    else if (OpenerStep == 5) actionID = ForbiddenChakra;
+                    if (CustomComboFunctions.WasLastAction(CustomComboFunctions.OriginalHook(Meditation)) && OpenerStep == 5) OpenerStep++;
+                    else if (OpenerStep == 5) actionID = CustomComboFunctions.OriginalHook(Meditation);
 
                     if (CustomComboFunctions.WasLastAction(Bootshine) && OpenerStep == 6) OpenerStep++;
                     else if (OpenerStep == 6) actionID = Bootshine;
@@ -189,8 +189,8 @@ namespace XIVSlothCombo.Combos.JobHelpers
                     if (CustomComboFunctions.WasLastAction(Demolish) && CustomComboFunctions.GetBuffStacks(Buffs.PerfectBalance) == 1 && OpenerStep == 5) OpenerStep++;
                     else if (OpenerStep == 5) actionID = Demolish;
 
-                    if (CustomComboFunctions.WasLastAction(ForbiddenChakra) && OpenerStep == 6) OpenerStep++;
-                    else if (OpenerStep == 6) actionID = ForbiddenChakra;
+                    if (CustomComboFunctions.WasLastAction(CustomComboFunctions.OriginalHook(Meditation)) && OpenerStep == 6) OpenerStep++;
+                    else if (OpenerStep == 6) actionID = CustomComboFunctions.OriginalHook(Meditation);
 
                     if (CustomComboFunctions.WasLastAction(Bootshine) && CustomComboFunctions.GetBuffStacks(Buffs.PerfectBalance) == 0 && OpenerStep == 7) OpenerStep++;
                     else if (OpenerStep == 7) actionID = Bootshine;
@@ -268,8 +268,8 @@ namespace XIVSlothCombo.Combos.JobHelpers
                 if (CustomComboFunctions.WasLastAction(Demolish) && OpenerStep == 4) OpenerStep++;
                 else if (OpenerStep == 4) actionID = Demolish;
 
-                if (CustomComboFunctions.WasLastAction(ForbiddenChakra) && OpenerStep == 5) OpenerStep++;
-                else if (OpenerStep == 5) actionID = ForbiddenChakra;
+                if (CustomComboFunctions.WasLastAction(CustomComboFunctions.OriginalHook(Meditation)) && OpenerStep == 5) OpenerStep++;
+                else if (OpenerStep == 5) actionID = CustomComboFunctions.OriginalHook(Meditation);
 
                 if (CustomComboFunctions.WasLastAction(Bootshine) && OpenerStep == 6) OpenerStep++;
                 else if (OpenerStep == 6) actionID = Bootshine;
