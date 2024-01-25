@@ -125,13 +125,13 @@ namespace XIVSlothCombo.Combos.PvE
 
         public static class Config
         {
-            public static string
-                SMN_Lucid = "SMN_Lucid",
-                SMN_BurstPhase = "SMN_BurstPhase",
-                SMN_PrimalChoice = "SMN_PrimalChoice",
-                SMN_SwiftcastPhase = "SMN_SwiftcastPhase",
-                SMN_Burst_Delay = "SMN_Burst_Delay",
-                SMN_VariantCure = "SMN_VariantCure";
+            public static UserInt
+                SMN_Lucid = new("SMN_Lucid"),
+                SMN_BurstPhase = new("SMN_BurstPhase"),
+                SMN_PrimalChoice = new("SMN_PrimalChoice"),
+                SMN_SwiftcastPhase = new("SMN_SwiftcastPhase"),
+                SMN_Burst_Delay = new("SMN_Burst_Delay"),
+                SMN_VariantCure = new("SMN_VariantCure");
 
             public static UserBoolArray
                 SMN_ST_Egi_AstralFlow = new("SMN_ST_Egi_AstralFlow");
@@ -222,9 +222,9 @@ namespace XIVSlothCombo.Combos.PvE
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                var gauge = GetJobGauge<SMNGauge>();
-                var STCombo = actionID is Ruin or Ruin2;
-                var AoECombo = actionID is Outburst or Tridisaster;
+                SMNGauge? gauge = GetJobGauge<SMNGauge>();
+                bool STCombo = actionID is Ruin or Ruin2;
+                bool AoECombo = actionID is Outburst or Tridisaster;
 
                 if (actionID is Ruin or Ruin2 or Outburst or Tridisaster)
                 {
@@ -354,6 +354,7 @@ namespace XIVSlothCombo.Combos.PvE
                 return actionID;
             }
         }
+
         internal class SMN_Advanced_Combo : CustomCombo
         {
             internal static uint DemiAttackCount = 0;
@@ -362,15 +363,15 @@ namespace XIVSlothCombo.Combos.PvE
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                var gauge = GetJobGauge<SMNGauge>();
-                var summonerPrimalChoice = PluginConfiguration.GetCustomIntValue(Config.SMN_PrimalChoice);
-                var SummonerBurstPhase = PluginConfiguration.GetCustomIntValue(Config.SMN_BurstPhase);
-                var lucidThreshold = PluginConfiguration.GetCustomIntValue(Config.SMN_Lucid);
-                var swiftcastPhase = PluginConfiguration.GetCustomIntValue(Config.SMN_SwiftcastPhase);
-                var burstDelay = PluginConfiguration.GetCustomIntValue(Config.SMN_Burst_Delay);
-                var inOpener = CombatEngageDuration().TotalSeconds < 40;
-                var STCombo = actionID is Ruin or Ruin2;
-                var AoECombo = actionID is Outburst or Tridisaster;
+                SMNGauge? gauge = GetJobGauge<SMNGauge>();
+                int summonerPrimalChoice = Config.SMN_PrimalChoice;
+                int SummonerBurstPhase = Config.SMN_BurstPhase;
+                int lucidThreshold = Config.SMN_Lucid;
+                int swiftcastPhase = Config.SMN_SwiftcastPhase;
+                int burstDelay = Config.SMN_Burst_Delay;
+                bool inOpener = CombatEngageDuration().TotalSeconds < 40;
+                bool STCombo = actionID is Ruin or Ruin2;
+                bool AoECombo = actionID is Outburst or Tridisaster;
 
                 if (WasLastAction(OriginalHook(Aethercharge))) DemiAttackCount = 0;    // Resets counter
 
@@ -623,11 +624,11 @@ namespace XIVSlothCombo.Combos.PvE
                     if ((Config.SMN_ST_Egi_AstralFlow[2] && HasEffect(Buffs.GarudasFavor) && (IsNotEnabled(CustomComboPreset.SMN_DemiEgiMenu_SwiftcastEgi) || swiftcastPhase == 2)) ||                 // Garuda
                         (Config.SMN_ST_Egi_AstralFlow[0] && HasEffect(Buffs.TitansFavor) && lastComboMove is TopazRite or TopazCata && CanSpellWeave(actionID)) ||                                  // Titan
                         (Config.SMN_ST_Egi_AstralFlow[1] && HasEffect(Buffs.IfritsFavor) && IsNotEnabled(CustomComboPreset.SMN_ST_CrimsonCycloneMelee) && (IsMoving || gauge.Attunement == 0 || (lastComboMove is CrimsonCyclone && InMeleeRange()))) ||
-                        (Config.SMN_ST_Egi_AstralFlow[1] && HasEffect(Buffs.IfritsFavor) && IsEnabled(CustomComboPreset.SMN_ST_CrimsonCycloneMelee) && (InMeleeRange() || lastComboMove is CrimsonCyclone)))  // Ifrit
+                        (Config.SMN_ST_Egi_AstralFlow[1] && (HasEffect(Buffs.IfritsFavor) && IsEnabled(CustomComboPreset.SMN_ST_CrimsonCycloneMelee) && InMeleeRange()) || lastComboMove is CrimsonCyclone))  // Ifrit
                         return OriginalHook(AstralFlow);
 
-                        // Gemshine/Precious Brilliance
-                        if (IsEnabled(CustomComboPreset.SMN_Advanced_Combo_EgiSummons_Attacks) && (gauge.IsGarudaAttuned || gauge.IsTitanAttuned || gauge.IsIfritAttuned))
+                    // Gemshine/Precious Brilliance
+                    if (IsEnabled(CustomComboPreset.SMN_Advanced_Combo_EgiSummons_Attacks) && (gauge.IsGarudaAttuned || gauge.IsTitanAttuned || gauge.IsIfritAttuned))
                     {
                         if (STCombo)
                             return OriginalHook(Gemshine);
