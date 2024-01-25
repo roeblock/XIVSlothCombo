@@ -2369,8 +2369,6 @@ namespace XIVSlothCombo.Window.Functions
                 UserConfig.DrawHorizontalMultiChoice(SMN.Config.SMN_ST_Egi_AstralFlow, "Add Slipstream", "", 3, 2);
             }
 
-
-
             #endregion
 
             #region PvP

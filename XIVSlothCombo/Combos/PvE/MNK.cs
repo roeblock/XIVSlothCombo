@@ -1,6 +1,5 @@
 using Dalamud.Game.ClientState.JobGauge.Enums;
 using Dalamud.Game.ClientState.JobGauge.Types;
-using Dalamud.Game.ClientState.Statuses;
 using XIVSlothCombo.Combos.JobHelpers;
 using XIVSlothCombo.Combos.PvE.Content;
 using XIVSlothCombo.CustomComboNS;
@@ -472,7 +471,7 @@ namespace XIVSlothCombo.Combos.PvE
                         if (gauge.Chakra < 5 && LevelChecked(Meditation))
                             return Meditation;
 
-                        if (LevelChecked(FormShift) && !HasEffect(Buffs.FormlessFist) && comboTime <= 0)
+                        if (LevelChecked(FormShift) && comboTime <= 0 && (!HasEffect(Buffs.FormlessFist) || !HasEffect(Buffs.PerfectBalance)))
                             return FormShift;
 
                         if (!InMeleeRange() && gauge.Chakra == 5 && (!LevelChecked(FormShift) || HasEffect(Buffs.FormlessFist)))
@@ -600,7 +599,7 @@ namespace XIVSlothCombo.Combos.PvE
                             return Meditation;
 
                         if (IsEnabled(CustomComboPreset.MNK_AoE_FormlessFist) &&
-                            LevelChecked(FormShift) && !HasEffect(Buffs.FormlessFist) && comboTime <= 0)
+                            LevelChecked(FormShift) && comboTime <= 0 && (!HasEffect(Buffs.FormlessFist) || !HasEffect(Buffs.PerfectBalance)))
                             return FormShift;
 
                         if (IsEnabled(CustomComboPreset.MNK_AoE_Thunderclap) && !InMeleeRange() && gauge.Chakra == 5
