@@ -161,13 +161,9 @@ namespace XIVSlothCombo.Combos.PvE
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (actionID == Ruin4)
-                {
-                    var furtherRuin = HasEffect(Buffs.FurtherRuin);
+                if (actionID is Ruin4 && !HasEffect(Buffs.FurtherRuin))
+                    return Ruin3;
 
-                    if (!furtherRuin)
-                        return Ruin3;
-                }
                 return actionID;
             }
         }
@@ -178,9 +174,9 @@ namespace XIVSlothCombo.Combos.PvE
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (actionID == Fester)
+                if (actionID is Fester)
                 {
-                    var gauge = GetJobGauge<SMNGauge>();
+                    SMNGauge? gauge = GetJobGauge<SMNGauge>();
                     if (HasEffect(Buffs.FurtherRuin) && IsOnCooldown(EnergyDrain) && !gauge.HasAetherflowStacks && IsEnabled(CustomComboPreset.SMN_EDFester_Ruin4))
                         return Ruin4;
 
@@ -198,9 +194,9 @@ namespace XIVSlothCombo.Combos.PvE
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                var gauge = GetJobGauge<SMNGauge>();
+                SMNGauge? gauge = GetJobGauge<SMNGauge>();
 
-                if (actionID == Painflare && LevelChecked(Painflare) && !gauge.HasAetherflowStacks)
+                if (actionID is Painflare && LevelChecked(Painflare) && !gauge.HasAetherflowStacks)
                 {
                     if (HasEffect(Buffs.FurtherRuin) && IsOnCooldown(EnergySiphon) && IsEnabled(CustomComboPreset.SMN_ESPainflare_Ruin4))
                         return Ruin4;
@@ -624,7 +620,7 @@ namespace XIVSlothCombo.Combos.PvE
                     if ((Config.SMN_ST_Egi_AstralFlow[2] && HasEffect(Buffs.GarudasFavor) && (IsNotEnabled(CustomComboPreset.SMN_DemiEgiMenu_SwiftcastEgi) || swiftcastPhase == 2)) ||                 // Garuda
                         (Config.SMN_ST_Egi_AstralFlow[0] && HasEffect(Buffs.TitansFavor) && lastComboMove is TopazRite or TopazCata && CanSpellWeave(actionID)) ||                                  // Titan
                         (Config.SMN_ST_Egi_AstralFlow[1] && HasEffect(Buffs.IfritsFavor) && IsNotEnabled(CustomComboPreset.SMN_ST_CrimsonCycloneMelee) && (IsMoving || gauge.Attunement == 0 || (lastComboMove is CrimsonCyclone && InMeleeRange()))) ||
-                        (Config.SMN_ST_Egi_AstralFlow[1] && (HasEffect(Buffs.IfritsFavor) && IsEnabled(CustomComboPreset.SMN_ST_CrimsonCycloneMelee) && InMeleeRange()) || lastComboMove is CrimsonCyclone))  // Ifrit
+                        (Config.SMN_ST_Egi_AstralFlow[1] && HasEffect(Buffs.IfritsFavor) && IsEnabled(CustomComboPreset.SMN_ST_CrimsonCycloneMelee) && InMeleeRange()) || lastComboMove is CrimsonCyclone)  // Ifrit
                         return OriginalHook(AstralFlow);
 
                     // Gemshine/Precious Brilliance
@@ -684,7 +680,7 @@ namespace XIVSlothCombo.Combos.PvE
                 {
                     presentTime = DateTime.Now;
                     int deltaTime = (presentTime - noPetTime).Milliseconds;
-                    var gauge = GetJobGauge<SMNGauge>();
+                    SMNGauge? gauge = GetJobGauge<SMNGauge>();
 
                     if (HasPetPresent())
                     {
