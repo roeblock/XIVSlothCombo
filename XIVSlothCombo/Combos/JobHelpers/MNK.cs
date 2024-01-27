@@ -86,9 +86,6 @@ namespace XIVSlothCombo.Combos.JobHelpers
                 if (CustomComboFunctions.HasEffect(Buffs.FormlessFist) && PrePullStep == 2) CurrentState = OpenerState.InOpener;
                 else if (PrePullStep == 2) actionID = FormShift;
 
-                if (CustomComboFunctions.WasLastAction(FormShift) && !CustomComboFunctions.HasEffect(Buffs.FormlessFist))
-                    actionID = FormShift;
-
                 if (ActionWatching.CombatActions.Count > 2 && CustomComboFunctions.InCombat())
                     CurrentState = OpenerState.FailedOpener;
 
@@ -119,8 +116,8 @@ namespace XIVSlothCombo.Combos.JobHelpers
                     if (CustomComboFunctions.WasLastAction(Demolish) && OpenerStep == 4) OpenerStep++;
                     else if (OpenerStep == 4) actionID = Demolish;
 
-                    if (CustomComboFunctions.WasLastAction(CustomComboFunctions.OriginalHook(Meditation)) && OpenerStep == 5) OpenerStep++;
-                    else if (OpenerStep == 5) actionID = CustomComboFunctions.OriginalHook(Meditation);
+                    if (CustomComboFunctions.WasLastAction(ForbiddenChakra) && OpenerStep == 5) OpenerStep++;
+                    else if (OpenerStep == 5) actionID = ForbiddenChakra;
 
                     if (CustomComboFunctions.WasLastAction(Bootshine) && OpenerStep == 6) OpenerStep++;
                     else if (OpenerStep == 6) actionID = Bootshine;
@@ -143,32 +140,35 @@ namespace XIVSlothCombo.Combos.JobHelpers
                     if (CustomComboFunctions.WasLastAction(DragonKick) && CustomComboFunctions.GetBuffStacks(Buffs.PerfectBalance) == 0 && OpenerStep == 12) OpenerStep++;
                     else if (OpenerStep == 12) actionID = DragonKick;
 
-                    if (CustomComboFunctions.WasLastAction(ElixirField) && OpenerStep == 13) OpenerStep++;
-                    else if (OpenerStep == 13) actionID = ElixirField;
+                    if (CustomComboFunctions.WasLastAction(ForbiddenChakra) && OpenerStep ==13) OpenerStep++;
+                    else if (OpenerStep == 13) actionID = ForbiddenChakra;
 
-                    if (CustomComboFunctions.WasLastAction(Bootshine) && OpenerStep == 14) OpenerStep++;
-                    else if (OpenerStep == 14) actionID = Bootshine;
+                    if (CustomComboFunctions.WasLastAction(ElixirField) && OpenerStep == 14) OpenerStep++;
+                    else if (OpenerStep == 14) actionID = ElixirField;
 
-                    if (CustomComboFunctions.WasLastAction(PerfectBalance) && CustomComboFunctions.GetRemainingCharges(PerfectBalance) == 0 && OpenerStep == 15) OpenerStep++;
-                    else if (OpenerStep == 15) actionID = PerfectBalance;
+                    if (CustomComboFunctions.WasLastAction(Bootshine) && OpenerStep == 15) OpenerStep++;
+                    else if (OpenerStep == 15) actionID = Bootshine;
 
-                    if (CustomComboFunctions.WasLastAction(TwinSnakes) && CustomComboFunctions.GetBuffStacks(Buffs.PerfectBalance) == 2 && OpenerStep == 16) OpenerStep++;
-                    else if (OpenerStep == 16) actionID = TwinSnakes;
+                    if (CustomComboFunctions.WasLastAction(PerfectBalance) && CustomComboFunctions.GetRemainingCharges(PerfectBalance) == 0 && OpenerStep == 16) OpenerStep++;
+                    else if (OpenerStep == 16) actionID = PerfectBalance;
 
-                    if (CustomComboFunctions.WasLastAction(DragonKick) && CustomComboFunctions.GetBuffStacks(Buffs.PerfectBalance) == 1 && OpenerStep == 17) OpenerStep++;
-                    else if (OpenerStep == 17) actionID = DragonKick;
+                    if (CustomComboFunctions.WasLastAction(TwinSnakes) && CustomComboFunctions.GetBuffStacks(Buffs.PerfectBalance) == 2 && OpenerStep == 17) OpenerStep++;
+                    else if (OpenerStep == 17) actionID = TwinSnakes;
 
-                    if (CustomComboFunctions.WasLastAction(Demolish) && CustomComboFunctions.GetBuffStacks(Buffs.PerfectBalance) == 0 && OpenerStep == 18) OpenerStep++;
-                    else if (OpenerStep == 18) actionID = Demolish;
+                    if (CustomComboFunctions.WasLastAction(DragonKick) && CustomComboFunctions.GetBuffStacks(Buffs.PerfectBalance) == 1 && OpenerStep == 18) OpenerStep++;
+                    else if (OpenerStep == 18) actionID = DragonKick;
 
-                    if (CustomComboFunctions.WasLastAction(RisingPhoenix) && OpenerStep == 19) OpenerStep++;
-                    else if (OpenerStep == 19) actionID = RisingPhoenix;
+                    if (CustomComboFunctions.WasLastAction(Demolish) && CustomComboFunctions.GetBuffStacks(Buffs.PerfectBalance) == 0 && OpenerStep == 19) OpenerStep++;
+                    else if (OpenerStep == 19) actionID = Demolish;
 
-                    if (CustomComboFunctions.WasLastAction(TwinSnakes) && OpenerStep == 20) OpenerStep++;
-                    else if (OpenerStep == 20) actionID = TwinSnakes;
+                    if (CustomComboFunctions.WasLastAction(RisingPhoenix) && OpenerStep == 20) OpenerStep++;
+                    else if (OpenerStep == 20) actionID = RisingPhoenix;
 
-                    if (CustomComboFunctions.WasLastAction(SnapPunch) && OpenerStep == 21) CurrentState = OpenerState.OpenerFinished;
-                    else if (OpenerStep == 21) actionID = SnapPunch;
+                    if (CustomComboFunctions.WasLastAction(TwinSnakes) && OpenerStep == 21) OpenerStep++;
+                    else if (OpenerStep == 21) actionID = TwinSnakes;
+
+                    if (CustomComboFunctions.WasLastAction(SnapPunch) && OpenerStep == 22) CurrentState = OpenerState.OpenerFinished;
+                    else if (OpenerStep == 22) actionID = SnapPunch;
 
                 }
 
@@ -189,8 +189,8 @@ namespace XIVSlothCombo.Combos.JobHelpers
                     if (CustomComboFunctions.WasLastAction(Demolish) && CustomComboFunctions.GetBuffStacks(Buffs.PerfectBalance) == 1 && OpenerStep == 5) OpenerStep++;
                     else if (OpenerStep == 5) actionID = Demolish;
 
-                    if (CustomComboFunctions.WasLastAction(CustomComboFunctions.OriginalHook(Meditation)) && OpenerStep == 6) OpenerStep++;
-                    else if (OpenerStep == 6) actionID = CustomComboFunctions.OriginalHook(Meditation);
+                    if (CustomComboFunctions.WasLastAction(ForbiddenChakra) && OpenerStep == 6) OpenerStep++;
+                    else if (OpenerStep == 6) actionID = ForbiddenChakra;
 
                     if (CustomComboFunctions.WasLastAction(Bootshine) && CustomComboFunctions.GetBuffStacks(Buffs.PerfectBalance) == 0 && OpenerStep == 7) OpenerStep++;
                     else if (OpenerStep == 7) actionID = Bootshine;
@@ -268,8 +268,8 @@ namespace XIVSlothCombo.Combos.JobHelpers
                 if (CustomComboFunctions.WasLastAction(Demolish) && OpenerStep == 4) OpenerStep++;
                 else if (OpenerStep == 4) actionID = Demolish;
 
-                if (CustomComboFunctions.WasLastAction(CustomComboFunctions.OriginalHook(Meditation)) && OpenerStep == 5) OpenerStep++;
-                else if (OpenerStep == 5) actionID = CustomComboFunctions.OriginalHook(Meditation);
+                if (CustomComboFunctions.WasLastAction(ForbiddenChakra) && OpenerStep == 5) OpenerStep++;
+                else if (OpenerStep == 5) actionID = ForbiddenChakra;
 
                 if (CustomComboFunctions.WasLastAction(Bootshine) && OpenerStep == 6) OpenerStep++;
                 else if (OpenerStep == 6) actionID = Bootshine;
