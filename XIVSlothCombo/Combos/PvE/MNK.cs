@@ -180,7 +180,7 @@ namespace XIVSlothCombo.Combos.PvE
                         (HasEffect(Buffs.DisciplinedFist) || !LevelChecked(TwinSnakes)))
                     {
                         //Meditation spender
-                        if (gauge.Chakra == 5 && CanWeave(actionID) && 
+                        if (gauge.Chakra == 5 && CanWeave(actionID) &&
                             (!LevelChecked(RiddleOfFire) || (GetCooldownRemainingTime(RiddleOfFire) >= 1.5 && !WasLastAction(RiddleOfFire))))
                             return OriginalHook(Meditation);
 
@@ -360,8 +360,7 @@ namespace XIVSlothCombo.Combos.PvE
                         (HasEffect(Buffs.DisciplinedFist) || !LevelChecked(TwinSnakes)))
                     {
                         //Meditation spender
-                        if (gauge.Chakra is 5 && CanWeave(actionID) &&
-                            (!LevelChecked(RiddleOfFire) || (GetCooldownRemainingTime(RiddleOfFire) >= 1.5 && !WasLastAction(RiddleOfFire))))
+                        if (gauge.Chakra is 5 && CanWeave(actionID))
                             return OriginalHook(Meditation);
 
                         // Meditation Uptime
