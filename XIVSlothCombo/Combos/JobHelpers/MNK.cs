@@ -80,6 +80,7 @@ namespace XIVSlothCombo.Combos.JobHelpers
 
             if (CurrentState == OpenerState.PrePull && PrePullStep > 0)
             {
+
                 if (Svc.Gauges.Get<MNKGauge>().Chakra == 5 && PrePullStep == 1) PrePullStep++;
                 else if (PrePullStep == 1) actionID = Meditation;
 
