@@ -1606,7 +1606,7 @@ namespace XIVSlothCombo.Window.Functions
             {
                 UserConfig.DrawHorizontalMultiChoice(MCH.Config.MCH_ST_Reassembled, $"Use on {ActionWatching.GetActionName(MCH.HotShot)}/{ActionWatching.GetActionName(MCH.AirAnchor)}", "", 4, 0);
                 UserConfig.DrawHorizontalMultiChoice(MCH.Config.MCH_ST_Reassembled, $"Use on {ActionWatching.GetActionName(MCH.Drill)}", "", 4, 1);
-                UserConfig.DrawHorizontalMultiChoice(MCH.Config.MCH_ST_Reassembled, $"Use on {ActionWatching.GetActionName(MCH.ChainSaw)}", "", 4, 2);
+                UserConfig.DrawHorizontalMultiChoice(MCH.Config.MCH_ST_Reassembled, $"Use on {ActionWatching.GetActionName(MCH.Chainsaw)}", "", 4, 2);
                 UserConfig.DrawHorizontalMultiChoice(MCH.Config.MCH_ST_Reassembled, $"Use on {ActionWatching.GetActionName(MCH.CleanShot)}", "", 4, 3);
             }
 
@@ -1614,7 +1614,7 @@ namespace XIVSlothCombo.Window.Functions
             {
                 UserConfig.DrawHorizontalMultiChoice(MCH.Config.MCH_AoE_Reassembled, $"Use on {ActionWatching.GetActionName(MCH.SpreadShot)}/{ActionWatching.GetActionName(MCH.Scattergun)}", "", 3, 0);
                 UserConfig.DrawHorizontalMultiChoice(MCH.Config.MCH_AoE_Reassembled, $"Use on {ActionWatching.GetActionName(MCH.AutoCrossbow)}", "", 3, 1);
-                UserConfig.DrawHorizontalMultiChoice(MCH.Config.MCH_AoE_Reassembled, $"Use on {ActionWatching.GetActionName(MCH.ChainSaw)}", "", 3, 2);
+                UserConfig.DrawHorizontalMultiChoice(MCH.Config.MCH_AoE_Reassembled, $"Use on {ActionWatching.GetActionName(MCH.Chainsaw)}", "", 3, 2);
             }
 
             if (preset == CustomComboPreset.MCH_ST_Adv_SecondWind)

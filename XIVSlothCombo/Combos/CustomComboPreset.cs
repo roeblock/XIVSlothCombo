@@ -1606,7 +1606,7 @@ namespace XIVSlothCombo.Combos
 
         [ParentCombo(MCH_ST_AdvancedMode)]
         [CustomComboInfo("Heat Blast Option", "Adds Heat Blast to the rotation", MCH.JobID)]
-        MCH_ST_Adv_HeatBlast = 8106,
+        MCH_ST_Adv_Heatblast = 8106,
 
         [ParentCombo(MCH_ST_AdvancedMode)]
         [CustomComboInfo("Rook Autoturret/Automaton Queen Option", "Adds Rook Autoturret/Automaton Queen to the rotation.", MCH.JobID)]
@@ -1630,7 +1630,7 @@ namespace XIVSlothCombo.Combos
 
         [ParentCombo(MCH_ST_AdvancedMode)]
         [CustomComboInfo("Chain Saw Option", "Adds Chain Saw to the rotation.", MCH.JobID)]
-        MCH_ST_Adv_ChainSaw = 8112,
+        MCH_ST_Adv_Chainsaw = 8112,
 
         [ParentCombo(MCH_ST_AdvancedMode)]
         [CustomComboInfo("Rook / Queen Overdrive Option", "Adds Rook / Queen Overdrive to the rotation.", MCH.JobID)]
@@ -1723,9 +1723,9 @@ namespace XIVSlothCombo.Combos
 
         [ReplaceSkill(MCH.Drill, MCH.AirAnchor, MCH.HotShot)]
         [CustomComboInfo("Drill/Air Anchor (Hot Shot) Feature", "Replace Drill and Air Anchor (Hot Shot) with one or the other (or Chain Saw) depending on which is on cooldown.", MCH.JobID)]
-        MCH_HotShotDrillChainSaw = 8004,
+        MCH_HotShotDrillChainsaw = 8004,
 
-        [ReplaceSkill(MCH.HeatBlast)]
+        [ReplaceSkill(MCH.Heatblast)]
         [CustomComboInfo("Single Button Heat Blast Feature", "Turns Heat Blast into Hypercharge when at or above 50 heat.", MCH.JobID)]
         MCH_Heatblast = 8006,
 
