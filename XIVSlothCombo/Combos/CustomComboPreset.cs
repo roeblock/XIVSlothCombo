@@ -1168,12 +1168,12 @@ namespace XIVSlothCombo.Combos
         #region DRAGOON
 
         [ReplaceSkill(DRG.FullThrust)]
-        [CustomComboInfo("Basic Combo", "Replaces Full Thrust with basic rotation", DRG.JobID)]
+        [CustomComboInfo("Basic Combo", "Replaces Full Thrust with basic rotation", DRG.JobID, -2)]
         DRG_BasicCombo = 6000,
 
         [ReplaceSkill(DRG.TrueThrust)]
         [ConflictingCombos(DRG_ST_AdvancedMode)]
-        [CustomComboInfo("Simple Mode - Single Target", "Replaces True Thrust with a full one-button single target rotation.\nThis is the ideal option for newcomers to the job.", DRG.JobID)]
+        [CustomComboInfo("Simple Mode - Single Target", "Replaces True Thrust with a full one-button single target rotation.\nThis is the ideal option for newcomers to the job.", DRG.JobID, -1)]
         DRG_ST_SimpleMode = 6001,
 
         #region Advanced ST Dragoon
