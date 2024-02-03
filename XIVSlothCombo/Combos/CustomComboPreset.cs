@@ -2382,12 +2382,10 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Advanced Mode - Single Target", "Replace Slice with its combo chain.\nIf all sub options are toggled will turn into a full one button rotation (Advanced Reaper)", RPR.JobID, 0, "", "")]
         RPR_ST_AdvancedMode = 12001,
 
-        [ParentCombo(RPR_ST_SliceCombo)]
+        [ParentCombo(RPR_ST_AdvancedMode)]
         [CustomComboInfo("Positional Preference", "Choose positional order for all positional related features.\nSupports turning Slice/Shadow of Death into all positionals or Slice and Shadow of Death being two separate positionals.", RPR.JobID)]
         ReaperPositionalConfigST = 12000,
 
-        [ParentCombo(RPR_ST_SliceCombo)]
-        [CustomComboInfo("Soul Slice Option", "Adds Soul Slice to Slice Combo when Soul Gauge is 50 or less and when current target is afflicted with Death's Design.", RPR.JobID)]
         [ParentCombo(RPR_ST_AdvancedMode)]
         [CustomComboInfo("Soul Slice Option", "Adds Soul Slice to Slice Combo when Soul Gauge is 50 or less and when current target is afflicted with Death's Design.", RPR.JobID, 0, "", "")]
         RPR_ST_SliceCombo_SoulSlice = 12002,
