@@ -23,7 +23,46 @@ namespace XIVSlothCombo.Combos.JobHelpers
 
         public uint PrePullStep = 0;
 
-        public uint OpenerStep = 1;
+        public uint OpenerStep = 0;
+
+        private static uint[] EarlyEnshroudOpener = [
+            ShadowOfDeath,
+            ArcaneCircle,
+            SoulSlice,
+            PlentifulHarvest,
+            Enshroud,
+            VoidReaping,
+            CrossReaping,
+            LemuresSlice,
+            VoidReaping,
+            CrossReaping,
+            LemuresSlice,
+            Communio,
+            Gluttony,
+            Gallows,
+            Gibbet,
+            UnveiledGallows,
+            Gallows];
+
+        private static uint[] EarlyGluttonyOpener = [
+            ShadowOfDeath,
+            SoulSlice,
+            ArcaneCircle,
+            Gluttony,
+            Gallows,
+            Gibbet,
+            PlentifulHarvest,
+            Enshroud,
+            VoidReaping,
+            CrossReaping,
+            LemuresSlice,
+            VoidReaping,
+            CrossReaping,
+            LemuresSlice,
+            Communio,
+            SoulSlice,
+            UnveiledGallows,
+            Gallows];
 
         public static bool LevelChecked => CustomComboFunctions.LocalPlayer.Level >= OpenerLevel;
 
@@ -45,7 +84,7 @@ namespace XIVSlothCombo.Combos.JobHelpers
                     {
                         Svc.Log.Debug($"Entered PrePull Opener");
                     }
-                    if (value == OpenerState.InOpener) OpenerStep = 1;
+                    if (value == OpenerState.InOpener) OpenerStep = 0;
                     if (value == OpenerState.OpenerFinished || value == OpenerState.FailedOpener)
                     {
                         if (value == OpenerState.FailedOpener)
@@ -65,14 +104,10 @@ namespace XIVSlothCombo.Combos.JobHelpers
             if (!LevelChecked) return false;
 
             if (CanOpener && PrePullStep == 0)
-            {
                 PrePullStep = 1;
-            }
 
             if (!HasCooldowns())
-            {
                 PrePullStep = 0;
-            }
 
             if (CurrentState == OpenerState.PrePull && PrePullStep > 0)
             {
@@ -95,205 +130,24 @@ namespace XIVSlothCombo.Combos.JobHelpers
             return false;
         }
 
-        private bool DoOpener(ref uint actionID)
+        private bool DoOpener(uint[] OpenerActions, ref uint actionID)
         {
             if (!LevelChecked) return false;
 
             if (currentState == OpenerState.InOpener)
             {
-                if (Config.RPR_OpenerChoice == 0)
-                {
-                    if (CustomComboFunctions.WasLastAction(ShadowOfDeath) && OpenerStep == 1) OpenerStep++;
-                    else if (OpenerStep == 1) actionID = ShadowOfDeath;
+                if (CustomComboFunctions.WasLastAction(OpenerActions[OpenerStep]))
+                    OpenerStep++;
 
-                    if (CustomComboFunctions.WasLastAction(ArcaneCircle) && OpenerStep == 2) OpenerStep++;
-                    else if (OpenerStep == 2) actionID = ArcaneCircle;
+                if (OpenerStep == 3 && CustomComboFunctions.HasCharges(SoulSlice))
+                    actionID = SoulSlice;
 
-                    if (CustomComboFunctions.WasLastAction(SoulSlice) && CustomComboFunctions.GetRemainingCharges(SoulSlice) is 1 && OpenerStep == 3) OpenerStep++;
-                    else if (OpenerStep == 3) actionID = SoulSlice;
+                else if (OpenerStep == OpenerActions.Length)
+                    CurrentState = OpenerState.OpenerFinished;
 
-                    if (CustomComboFunctions.WasLastAction(SoulSlice) && CustomComboFunctions.GetRemainingCharges(SoulSlice) is 0 && OpenerStep == 4) OpenerStep++;
-                    else if (OpenerStep == 4) actionID = SoulSlice;
+                else actionID = OpenerActions[OpenerStep];
 
-                    if (CustomComboFunctions.WasLastAction(PlentifulHarvest) && OpenerStep == 5) OpenerStep++;
-                    else if (OpenerStep == 5) actionID = PlentifulHarvest;
-
-                    if (CustomComboFunctions.WasLastAction(Enshroud) && OpenerStep == 6) OpenerStep++;
-                    else if (OpenerStep == 6) actionID = Enshroud;
-
-                    if (CustomComboFunctions.WasLastAction(VoidReaping) && OpenerStep == 7) OpenerStep++;
-                    else if (OpenerStep == 7) actionID = VoidReaping;
-
-                    if (CustomComboFunctions.WasLastAction(CrossReaping) && OpenerStep == 8) OpenerStep++;
-                    else if (OpenerStep == 8) actionID = CrossReaping;
-
-                    if (CustomComboFunctions.WasLastAction(LemuresSlice) && OpenerStep == 9) OpenerStep++;
-                    else if (OpenerStep == 9) actionID = LemuresSlice;
-
-                    if (CustomComboFunctions.WasLastAction(VoidReaping) && OpenerStep == 10) OpenerStep++;
-                    else if (OpenerStep == 10) actionID = VoidReaping;
-
-                    if (CustomComboFunctions.WasLastAction(CrossReaping) && OpenerStep == 11) OpenerStep++;
-                    else if (OpenerStep == 11) actionID = CrossReaping;
-
-                    if (CustomComboFunctions.WasLastAction(LemuresSlice) && OpenerStep == 12) OpenerStep++;
-                    else if (OpenerStep == 12) actionID = LemuresSlice;
-
-                    if (CustomComboFunctions.WasLastAction(Communio) && OpenerStep == 13) OpenerStep++;
-                    else if (OpenerStep == 13) actionID = Communio;
-
-                    if (CustomComboFunctions.WasLastAction(Gluttony) && OpenerStep == 14) OpenerStep++;
-                    else if (OpenerStep == 14) actionID = Gluttony;
-
-                    if (CustomComboFunctions.WasLastAction(Gallows) && OpenerStep == 15) OpenerStep++;
-                    else if (OpenerStep == 15) actionID = Gallows;
-
-                    if (CustomComboFunctions.WasLastAction(Gibbet) && OpenerStep == 16) OpenerStep++;
-                    else if (OpenerStep == 16) actionID = Gibbet;
-
-                    if (CustomComboFunctions.WasLastAction(UnveiledGallows) && OpenerStep == 17) OpenerStep++;
-                    else if (OpenerStep == 17) actionID = UnveiledGallows;
-
-                    if (CustomComboFunctions.WasLastAction(Gallows) && OpenerStep == 18) CurrentState = OpenerState.OpenerFinished;
-                    else if (OpenerStep == 18) actionID = Gallows;
-
-                }
-
-                else
-                {
-                    if (CustomComboFunctions.WasLastAction(ShadowOfDeath) && OpenerStep == 1) OpenerStep++;
-                    else if (OpenerStep == 1) actionID = ShadowOfDeath;
-
-                    if (CustomComboFunctions.WasLastAction(SoulSlice) && OpenerStep == 2) OpenerStep++;
-                    else if (OpenerStep == 2) actionID = SoulSlice;
-
-                    if (CustomComboFunctions.WasLastAction(ArcaneCircle) && OpenerStep == 3) OpenerStep++;
-                    else if (OpenerStep == 3) actionID = ArcaneCircle;
-
-                    if (CustomComboFunctions.WasLastAction(Gluttony) && OpenerStep == 4) OpenerStep++;
-                    else if (OpenerStep == 4) actionID = Gluttony;
-
-                    if (CustomComboFunctions.WasLastAction(Gallows) && OpenerStep == 5) OpenerStep++;
-                    else if (OpenerStep == 5) actionID = Gallows;
-
-                    if (CustomComboFunctions.WasLastAction(Gibbet) && OpenerStep == 6) OpenerStep++;
-                    else if (OpenerStep == 6) actionID = Gibbet;
-
-                    if (CustomComboFunctions.WasLastAction(PlentifulHarvest) && OpenerStep == 7) OpenerStep++;
-                    else if (OpenerStep == 7) actionID = PlentifulHarvest;
-
-                    if (CustomComboFunctions.WasLastAction(Enshroud) && OpenerStep == 8) OpenerStep++;
-                    else if (OpenerStep == 8) actionID = Enshroud;
-
-                    if (CustomComboFunctions.WasLastAction(VoidReaping) && OpenerStep == 9) OpenerStep++;
-                    else if (OpenerStep == 9) actionID = VoidReaping;
-
-                    if (CustomComboFunctions.WasLastAction(CrossReaping) && OpenerStep == 10) OpenerStep++;
-                    else if (OpenerStep == 10) actionID = CrossReaping;
-
-                    if (CustomComboFunctions.WasLastAction(LemuresSlice) && OpenerStep == 11) OpenerStep++;
-                    else if (OpenerStep == 11) actionID = LemuresSlice;
-
-                    if (CustomComboFunctions.WasLastAction(VoidReaping) && OpenerStep == 12) OpenerStep++;
-                    else if (OpenerStep == 12) actionID = VoidReaping;
-
-                    if (CustomComboFunctions.WasLastAction(CrossReaping) && OpenerStep == 13) OpenerStep++;
-                    else if (OpenerStep == 13) actionID = CrossReaping;
-
-                    if (CustomComboFunctions.WasLastAction(LemuresSlice) && OpenerStep == 14) OpenerStep++;
-                    else if (OpenerStep == 14) actionID = LemuresSlice;
-
-                    if (CustomComboFunctions.WasLastAction(Communio) && OpenerStep == 15) OpenerStep++;
-                    else if (OpenerStep == 15) actionID = Communio;
-
-                    if (CustomComboFunctions.WasLastAction(SoulSlice) && OpenerStep == 16) OpenerStep++;
-                    else if (OpenerStep == 16) actionID = SoulSlice;
-
-                    if (CustomComboFunctions.WasLastAction(UnveiledGallows) && OpenerStep == 17) OpenerStep++;
-                    else if (OpenerStep == 17) actionID = UnveiledGallows;
-
-                    if (CustomComboFunctions.WasLastAction(Gallows) && OpenerStep == 18) CurrentState = OpenerState.OpenerFinished;
-                    else if (OpenerStep == 18) actionID = Gallows;
-                }
-
-                if (CustomComboFunctions.InCombat() && ActionWatching.TimeSinceLastAction.TotalSeconds >= 3)
-                    CurrentState = OpenerState.FailedOpener;
-
-                if (((actionID == SoulSlice && CustomComboFunctions.GetRemainingCharges(SoulSlice) == 0) ||
-                       (actionID == ArcaneCircle && CustomComboFunctions.IsOnCooldown(ArcaneCircle)) ||
-                       (actionID == Gluttony && CustomComboFunctions.IsOnCooldown(Gluttony))) && ActionWatching.TimeSinceLastAction.TotalSeconds >= 3)
-                {
-                    CurrentState = OpenerState.FailedOpener;
-                    return false;
-                }
-
-                return true;
-            }
-
-            return false;
-        }
-
-        private bool DoOpenerSimple(ref uint actionID)
-        {
-            if (!LevelChecked) return false;
-
-            if (currentState == OpenerState.InOpener)
-            {
-                if (CustomComboFunctions.WasLastAction(ShadowOfDeath) && OpenerStep == 1) OpenerStep++;
-                else if (OpenerStep == 1) actionID = ShadowOfDeath;
-
-                if (CustomComboFunctions.WasLastAction(ArcaneCircle) && OpenerStep == 2) OpenerStep++;
-                else if (OpenerStep == 2) actionID = ArcaneCircle;
-
-                if (CustomComboFunctions.WasLastAction(SoulSlice) && OpenerStep == 3) OpenerStep++;
-                else if (OpenerStep == 3) actionID = SoulSlice;
-
-                if (CustomComboFunctions.WasLastAction(SoulSlice) && OpenerStep == 4) OpenerStep++;
-                else if (OpenerStep == 4) actionID = SoulSlice;
-
-                if (CustomComboFunctions.WasLastAction(PlentifulHarvest) && OpenerStep == 5) OpenerStep++;
-                else if (OpenerStep == 5) actionID = PlentifulHarvest;
-
-                if (CustomComboFunctions.WasLastAction(Enshroud) && OpenerStep == 6) OpenerStep++;
-                else if (OpenerStep == 6) actionID = Enshroud;
-
-                if (CustomComboFunctions.WasLastAction(VoidReaping) && OpenerStep == 7) OpenerStep++;
-                else if (OpenerStep == 7) actionID = VoidReaping;
-
-                if (CustomComboFunctions.WasLastAction(CrossReaping) && OpenerStep == 8) OpenerStep++;
-                else if (OpenerStep == 8) actionID = CrossReaping;
-
-                if (CustomComboFunctions.WasLastAction(LemuresSlice) && OpenerStep == 9) OpenerStep++;
-                else if (OpenerStep == 9) actionID = LemuresSlice;
-
-                if (CustomComboFunctions.WasLastAction(VoidReaping) && OpenerStep == 10) OpenerStep++;
-                else if (OpenerStep == 10) actionID = VoidReaping;
-
-                if (CustomComboFunctions.WasLastAction(CrossReaping) && OpenerStep == 11) OpenerStep++;
-                else if (OpenerStep == 11) actionID = CrossReaping;
-
-                if (CustomComboFunctions.WasLastAction(LemuresSlice) && OpenerStep == 12) OpenerStep++;
-                else if (OpenerStep == 12) actionID = LemuresSlice;
-
-                if (CustomComboFunctions.WasLastAction(Communio) && OpenerStep == 13) OpenerStep++;
-                else if (OpenerStep == 13) actionID = Communio;
-
-                if (CustomComboFunctions.WasLastAction(Gluttony) && OpenerStep == 14) OpenerStep++;
-                else if (OpenerStep == 14) actionID = Gluttony;
-
-                if (CustomComboFunctions.WasLastAction(Gibbet) && OpenerStep == 15) OpenerStep++;
-                else if (OpenerStep == 15) actionID = Gibbet;
-
-                if (CustomComboFunctions.WasLastAction(Gallows) && OpenerStep == 16) OpenerStep++;
-                else if (OpenerStep == 16) actionID = Gallows;
-
-                if (CustomComboFunctions.WasLastAction(UnveiledGibbet) && OpenerStep == 17) OpenerStep++;
-                else if (OpenerStep == 17) actionID = UnveiledGibbet;
-
-                if (CustomComboFunctions.WasLastAction(Gibbet) && OpenerStep == 18) CurrentState = OpenerState.OpenerFinished;
-                else if (OpenerStep == 18) actionID = Gibbet;
-
-                if (CustomComboFunctions.InCombat() && ActionWatching.TimeSinceLastAction.TotalSeconds >= 3)
+                if (CustomComboFunctions.InCombat() && ActionWatching.TimeSinceLastAction.TotalSeconds >= 5)
                     CurrentState = OpenerState.FailedOpener;
 
                 if (((actionID == SoulSlice && CustomComboFunctions.GetRemainingCharges(SoulSlice) == 0) ||
@@ -316,7 +170,7 @@ namespace XIVSlothCombo.Combos.JobHelpers
             OpenerStep = 0;
         }
 
-        public bool DoFullOpener(ref uint actionID, bool simpleMode)
+        public bool DoFullOpener(ref uint actionID)
         {
             if (!LevelChecked)
                 return false;
@@ -327,15 +181,15 @@ namespace XIVSlothCombo.Combos.JobHelpers
 
             if (CurrentState == OpenerState.InOpener)
             {
-                if (simpleMode)
+                if (Config.RPR_OpenerChoice == 0)
                 {
-                    if (DoOpenerSimple(ref actionID))
+                    if (DoOpener(EarlyEnshroudOpener, ref actionID))
                         return true;
                 }
 
-                else
+                if (Config.RPR_OpenerChoice == 1)
                 {
-                    if (DoOpener(ref actionID))
+                    if (DoOpener(EarlyGluttonyOpener, ref actionID))
                         return true;
                 }
             }

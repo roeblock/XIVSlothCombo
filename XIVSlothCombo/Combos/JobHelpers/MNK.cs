@@ -151,7 +151,8 @@ namespace XIVSlothCombo.Combos.JobHelpers
 
             if (currentState == OpenerState.InOpener)
             {
-                if (CustomComboFunctions.WasLastAction(OpenerActions[OpenerStep])) OpenerStep++;
+                if (CustomComboFunctions.WasLastAction(OpenerActions[OpenerStep]))
+                    OpenerStep++;
 
                 if (OpenerStep > 3 && Svc.Gauges.Get<MNKGauge>().Chakra == 5)
                     actionID = ForbiddenChakra;
@@ -202,13 +203,13 @@ namespace XIVSlothCombo.Combos.JobHelpers
 
                 else
                 {
-                    if (Config.MNK_OpenerChoice == 0) // Lunar Solar opener choosen
+                    if (Config.MNK_OpenerChoice == 0)
                     {
                         if (DoOpener(LunarSolarOpener, ref actionID))
                             return true;
                     }
 
-                    else
+                    if (Config.MNK_OpenerChoice == 1)
                     {
                         if (DoOpener(DoubleSolarOpener, ref actionID))
                             return true;

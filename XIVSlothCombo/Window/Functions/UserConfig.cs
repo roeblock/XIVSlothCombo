@@ -1277,22 +1277,12 @@ namespace XIVSlothCombo.Window.Functions
                 ImGui.Indent();
                 UserConfig.DrawRoundedSliderFloat(3.0f, 8.0f, BLM.Config.BLM_AstralFire_Refresh, "Seconds before refreshing Astral Fire");
                 ImGui.Unindent();
+                UserConfig.DrawHorizontalRadioButton(BLM.Config.BLM_Adv_Rotation_Options, "Standard Rotation", "", 0);
+                UserConfig.DrawHorizontalRadioButton(BLM.Config.BLM_Adv_Rotation_Options, "Double Transpose Rotation", "", 1);
             }
 
             if (preset is CustomComboPreset.BLM_Variant_Cure)
                 UserConfig.DrawSliderInt(1, 100, BLM.Config.BLM_VariantCure, "HP% to be at or under", 200);
-
-            if (preset is CustomComboPreset.BLM_Adv_Opener)
-            {
-                UserConfig.DrawHorizontalRadioButton(BLM.Config.BLM_Advanced_OpenerSelection, "Standard Opener", "Uses Standard Opener.", 0);
-                UserConfig.DrawHorizontalRadioButton(BLM.Config.BLM_Advanced_OpenerSelection, "Double Transpose Opener", "Uses Fire III opener - Double Transpose variation.", 1);
-            }
-
-            if (preset is CustomComboPreset.BLM_Adv_Rotation)
-            {
-                UserConfig.DrawHorizontalRadioButton(BLM.Config.BLM_Adv_Rotation_Options, "Standard Rotation", "Uses Standard Rotation.", 0);
-                UserConfig.DrawHorizontalRadioButton(BLM.Config.BLM_Adv_Rotation_Options, "Double Transpose Rotation", "Uses Double Transpose rotation.\nOnly works at Lv.90.", 1);
-            }
 
             if (preset is CustomComboPreset.BLM_Adv_Cooldowns)
             {

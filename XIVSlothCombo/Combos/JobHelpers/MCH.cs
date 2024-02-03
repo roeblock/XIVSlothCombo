@@ -2,6 +2,7 @@
 using ECommons.DalamudServices;
 using System.Linq;
 using XIVSlothCombo.Combos.JobHelpers.Enums;
+using XIVSlothCombo.Combos.PvE;
 using XIVSlothCombo.CustomComboNS.Functions;
 using XIVSlothCombo.Data;
 
@@ -27,7 +28,7 @@ namespace XIVSlothCombo.Combos.JobHelpers
 
         public static bool HasPrePullCooldowns()
         {
-            if (CustomComboFunctions.GetRemainingCharges(Reassemble) == 0 && Config.MCH_ST_RotationSelection == 2) return false;
+            if (CustomComboFunctions.GetRemainingCharges(Reassemble) < 2 && Config.MCH_ST_RotationSelection == 2) return false;
 
             return true;
         }
@@ -158,7 +159,8 @@ namespace XIVSlothCombo.Combos.JobHelpers
 
         private bool DoPrePullSteps(ref uint actionID)
         {
-            if (!LevelChecked) return false;
+            if (!LevelChecked)
+                return false;
 
             if (CanOpener && PrePullStep == 0)
                 PrePullStep = 1;
@@ -168,7 +170,6 @@ namespace XIVSlothCombo.Combos.JobHelpers
 
             if (CurrentState == OpenerState.PrePull && PrePullStep > 0)
             {
-
                 if (Config.MCH_ST_RotationSelection == 0 || Config.MCH_ST_RotationSelection == 1)
                 {
                     if (CustomComboFunctions.WasLastAction(HeatedSplitShot) && PrePullStep == 1) CurrentState = OpenerState.InOpener;
@@ -199,12 +200,12 @@ namespace XIVSlothCombo.Combos.JobHelpers
 
         private bool DoOpener(uint[] OpenerActions, ref uint actionID)
         {
-            if(!LevelChecked) 
+            if (!LevelChecked)
                 return false;
 
             if (currentState == OpenerState.InOpener)
             {
-                if (CustomComboFunctions.WasLastAction(OpenerActions[OpenerStep])) 
+                if (CustomComboFunctions.WasLastAction(OpenerActions[OpenerStep]))
                     OpenerStep++;
 
                 if (OpenerStep == OpenerActions.Length)
@@ -252,14 +253,23 @@ namespace XIVSlothCombo.Combos.JobHelpers
                 }
                 else
                 {
-                    if (Config.MCH_ST_RotationSelection == 0 && DoOpener(DelayedToolsOpener, ref actionID))
-                        return true;
+                    if (Config.MCH_ST_RotationSelection == 0)
+                    {
+                        if (DoOpener(DelayedToolsOpener, ref actionID))
+                            return true;
+                    }
 
-                    else if (Config.MCH_ST_RotationSelection == 1 && DoOpener(OneTwoThreeToolsOpener, ref actionID))
-                        return true;
+                    if (Config.MCH_ST_RotationSelection == 1)
+                    {
+                        if (DoOpener(OneTwoThreeToolsOpener, ref actionID))
+                            return true;
+                    }
 
-                    else if (Config.MCH_ST_RotationSelection == 2 && DoOpener(EarlyToolsOpener, ref actionID))
-                        return true;
+                    if (Config.MCH_ST_RotationSelection == 2)
+                    {
+                        if (DoOpener(EarlyToolsOpener, ref actionID))
+                            return true;
+                    }
                 }
             }
 
@@ -278,10 +288,10 @@ namespace XIVSlothCombo.Combos.JobHelpers
         private static uint lastBattery = 0;
         internal static uint LastSummonBattery(this MCHGauge gauge)
         {
-            if (!CustomComboFunctions.InCombat() || ActionWatching.CombatActions.Count(x => x == CustomComboFunctions.OriginalHook(PvE.MCH.RookAutoturret)) == 0)
+            if (!CustomComboFunctions.InCombat() || ActionWatching.CombatActions.Count(x => x == CustomComboFunctions.OriginalHook(MCH.RookAutoturret)) == 0)
                 lastBattery = 0;
 
-            if (ActionWatching.CombatActions.Count(x => x == CustomComboFunctions.OriginalHook(PvE.MCH.RookAutoturret)) > 0)
+            if (ActionWatching.CombatActions.Count(x => x == CustomComboFunctions.OriginalHook(MCH.RookAutoturret)) > 0)
                 lastBattery = gauge.LastSummonBatteryPower;
 
             return lastBattery;

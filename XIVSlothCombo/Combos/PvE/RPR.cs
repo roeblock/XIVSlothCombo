@@ -168,7 +168,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (IsEnabled(CustomComboPreset.RPR_ST_SliceCombo_Opener))
                     {
-                        if (RPROpener.DoFullOpener(ref actionID, false))
+                        if (RPROpener.DoFullOpener(ref actionID))
                             return actionID;
                     }
 

@@ -1,8 +1,5 @@
 ﻿using Dalamud.Game.ClientState.JobGauge.Types;
 using ECommons.DalamudServices;
-using System;
-using System.Linq;
-using System.Security.Cryptography;
 using XIVSlothCombo.Combos.JobHelpers.Enums;
 using XIVSlothCombo.Combos.PvE;
 using XIVSlothCombo.CustomComboNS.Functions;
@@ -23,7 +20,7 @@ namespace XIVSlothCombo.Combos.JobHelpers
             if (!CustomComboFunctions.ActionReady(Amplifier))
                 return false;
             if (!CustomComboFunctions.ActionReady(All.LucidDreaming) &&
-                Config.BLM_Advanced_OpenerSelection == 1)
+                Config.BLM_Adv_Rotation_Options == 1)
                 return false;
             if (!CustomComboFunctions.ActionReady(LeyLines))
                 return false;
@@ -127,7 +124,7 @@ namespace XIVSlothCombo.Combos.JobHelpers
 
             if (currentState == OpenerState.InOpener)
             {
-                if (Config.BLM_Advanced_OpenerSelection == 0)
+                if (Config.BLM_Adv_Rotation_Options == 0)
                 {
                     if (CustomComboFunctions.LocalPlayer.CastActionId == Thunder3 && OpenerStep == 1) OpenerStep++;
                     else if (OpenerStep == 1) actionID = Thunder3;
@@ -205,7 +202,6 @@ namespace XIVSlothCombo.Combos.JobHelpers
 
                 else
                 {
-
                     if (CustomComboFunctions.LocalPlayer.CastActionId == Thunder3 && OpenerStep == 1) OpenerStep++;
                     else if (OpenerStep == 1) actionID = Thunder3;
 
