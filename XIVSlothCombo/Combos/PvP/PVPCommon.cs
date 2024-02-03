@@ -43,8 +43,8 @@ namespace XIVSlothCombo.Combos.PvP
 
         // Lists of Excluded skills 
         internal static readonly List<uint>
-            MovmentSkills = new() { WARPvP.Onslaught, NINPvP.Shukuchi, DNCPvP.EnAvant, MNKPvP.ThunderClap, RDMPvP.CorpsACorps, RDMPvP.Displacement, SGEPvP.Icarus, RPRPvP.HellsIngress, RPRPvP.Regress, BRDPvP.RepellingShot, BLMPvP.AetherialManipulation, DRGPvP.ElusiveJump, GNBPvP.RoughDivide },
-            GlobalSkills = new() { Teleport, Guard, Recuperate, Purify, StandardElixir, Sprint };
+            MovmentSkills = [WARPvP.Onslaught, NINPvP.Shukuchi, DNCPvP.EnAvant, MNKPvP.ThunderClap, RDMPvP.CorpsACorps, RDMPvP.Displacement, SGEPvP.Icarus, RPRPvP.HellsIngress, RPRPvP.Regress, BRDPvP.RepellingShot, BLMPvP.AetherialManipulation, DRGPvP.ElusiveJump, GNBPvP.RoughDivide],
+            GlobalSkills = [Teleport, Guard, Recuperate, Purify, StandardElixir, Sprint];
 
         internal class GlobalEmergencyHeals : CustomCombo
         {
@@ -67,7 +67,7 @@ namespace XIVSlothCombo.Combos.PvP
                 return actionID;
             }
 
-            public bool Execute()
+            public static bool Execute()
             {
                 var jobMaxHp = LocalPlayer.MaxHp;
                 var threshold = PluginConfiguration.GetCustomIntValue(Config.EmergencyHealThreshold);
@@ -107,7 +107,7 @@ namespace XIVSlothCombo.Combos.PvP
                 return actionID;
             }
 
-            public bool Execute()
+            public static bool Execute()
             {
                 var jobMaxHp = LocalPlayer.MaxHp;
                 var threshold = PluginConfiguration.GetCustomIntValue(Config.EmergencyGuardThreshold);
@@ -145,7 +145,7 @@ namespace XIVSlothCombo.Combos.PvP
                 return actionID;
             }
 
-            public bool Execute()
+            public static bool Execute()
             {
                 var selectedStatuses = PluginConfiguration.GetCustomBoolArrayValue(Config.QuickPurifyStatuses);
 

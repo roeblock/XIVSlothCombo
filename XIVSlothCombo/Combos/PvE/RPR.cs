@@ -1,5 +1,6 @@
 using Dalamud.Game.ClientState.JobGauge.Types;
 using XIVSlothCombo.Combos.JobHelpers;
+using ECommons.DalamudServices;
 using XIVSlothCombo.Combos.PvE.Content;
 using XIVSlothCombo.CustomComboNS;
 using XIVSlothCombo.CustomComboNS.Functions;
@@ -77,6 +78,12 @@ namespace XIVSlothCombo.Combos.PvE
 
         public static class Config
         {
+            public const string
+                RPR_SoDThreshold = "RPRSoDThreshold",
+                RPR_SoDRefreshRange = "RPRSoDRefreshRange",
+                RPR_OpenerChoice = "RPR_OpenerChoice",
+                RPR_SoulsowOptions = "RPRSoulsowOptions",
+                RPR_VariantCure = "RPRVariantCure";
             public static UserInt
                 RPR_SoDThreshold = new("RPRSoDThreshold"),
                 RPR_SoDRefreshRange = new("RPRSoDRefreshRange"),
@@ -90,6 +97,10 @@ namespace XIVSlothCombo.Combos.PvE
                RPR_SoulsowOptions = new("RPR_SoulsowOptions");
             public static UserBool
                RPR_ST_TrueNorth_Moving = new("RPR_ST_TrueNorth_Moving");
+                RPR_Slice_AltMode = new("RPR_Slice_AltMode"),
+                RPR_PositionalST = new("RPR_PositionalST"),
+                RPR_PositionalAoE = new("RPR_PositionalAoE"),
+                RPR_PositionalShroud = new("RPR_PositionalShroud");
         }
 
         internal class RPR_ST_AdvancedMode : CustomCombo
@@ -100,14 +111,29 @@ namespace XIVSlothCombo.Combos.PvE
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
                 RPRGauge? gauge = GetJobGauge<RPRGauge>();
-                double enemyHP = GetTargetHPPercent();
+                bool enshrouded = HasEffect(Buffs.Enshrouded);
+                bool soulReaver = HasEffect(Buffs.SoulReaver);
+                double playerHP = PlayerHealthPercentageHp();
+                double playerHP = PlayerHealthPercentageHp();
                 int positionalChoice = Config.RPR_PositionalChoice;
                 bool interruptReady = ActionReady(All.LegSweep) && CanInterruptEnemy();
                 bool plentifulReady = LevelChecked(PlentifulHarvest) && HasEffect(Buffs.ImmortalSacrifice);
                 bool harvestMoonReady = LevelChecked(HarvestMoon) && HasEffect(Buffs.Soulsow);
                 bool trueNorthReady = TargetNeedsPositionals() && HasCharges(All.TrueNorth) && !HasEffect(All.Buffs.TrueNorth);
                 bool tnMoving = (Config.RPR_ST_TrueNorth_Moving && !IsMoving) || (!Config.RPR_ST_TrueNorth_Moving);
-
+                int positionalChoice = IsEnabled(CustomComboPreset.ReaperPositionalConfigST) ? Config.RPR_PositionalST : 0;
+                int openerChoice = PluginConfiguration.GetCustomIntValue(Config.RPR_OpenerChoice);
+                int sodThreshold = PluginConfiguration.GetCustomIntValue(Config.RPR_SoDThreshold);
+                int sodRefreshRange = PluginConfiguration.GetCustomIntValue(Config.RPR_SoDRefreshRange);
+                bool trueNorthReady = TargetNeedsPositionals() && GetRemainingCharges(All.TrueNorth) > 0 && !HasEffect(All.Buffs.TrueNorth);
+                bool trueNorthReadyDyn = trueNorthReady;
+                bool opener = IsEnabled(CustomComboPreset.RPR_ST_SliceCombo_Opener) && CombatEngageDuration().TotalSeconds < 30 && LevelChecked(Communio);
+                bool trueNorthReadyDyn = trueNorthReady;
+                // Prevent the dynamic true north option from using the last charge
+                if (trueNorthReady && IsEnabled(CustomComboPreset.RPR_TrueNorthDynamic) && IsEnabled(CustomComboPreset.RPR_TrueNorthDynamic_HoldCharge) && GetRemainingCharges(All.TrueNorth) < 2)
+                {
+                    trueNorthReadyDyn = false;
+                }
                 // Prevent the dynamic true north option from using the last charge
                 if (IsEnabled(CustomComboPreset.RPR_TrueNorthDynamic) &&
                     IsEnabled(CustomComboPreset.RPR_TrueNorthDynamic_HoldCharge) &&
@@ -118,35 +144,49 @@ namespace XIVSlothCombo.Combos.PvE
 
                     else trueNorthReady = false;
                 }
+                int positionalChoice = IsEnabled(CustomComboPreset.ReaperPositionalConfigST) ? Config.RPR_PositionalST : 0;
+                bool interruptReady = ActionReady(All.LegSweep) && CanInterruptEnemy();
+                bool plentifulReady = LevelChecked(PlentifulHarvest) && HasEffect(Buffs.ImmortalSacrifice);
+                bool harvestMoonReady = LevelChecked(HarvestMoon) && HasEffect(Buffs.Soulsow);
+                bool trueNorthReady = TargetNeedsPositionals() && HasCharges(All.TrueNorth) && !HasEffect(All.Buffs.TrueNorth);
+                bool tnMoving = (Config.RPR_ST_TrueNorth_Moving && !IsMoving) || (!Config.RPR_ST_TrueNorth_Moving);
+
+				// Prevent the dynamic true north option from using the last charge
+                    if (positionalChoice is 0 or 1)
+					trueNorthReadyDyn = false;
+				}
 
 
                 // Gibbet and Gallows on Shadow of Death
                 if (actionID is ShadowOfDeath && IsEnabled(CustomComboPreset.RPR_ST_SliceCombo_GibbetGallows) &&
                     IsEnabled(CustomComboPreset.RPR_ST_SliceCombo_GibbetGallows_OnSoD) &&
                     HasEffect(Buffs.SoulReaver) && LevelChecked(Gibbet))
-                {
+                    if (positionalChoice == 2)
+                    if (positionalChoice is 3)
 
-                    if (positionalChoice is 0 or 1 or 2)
+                    if (positionalChoice == 3)
+
+                    if (positionalChoice is 4)
                     {
                         if (HasEffect(Buffs.EnhancedGibbet))
                             return OriginalHook(Gibbet);
 
                         if (HasEffect(Buffs.EnhancedGallows))
                             return OriginalHook(Gallows);
-                    }
+                        if (positionalChoice == 1)
 
-                    if (positionalChoice is 3)
+                        if (positionalChoice is 2)
+
+                    if (positionalChoice == 3)
                         return OriginalHook(Gibbet);
-
-                    if (positionalChoice is 4)
+                    if (positionalChoice == 4)
                         return OriginalHook(Gallows);
 
                     if (!HasEffect(Buffs.EnhancedGibbet) && !HasEffect(Buffs.EnhancedGallows))
                     {
-                        if (positionalChoice is 0 or 1)
+                        if (positionalChoice is 0)
                             return Gallows;
-
-                        if (positionalChoice is 2)
+                        if (positionalChoice == 2)
                             return Gibbet;
                     }
                 }
@@ -155,17 +195,7 @@ namespace XIVSlothCombo.Combos.PvE
                 {
 
                     if (IsEnabled(CustomComboPreset.RPR_Variant_Cure) &&
-                        IsEnabled(Variant.VariantCure) && PlayerHealthPercentageHp() <= Config.RPR_VariantCure)
-                        return Variant.VariantCure;
-
-                    if (IsEnabled(CustomComboPreset.RPR_Variant_Rampart) &&
-                        IsEnabled(Variant.VariantRampart) &&
-                        IsOffCooldown(Variant.VariantRampart) &&
-                        CanWeave(actionID))
-                        return Variant.VariantRampart;
-
-                    if (IsEnabled(CustomComboPreset.RPR_ST_SliceCombo_Opener))
-                    {
+                        if (positionalChoice is 0 or 1)
                         if (RPROpener.DoFullOpener(ref actionID, false))
                             return actionID;
                     }
@@ -174,49 +204,77 @@ namespace XIVSlothCombo.Combos.PvE
                         HasEffect(Buffs.SoulReaver) && LevelChecked(Gibbet))
                     {
                         if (positionalChoice is 0 or 1 or 2)
-                        {
+                        return Variant.VariantCure;
+
+                    if (IsEnabled(CustomComboPreset.RPR_Variant_Rampart) &&
+                        IsEnabled(Variant.VariantRampart) &&
+                                if (IsEnabled(CustomComboPreset.RPR_TrueNorthDynamic) && trueNorthReadyDyn && !HasEffect(All.Buffs.TrueNorth) && CanWeave(actionID) && !OnTargetsFlank())
+                                {
+                                if (IsEnabled(CustomComboPreset.RPR_TrueNorthDynamic) && trueNorthReady && tnMoving &&
+                                    !HasEffect(All.Buffs.TrueNorth) && CanWeave(actionID) && !OnTargetsFlank())
+                        CanWeave(actionID))
+                        return Variant.VariantRampart;
+
+                    if (IsEnabled(CustomComboPreset.RPR_ST_SliceCombo_Opener))
+                            if (HasEffect(Buffs.EnhancedGallows))
+                            {
+
+                            if (HasEffect(Buffs.EnhancedGallows))
+                            {
+                        if (positionalChoice is 0 or 1 or 2)
+                                if (IsEnabled(CustomComboPreset.RPR_TrueNorthDynamic) && trueNorthReadyDyn && !HasEffect(All.Buffs.TrueNorth) && CanWeave(actionID) && !OnTargetsRear())
+                                {
+                                if (IsEnabled(CustomComboPreset.RPR_TrueNorthDynamic) && trueNorthReady &&
+                                    !HasEffect(All.Buffs.TrueNorth) && CanWeave(actionID) && !OnTargetsRear())
                             if (HasEffect(Buffs.EnhancedGibbet))
                             {
                                 // If we are not on the flank, but need to use gibbet, pop true north if not already up
-                                if (IsEnabled(CustomComboPreset.RPR_TrueNorthDynamic) && trueNorthReady && tnMoving &&
-                                    !HasEffect(All.Buffs.TrueNorth) && CanWeave(actionID) && !OnTargetsFlank())
+                                if( IsEnabled(CustomComboPreset.RPR_TrueNorthDynamic) && trueNorthReadyDyn && !HasEffect(All.Buffs.TrueNorth) && CanWeave(actionID) && !OnTargetsFlank() ) {
                                     return All.TrueNorth;
 
                                 return OriginalHook(Gibbet);
                             }
-
-                            if (HasEffect(Buffs.EnhancedGallows))
-                            {
-                                // If we are not on the rear, but need to use gallows, pop true north if not already up
-                                if (IsEnabled(CustomComboPreset.RPR_TrueNorthDynamic) && trueNorthReady &&
-                                    !HasEffect(All.Buffs.TrueNorth) && CanWeave(actionID) && !OnTargetsRear())
-                                    return All.TrueNorth;
-
-                                return OriginalHook(Gallows);
-                            }
-                        }
-
                         if (positionalChoice == 3)
-                            return OriginalHook(Gallows);
 
                         if (positionalChoice == 4)
-                            return OriginalHook(Gibbet);
-
+                                // If we are not on the rear, but need to use gallows, pop true north if not already up
+                                if( IsEnabled(CustomComboPreset.RPR_TrueNorthDynamic) && trueNorthReadyDyn && !HasEffect(All.Buffs.TrueNorth) && CanWeave(actionID) && !OnTargetsRear() ) {
+                        if (!HasEffect(Buffs.EnhancedGibbet) && !HasEffect(Buffs.EnhancedGallows) && HasBattleTarget())
+                        {
+                            if (positionalChoice is 0)
+                            {
+                                if (IsEnabled(CustomComboPreset.RPR_TrueNorthDynamic) && trueNorthReadyDyn && !HasEffect(All.Buffs.TrueNorth) && CanWeave(actionID) && !OnTargetsRear())
+                                {
                         if (!HasEffect(Buffs.EnhancedGibbet) && !HasEffect(Buffs.EnhancedGallows) && HasBattleTarget())
                         {
                             if (positionalChoice is 0 or 1)
                             {
                                 if (IsEnabled(CustomComboPreset.RPR_TrueNorthDynamic) && trueNorthReady && tnMoving &&
                                     !HasEffect(All.Buffs.TrueNorth) && CanWeave(actionID) && !OnTargetsRear())
-                                    return All.TrueNorth;
+                        }
 
-                                return Gallows;
-                            }
+                        if (positionalChoice == 2)
+                            return OriginalHook(Gallows);
+                            if (positionalChoice == 1)
+                            {
+                                if (IsEnabled(CustomComboPreset.RPR_TrueNorthDynamic) && trueNorthReadyDyn && !HasEffect(All.Buffs.TrueNorth) && CanWeave(actionID) && !OnTargetsFlank())
+                                {
 
                             if (positionalChoice is 2)
                             {
                                 if (IsEnabled(CustomComboPreset.RPR_TrueNorthDynamic) && trueNorthReady && tnMoving &&
                                     !HasEffect(All.Buffs.TrueNorth) && CanWeave(actionID) && !OnTargetsFlank())
+
+                        if (!HasEffect(Buffs.EnhancedGibbet) && !HasEffect(Buffs.EnhancedGallows) && HasBattleTarget() )
+                        {
+                            if (positionalChoice is 0 or 1) {
+                                if( IsEnabled(CustomComboPreset.RPR_TrueNorthDynamic) && trueNorthReadyDyn && !HasEffect(All.Buffs.TrueNorth) && CanWeave(actionID) && !OnTargetsRear() ) {
+                                    return All.TrueNorth;
+
+                                return Gallows;
+                            }
+                            if (positionalChoice == 2) {
+                                if( IsEnabled(CustomComboPreset.RPR_TrueNorthDynamic) && trueNorthReadyDyn && !HasEffect(All.Buffs.TrueNorth) && CanWeave(actionID) && !OnTargetsFlank() ) {
                                     return All.TrueNorth;
 
                                 return Gibbet;
@@ -279,17 +337,12 @@ namespace XIVSlothCombo.Combos.PvE
                             if (IsNotEnabled(CustomComboPreset.RPR_ST_SliceCombo_EnshroudPooling) &&
                                 gauge.Shroud >= 50)
                                 return Enshroud;
-
-                            if (IsEnabled(CustomComboPreset.RPR_ST_SliceCombo_EnshroudPooling) && gauge.Shroud >= 50 &&
-                                (!LevelChecked(PlentifulHarvest) || // Before Plentiful Harvest
-                                HasEffectAny(Buffs.ArcaneCircle) || // Shroud in Arcane Circle
-                                GetCooldownRemainingTime(ArcaneCircle) < 8 || // Prep for double Enshroud
-                                (!HasEffectAny(Buffs.ArcaneCircle) && GetCooldownRemainingTime(ArcaneCircle) is >= 50 and <= 65) || //Natural Odd Minute Shrouds
-                                (!HasEffectAny(Buffs.ArcaneCircle) && gauge.Soul >= 90))) // Correction for 2 min windows
-                                return Enshroud;
-                        }
-                    }
-
+                    if (enshrouded)
+                    {
+                        if (IsEnabled(CustomComboPreset.RPR_ST_SliceCombo_GibbetGallows) || opener)
+                        {   
+                            if (IsEnabled(CustomComboPreset.RPR_ST_SliceCombo_GibbetGallows_Communio) && gauge.LemureShroud is 1 && gauge.VoidShroud is 0 && LevelChecked(Communio))
+                                return !IsEnabled(CustomComboPreset.RPR_ST_SliceCombo_GibbetGallows_Communio_Movement) ? Communio : IsMoving ? ShadowOfDeath : Communio;
                     if (IsEnabled(CustomComboPreset.RPR_ST_SliceCombo_GibbetGallows) &&
                         HasEffect(Buffs.Enshrouded))
                     {
@@ -298,13 +351,26 @@ namespace XIVSlothCombo.Combos.PvE
                             return !IsEnabled(CustomComboPreset.RPR_ST_SliceCombo_GibbetGallows_Communio_Movement)
                                 ? Communio : IsMoving
                                 ? ShadowOfDeath : Communio;
+                                (!HasEffectAny(Buffs.ArcaneCircle) && gauge.Soul >= 90))) // Correction for 2 min windows
+                                return Enshroud;
+                        }
+                    }
+
+                    if (enshrouded)
+                    {
+                        if (IsEnabled(CustomComboPreset.RPR_ST_SliceCombo_GibbetGallows) || opener)
+                        {
+                            if (IsEnabled(CustomComboPreset.RPR_ST_SliceCombo_GibbetGallows_Communio) && gauge.LemureShroud is 1 && gauge.VoidShroud is 0 && LevelChecked(Communio))
+                                return !IsEnabled(CustomComboPreset.RPR_ST_SliceCombo_GibbetGallows_Communio_Movement) ? Communio : IsMoving ? ShadowOfDeath : Communio;
 
                         if (IsEnabled(CustomComboPreset.RPR_ST_SliceCombo_GibbetGallows_Lemure) &&
                             gauge.VoidShroud >= 2 && LevelChecked(LemuresSlice))
                             return OriginalHook(BloodStalk);
 
                         if (IsEnabled(CustomComboPreset.RPR_ST_SliceCombo_GibbetGallows_VoidCross))
-                        {
+                                if (positionalChoice is 1 or 3)
+
+                                if (positionalChoice is 2 or 4)
                             if (HasEffect(Buffs.EnhancedVoidReaping))
                                 return OriginalHook(Gibbet);
 
@@ -313,9 +379,8 @@ namespace XIVSlothCombo.Combos.PvE
 
                             if (!HasEffect(Buffs.EnhancedCrossReaping) && !HasEffect(Buffs.EnhancedVoidReaping))
                             {
-                                if (positionalChoice is 0 or 1 or 3)
+                                if (positionalChoice is 0 or 2)
                                     return OriginalHook(Gallows);
-
                                 if (positionalChoice is 2 or 4)
                                     return OriginalHook(Gibbet);
                             }
@@ -337,10 +402,15 @@ namespace XIVSlothCombo.Combos.PvE
                                 return Gluttony;
 
                             if ((!LevelChecked(Gluttony) || (gauge.Soul is 100 && IsOnCooldown(Gluttony)) ||
-                                GetCooldownRemainingTime(Gluttony) >= 10) && !HasEffect(Buffs.SoulReaver))
-                                return OriginalHook(BloodStalk);
-                        }
+                        if (lastComboMove == OriginalHook(Slice) && LevelChecked(WaxingSlice))
+                            return OriginalHook(WaxingSlice);
+                        if (lastComboMove == OriginalHook(WaxingSlice) && LevelChecked(InfernalSlice))
+                            return OriginalHook(InfernalSlice);
+                        if (lastComboMove is Slice && LevelChecked(WaxingSlice))
+                            return WaxingSlice;
 
+                        if (lastComboMove is WaxingSlice && LevelChecked(InfernalSlice))
+                            return InfernalSlice;
                         if (IsEnabled(CustomComboPreset.RPR_ST_SliceCombo_SoulSlice) &&
                             ActionReady(SoulSlice) && !HasEffect(Buffs.Enshrouded) && !HasEffect(Buffs.SoulReaver) && gauge.Soul <= 50)
                             return SoulSlice;
@@ -350,11 +420,11 @@ namespace XIVSlothCombo.Combos.PvE
                     {
                         if (lastComboMove is Slice && LevelChecked(WaxingSlice))
                             return WaxingSlice;
-
                         if (lastComboMove is WaxingSlice && LevelChecked(InfernalSlice))
                             return InfernalSlice;
                     }
-                    return Slice;
+
+                    return OriginalHook(Slice);
                 }
                 return actionID;
             }
@@ -415,7 +485,11 @@ namespace XIVSlothCombo.Combos.PvE
 
                         if (gauge.LemureShroud > 0 && IsEnabled(CustomComboPreset.RPR_AoE_ScytheCombo_Guillotine_GrimReaping))
                             return OriginalHook(Guillotine);
-                    }
+
+                    return lastComboMove is SpinningScythe && LevelChecked(NightmareScythe) ? OriginalHook(NightmareScythe) : SpinningScythe;
+                    return lastComboMove is SpinningScythe && LevelChecked(NightmareScythe)
+                        ? OriginalHook(NightmareScythe)
+                        : SpinningScythe;
 
                     if (IsEnabled(CustomComboPreset.RPR_AoE_ScytheCombo_GluttonyGrimSwathe) &&
                         !HasEffect(Buffs.SoulReaver) && !HasEffect(Buffs.Enshrouded) && gauge.Soul >= 50 && CanWeave(actionID) && LevelChecked(GrimSwathe))
@@ -426,10 +500,10 @@ namespace XIVSlothCombo.Combos.PvE
                         (comboTime == 0 || comboTime > 15))
                         return SoulScythe;
 
-                    return lastComboMove is SpinningScythe && LevelChecked(NightmareScythe)
-                        ? OriginalHook(NightmareScythe)
-                        : SpinningScythe;
-                }
+                    return lastComboMove is SpinningScythe && LevelChecked(NightmareScythe) ? OriginalHook(NightmareScythe) : SpinningScythe;
+
+                int positionalChoice = IsEnabled(CustomComboPreset.ReaperPositionalConfigAoE) ? Config.RPR_PositionalAoE : 0;
+                int positionalChoice = Config.RPR_PositionalChoice;
                 return actionID;
             }
         }
@@ -440,7 +514,7 @@ namespace XIVSlothCombo.Combos.PvE
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                int positionalChoice = Config.RPR_PositionalChoice;
+                int positionalChoice = PluginConfiguration.GetCustomIntValue(Config.RPR_PositionalChoice);
                 RPRGauge? gauge = GetJobGauge<RPRGauge>();
                 bool trueNorthReady = TargetNeedsPositionals() && GetRemainingCharges(All.TrueNorth) > 0 && !HasEffect(All.Buffs.TrueNorth);
 
@@ -477,7 +551,9 @@ namespace XIVSlothCombo.Combos.PvE
 
                         if (gauge.VoidShroud >= 2 && LevelChecked(LemuresSlice))
                             return OriginalHook(BloodStalk);
+                            if (positionalChoice is 1 or 3)
 
+                            if (positionalChoice is 2 or 4)
                         if (HasEffect(Buffs.EnhancedVoidReaping))
                             return OriginalHook(Gibbet);
 
@@ -486,9 +562,8 @@ namespace XIVSlothCombo.Combos.PvE
 
                         if (!HasEffect(Buffs.EnhancedCrossReaping) && !HasEffect(Buffs.EnhancedVoidReaping))
                         {
-                            if (positionalChoice is 0 or 1 or 3)
+                            if (positionalChoice is 0 or 2)
                                 return OriginalHook(Gallows);
-
                             if (positionalChoice is 2 or 4)
                                 return OriginalHook(Gibbet);
                         }
@@ -498,7 +573,9 @@ namespace XIVSlothCombo.Combos.PvE
                         return Gluttony;
 
                     if (IsEnabled(CustomComboPreset.RPR_GluttonyBloodSwathe_BloodSwatheCombo) && HasEffect(Buffs.SoulReaver) && LevelChecked(Gibbet))
-                    {
+                            if (positionalChoice is 1 or 3)
+
+                            if (positionalChoice is 2 or 4)
                         if (HasEffect(Buffs.EnhancedGibbet))
                             return OriginalHook(Gibbet);
 
@@ -507,9 +584,8 @@ namespace XIVSlothCombo.Combos.PvE
 
                         if (!HasEffect(Buffs.EnhancedGibbet) && !HasEffect(Buffs.EnhancedGallows))
                         {
-                            if (positionalChoice is 0 or 1 or 3)
+                            if (positionalChoice is 0 or 2)
                                 return OriginalHook(Gallows);
-
                             if (positionalChoice is 2 or 4)
                                 return OriginalHook(Gibbet);
                         }
@@ -559,24 +635,29 @@ namespace XIVSlothCombo.Combos.PvE
                         : HarvestMoon;
                 }
                 return actionID;
-            }
-        }
+                return ((soulSowOptions.Length > 0) && ((actionID is Harpe && soulSowOptions[0] ||
+                    (actionID is Slice && soulSowOptions[1]) ||
+                return (((soulSowOptions.Length > 0) && ((actionID is Harpe && soulSowOptions[0]) ||
+                    (actionID is Slice && soulSowOptions[1]) ||
 
         internal class RPR_Soulsow : CustomCombo
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.RPR_Soulsow;
-            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-            {
+                    Soulsow : actionID;
+
+                    Soulsow : actionID;
                 var soulSowOptions = PluginConfiguration.GetCustomBoolArrayValue(Config.RPR_SoulsowOptions);
                 bool soulsowReady = LevelChecked(Soulsow) && !HasEffect(Buffs.Soulsow);
 
-                return (((soulSowOptions.Length > 0) && ((actionID is Harpe && soulSowOptions[0]) ||
-                    (actionID is Slice && soulSowOptions[1]) ||
+                return ((soulSowOptions.Length > 0) && ((actionID is Harpe && soulSowOptions[0] || 
+                    (actionID is  Slice && soulSowOptions[1]) || 
                     (actionID is SpinningScythe && soulSowOptions[2]) ||
                     (actionID is ShadowOfDeath && soulSowOptions[3]) ||
                     (actionID is BloodStalk && soulSowOptions[4])) && soulsowReady && !InCombat()) ||
-                    (IsEnabled(CustomComboPreset.RPR_Soulsow_Combat) && actionID is Harpe && !HasBattleTarget())) ?
-                    Soulsow : actionID;
+                int positionalChoice = IsEnabled(CustomComboPreset.RPR_EnshroudProtection_Positional) ? Config.RPR_PositionalShroud : 0;
+                int positionalChoice = Config.RPR_PositionalChoice;
+                    Soulsow: actionID;
+
             }
         }
 
@@ -585,7 +666,7 @@ namespace XIVSlothCombo.Combos.PvE
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.RPR_EnshroudProtection;
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                int positionalChoice = Config.RPR_PositionalChoice;
+                int positionalChoice = PluginConfiguration.GetCustomIntValue(Config.RPR_PositionalChoice);
                 if (actionID is Enshroud)
                 {
                     bool trueNorthReady = TargetNeedsPositionals() && GetRemainingCharges(All.TrueNorth) > 0 && !HasEffect(All.Buffs.TrueNorth);
@@ -594,7 +675,9 @@ namespace XIVSlothCombo.Combos.PvE
                         return All.TrueNorth;
 
                     if (HasEffect(Buffs.SoulReaver))
-                    {
+                            if (positionalChoice is 1 or 3)
+
+                            if (positionalChoice is 2 or 4)
                         if (HasEffect(Buffs.EnhancedGibbet))
                             return OriginalHook(Gibbet);
 
@@ -603,9 +686,8 @@ namespace XIVSlothCombo.Combos.PvE
 
                         if (!HasEffect(Buffs.EnhancedGibbet) && !HasEffect(Buffs.EnhancedGallows))
                         {
-                            if (positionalChoice is 0 or 1 or 3)
+                            if (positionalChoice is 0 or 2)
                                 return OriginalHook(Gallows);
-
                             if (positionalChoice is 2 or 4)
                                 return OriginalHook(Gibbet);
                         }

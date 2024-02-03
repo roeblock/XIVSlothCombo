@@ -2377,14 +2377,17 @@ namespace XIVSlothCombo.Combos
 
         #region REAPER
 
-        [CustomComboInfo("Positional Preference", "Choose positional order for all positional related features.\nSupports turning Slice/Shadow of Death into all positionals or Slice and Shadow of Death being two separate positionals.", RPR.JobID, 0, "", "")]
-        ReaperPositionalConfig = 12000,
-
         #region Single Target (Slice) Combo Section
         [ReplaceSkill(RPR.Slice, RPR.Harpe)]
         [CustomComboInfo("Advanced Mode - Single Target", "Replace Slice with its combo chain.\nIf all sub options are toggled will turn into a full one button rotation (Advanced Reaper)", RPR.JobID, 0, "", "")]
         RPR_ST_AdvancedMode = 12001,
 
+        [ParentCombo(RPR_ST_SliceCombo)]
+        [CustomComboInfo("Positional Preference", "Choose positional order for all positional related features.\nSupports turning Slice/Shadow of Death into all positionals or Slice and Shadow of Death being two separate positionals.", RPR.JobID)]
+        ReaperPositionalConfigST = 12000,
+
+        [ParentCombo(RPR_ST_SliceCombo)]
+        [CustomComboInfo("Soul Slice Option", "Adds Soul Slice to Slice Combo when Soul Gauge is 50 or less and when current target is afflicted with Death's Design.", RPR.JobID)]
         [ParentCombo(RPR_ST_AdvancedMode)]
         [CustomComboInfo("Soul Slice Option", "Adds Soul Slice to Slice Combo when Soul Gauge is 50 or less and when current target is afflicted with Death's Design.", RPR.JobID, 0, "", "")]
         RPR_ST_SliceCombo_SoulSlice = 12002,
@@ -2438,7 +2441,7 @@ namespace XIVSlothCombo.Combos
         RPR_ST_SliceCombo_GibbetGallows = 12014,
 
         [ParentCombo(RPR_ST_SliceCombo_GibbetGallows)]
-        [CustomComboInfo("Void/Cross Reaping Option", "Adds Void Reaping and Cross Reaping to the to the the combo during Enshroud.", RPR.JobID, 0, "", "")]
+        [CustomComboInfo("Void/Cross Reaping Option", "Adds Void Reaping and Cross Reaping to the to the the combo during Enshroud.\n(Disabling this may stop the one-button combo working during enshroud)", RPR.JobID)]
         RPR_ST_SliceCombo_GibbetGallows_VoidCross = 12065,
 
         [ReplaceSkill(RPR.ShadowOfDeath)]
@@ -2465,7 +2468,11 @@ namespace XIVSlothCombo.Combos
         RPR_AoE_ScytheCombo = 12020,
 
         [ParentCombo(RPR_AoE_ScytheCombo)]
-        [CustomComboInfo("Soul Scythe Option", "Adds Soul Scythe to AoE combo when Soul Gauge is 50 or less and current target is afflicted with Death's Design.", RPR.JobID, 0, "", "")]
+        [CustomComboInfo("Positional Preference", "Choose positional order for all positional related features.\nSupports turning Slice/Shadow of Death into all positionals or Slice and Shadow of Death being two separate positionals.", RPR.JobID)]
+        ReaperPositionalConfigAoE = 12030,
+
+        [ParentCombo(RPR_AoE_ScytheCombo)]
+        [CustomComboInfo("Soul Scythe Option", "Adds Soul Scythe to AoE combo when Soul Gauge is 50 or less and current target is afflicted with Death's Design.", RPR.JobID)]
         RPR_AoE_ScytheCombo_SoulScythe = 12021,
 
         [ParentCombo(RPR_AoE_ScytheCombo)]
@@ -2551,6 +2558,10 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Enshroud Protection Feature", "Turns Enshroud into Gibbet/Gallows to protect Soul Reaver waste.", RPR.JobID)]
         RPR_EnshroudProtection = 12057,
 
+        [ParentCombo(RPR_EnshroudProtection)]
+        [CustomComboInfo("Positional Preference", "Choose positional order for all positional related features.\nSupports turning Slice/Shadow of Death into all positionals or Slice and Shadow of Death being two separate positionals.", RPR.JobID)]
+        RPR_EnshroudProtection_Positional = 12059,
+
         [ReplaceSkill(RPR.Gibbet, RPR.Gallows, RPR.Guillotine)]
         [CustomComboInfo("Communio on Gibbet/Gallows and Guillotine Feature", "Adds Communio to Gibbet/Gallows and Guillotine.", RPR.JobID)]
         RPR_CommunioOnGGG = 12058,
@@ -2561,7 +2572,7 @@ namespace XIVSlothCombo.Combos
 
         [ReplaceSkill(RPR.Enshroud)]
         [CustomComboInfo("Enshroud to Communio Feature", "Turns Enshroud to Communio when available to use.", RPR.JobID)]
-        RPR_EnshroudCommunio = 12059,
+        RPR_EnshroudCommunio = 12069,
 
         [ParentCombo(RPR_EnshroudProtection)]
         [CustomComboInfo("True North Feature", "Adds True North when under Gluttony and if Gibbet/Gallows options are selected to replace those skills.", RPR.JobID, 0)]
@@ -2595,7 +2606,7 @@ namespace XIVSlothCombo.Combos
         RPR_Variant_Rampart = 12068,
         #endregion
 
-        // Last value = 12068
+        // Last value = 12069
 
         #endregion
 
@@ -4367,18 +4378,6 @@ namespace XIVSlothCombo.Combos
         #endregion
 
         #endregion
-
-        [CustomComboInfo("Unlock Job Early?", "Unlocks Viper early. I'm BFFs with Yoshi-P, he say's it's fine.", 41)]
-        UnlockGag = 250000,
-
-        [CustomComboInfo("Super Speed Mode", "Cut fast, cut quick, cut cut cut", 41)]
-        SuperSpeedGag = 250001,
-
-        [CustomComboInfo("Snake Mode", "Kept you waiting huh?", 41)]
-        SnakeGag = 250002,
-
-        [CustomComboInfo("Gun Combo", "Swap your swords out for a couple of AK-47s", 41)]
-        GunGag = 250003,
     }
 }
 

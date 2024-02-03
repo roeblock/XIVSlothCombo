@@ -269,9 +269,9 @@ namespace XIVSlothCombo.Combos.PvE
                             if (lastComboMove is TrueThrust or RaidenThrust && LevelChecked(Disembowel))
                                 return Disembowel;
 
-                            if (lastComboMove is Disembowel && LevelChecked(OriginalHook(ChaosThrust))) 
+                            if (lastComboMove is Disembowel && LevelChecked(OriginalHook(ChaosThrust)))
                                 return trueNorthReady && CanDelayedWeave(All.TrueNorth) &&
-                                    !OnTargetsRear() && !HasEffect(Buffs.RightEye) 
+                                    !OnTargetsRear() && !HasEffect(Buffs.RightEye)
                                     ? All.TrueNorth
                                     : OriginalHook(ChaosThrust);
                         }

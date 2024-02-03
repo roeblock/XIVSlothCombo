@@ -692,7 +692,7 @@ namespace XIVSlothCombo.Combos.PvE
                 return actionID;
             }
 
-            private bool ReassembledTools(ref uint actionId)
+            private static bool ReassembledTools(ref uint actionId)
             {
                 var battery = Svc.Gauges.Get<MCHGauge>().Battery == 100;
                 bool reassembledAnchor = (IsEnabled(CustomComboPreset.MCH_ST_Adv_Reassemble) && Config.MCH_ST_Reassembled[0] && (HasEffect(Buffs.Reassembled) || !HasEffect(Buffs.Reassembled))) || (IsEnabled(CustomComboPreset.MCH_ST_Adv_Reassemble) && !Config.MCH_ST_Reassembled[0] && !HasEffect(Buffs.Reassembled)) || (!HasEffect(Buffs.Reassembled) && GetRemainingCharges(Reassemble) <= Config.MCH_ST_ReassemblePool) || (!IsEnabled(CustomComboPreset.MCH_ST_Adv_Reassemble));
