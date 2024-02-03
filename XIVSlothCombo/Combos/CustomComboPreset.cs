@@ -2595,7 +2595,7 @@ namespace XIVSlothCombo.Combos
 
         [ParentCombo(RPR_GluttonyBloodSwathe)]
         [CustomComboInfo("True North Feature", "Adds True North when under Gluttony and if Gibbet/Gallows options are selected to replace those skills.", RPR.JobID, 0)]
-        RPR_TrueNorthGluttony = 12069,
+        RPR_TrueNorthGluttony = 12070,
 
         [Variant]
         [VariantParent(RPR_ST_AdvancedMode, RPR_AoE_ScytheCombo)]
@@ -2608,7 +2608,7 @@ namespace XIVSlothCombo.Combos
         RPR_Variant_Rampart = 12068,
         #endregion
 
-        // Last value = 12069
+        // Last value = 12070
 
         #endregion
 
