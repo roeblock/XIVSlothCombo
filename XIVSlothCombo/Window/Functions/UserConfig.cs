@@ -1864,20 +1864,10 @@ namespace XIVSlothCombo.Window.Functions
 
             if (preset == CustomComboPreset.RPR_ST_SliceCombo_Opener && enabled)
             {
-                UserConfig.DrawHorizontalRadioButton(RPR.Config.RPR_OpenerChoice, "Early Enshroud Opener", "Uses Early Enshroud Opener. Will Clip CD if not at 2.48-2.49.", 0);
                 UserConfig.DrawHorizontalRadioButton(RPR.Config.RPR_OpenerChoice, "Early Gluttony Opener ", "Uses Early Gluttony Opener.", 1);
+                UserConfig.DrawHorizontalRadioButton(RPR.Config.RPR_OpenerChoice, "Early Enshroud Opener", "Uses Early Enshroud Opener. Will Clip CD if not at 2.48-2.49.", 2);
             }
 
-            if (preset == CustomComboPreset.RPR_ST_SliceCombo_ComboHeals)
-            {
-                UserConfig.DrawSliderInt(0, 100, RPR.Config.RPR_STSecondWindThreshold, "Second Wind HP percentage threshold (0 = Disabled)", 150, SliderIncrements.Ones);
-                UserConfig.DrawSliderInt(0, 100, RPR.Config.RPR_STBloodbathThreshold, "Bloodbath HP percentage threshold (0 = Disabled)", 150, SliderIncrements.Ones);
-            }
-
-            if (preset == CustomComboPreset.RPR_TrueNorthDynamic)
-            {
-                UserConfig.DrawAdditionalBoolChoice(RPR.Config.RPR_ST_TrueNorth_Moving, "Only When Not Moving", "");
-            }
 
             if (preset == CustomComboPreset.RPR_Variant_Cure)
                 UserConfig.DrawSliderInt(1, 100, RPR.Config.RPR_VariantCure, "HP% to be at or under", 200);

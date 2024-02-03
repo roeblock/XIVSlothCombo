@@ -1,3 +1,4 @@
+using Dalamud.Game;
 using Dalamud.Game.ClientState.Statuses;
 using Dalamud.Game.Command;
 using Dalamud.Game.Text;
@@ -20,6 +21,8 @@ using XIVSlothCombo.Window;
 using XIVSlothCombo.Window.Tabs;
 using ECommons;
 using Dalamud.Plugin.Services;
+using System.Reflection;
+using ECommons.DalamudServices;
 using Dalamud.Utility;
 using XIVSlothCombo.Attributes;
 
@@ -32,7 +35,7 @@ namespace XIVSlothCombo
 
         private readonly ConfigWindow configWindow;
         private readonly HttpClient httpClient = new();
-        
+
         private readonly TextPayload starterMotd = new("[Sloth Message of the Day] ");
         private static uint? jobID;
 
@@ -116,7 +119,7 @@ namespace XIVSlothCombo
         private static void OnFrameworkUpdate(IFramework framework)
         {
             if (Service.ClientState.LocalPlayer is not null)
-            JobID = Service.ClientState.LocalPlayer?.ClassJob?.Id;
+                JobID = Service.ClientState.LocalPlayer?.ClassJob?.Id;
 
             BlueMageService.PopulateBLUSpells();
         }
