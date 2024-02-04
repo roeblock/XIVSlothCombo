@@ -483,7 +483,7 @@ namespace XIVSlothCombo.Combos.PvE
                         } //END_RDM_ST_MANAFICATIONEMBOLDEN
 
                         //Normal Combo
-                        if (GetTargetDistance() <= 3 || Config.RDM_ST_MeleeEnforced)
+                        if (InMeleeRange()|| Config.RDM_ST_MeleeEnforced)
                         {
                             if ((lastComboMove is Riposte or EnchantedRiposte)
                                 && LevelChecked(Zwerchhau) 
@@ -503,7 +503,7 @@ namespace XIVSlothCombo.Combos.PvE
                         {
                             if (IsEnabled(CustomComboPreset.RDM_ST_MeleeCombo_CorpsGapCloser)
                                 && LevelChecked(Corpsacorps) && HasCharges(Corpsacorps)
-                                && GetTargetDistance() > 3)
+                                && !InMeleeRange())
                                 return Corpsacorps;
 
                             if (IsEnabled(CustomComboPreset.RDM_ST_MeleeCombo_UnbalanceMana)
