@@ -259,14 +259,15 @@ namespace XIVSlothCombo.Combos.PvE
                             IsNotEnabled(CustomComboPreset.NIN_ST_AdvancedMode_TrickAttack_Delayed)))
                             return OriginalHook(TrickAttack);
 
-                        if (IsEnabled(CustomComboPreset.NIN_ST_AdvancedMode_Bunshin) && Bunshin.LevelChecked() && IsOffCooldown(Bunshin) && gauge.Ninki >= bunshinPool)
+                        if (IsEnabled(CustomComboPreset.NIN_ST_AdvancedMode_Bunshin) && gauge.Ninki >= bunshinPool &&
+                            (GetCooldownRemainingTime(Bunshin) <= GetCooldownRemainingTime(OriginalHook(SpinningEdge)) + 0.25 || ActionReady(Bunshin)))
                             return OriginalHook(Bunshin);
 
                         if (IsEnabled(CustomComboPreset.NIN_ST_AdvancedMode_Kassatsu) && (TargetHasEffect(Debuffs.TrickAttack) || setupKassatsuWindow) && IsOffCooldown(Kassatsu) && Kassatsu.LevelChecked())
                             return OriginalHook(Kassatsu);
 
                         //healing - please move if not appropriate priority
-                        if (IsEnabled(CustomComboPreset.NIN_ST_AdvancedMode_SecondWind) && All.SecondWind.LevelChecked() && playerHP <= SecondWindThreshold && IsOffCooldown(All.SecondWind))
+                        if (IsEnabled(CustomComboPreset.NIN_ST_AdvancedMode_SecondWind) && ActionReady(All.SecondWind) && playerHP <= SecondWindThreshold)
                             return All.SecondWind;
 
                         if (IsEnabled(CustomComboPreset.NIN_ST_AdvancedMode_ShadeShift) && ShadeShift.LevelChecked() && playerHP <= ShadeShiftThreshold && IsOffCooldown(ShadeShift))
@@ -361,7 +362,7 @@ namespace XIVSlothCombo.Combos.PvE
                         if (IsEnabled(CustomComboPreset.NIN_ST_AdvancedMode_Ninjitsus))
                         {
                             if (IsEnabled(CustomComboPreset.NIN_ST_AdvancedMode_Ninjitsus_Suiton) &&
-                                setupSuitonWindow && 
+                                setupSuitonWindow &&
                                 TrickAttack.LevelChecked() &&
                                 !HasEffect(Buffs.Suiton) &&
                                 chargeCheck &&
@@ -387,9 +388,9 @@ namespace XIVSlothCombo.Combos.PvE
                     if (IsEnabled(CustomComboPreset.NIN_ST_AdvancedMode_ArmorCrush) &&
                         !HasEffect(Buffs.RaijuReady) &&
                         lastComboMove == GustSlash &&
-                        (IsEnabled(CustomComboPreset.NIN_ST_AdvancedMode_TrickAttack) && IsOnCooldown(TrickAttack) ||
+                        ((IsEnabled(CustomComboPreset.NIN_ST_AdvancedMode_TrickAttack) && IsOnCooldown(TrickAttack)) ||
                         IsNotEnabled(CustomComboPreset.NIN_ST_AdvancedMode_TrickAttack)) &&
-                        ((gauge.HutonTimer <= hutonArmorCrushTimer) || doubleArmorCrush && timesLastEnderWasArmorCrush == 1) &&
+                        ((gauge.HutonTimer <= hutonArmorCrushTimer) || (doubleArmorCrush && timesLastEnderWasArmorCrush == 1)) &&
                         gauge.HutonTimer > 0 && ArmorCrush.LevelChecked() &&
                         comboTime > 1f)
                     {
@@ -671,10 +672,10 @@ namespace XIVSlothCombo.Combos.PvE
                         if (HasEffect(Buffs.Suiton) && IsOffCooldown(TrickAttack))
                             return OriginalHook(TrickAttack);
 
-                        if (Bhavacakra.LevelChecked() && ((TargetHasEffect(Debuffs.TrickAttack) && gauge.Ninki >= 50) || useBhakaBeforeTrickWindow && gauge.Ninki == 100))
+                        if (Bhavacakra.LevelChecked() && ((TargetHasEffect(Debuffs.TrickAttack) && gauge.Ninki >= 50) || (useBhakaBeforeTrickWindow && gauge.Ninki == 100)))
                             return OriginalHook(Bhavacakra);
 
-                        if ((TargetHasEffect(Debuffs.TrickAttack) && gauge.Ninki >= 50) || (useBhakaBeforeTrickWindow && gauge.Ninki == 100) && !Bhavacakra.LevelChecked() && Hellfrog.LevelChecked())
+                        if ((TargetHasEffect(Debuffs.TrickAttack) && gauge.Ninki >= 50) || (useBhakaBeforeTrickWindow && gauge.Ninki == 100 && !Bhavacakra.LevelChecked() && Hellfrog.LevelChecked()))
                             return OriginalHook(Hellfrog);
 
                         if (!inTrickBurstSaveWindow)

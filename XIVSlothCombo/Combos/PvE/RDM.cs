@@ -335,7 +335,7 @@ namespace XIVSlothCombo.Combos.PvE
                 if (IsEnabled(CustomComboPreset.RDM_ST_oGCD))
                 {
                     bool ActionFound =
-                        ((!Config.RDM_ST_oGCD_OnAction_Adv && actionID is Jolt or Jolt2) ||
+                        (!Config.RDM_ST_oGCD_OnAction_Adv && actionID is Jolt or Jolt2) ||
                           (Config.RDM_ST_oGCD_OnAction_Adv &&
                             ((Config.RDM_ST_oGCD_OnAction[0] && actionID is Jolt or Jolt2) ||
                              (Config.RDM_ST_oGCD_OnAction[1] && actionID is Fleche) ||
@@ -343,7 +343,7 @@ namespace XIVSlothCombo.Combos.PvE
                              (Config.RDM_ST_oGCD_OnAction[3] && actionID is Reprise)
                             )
                           )
-                        );
+                        ;
                     if (ActionFound && LevelChecked(Corpsacorps))
                     {
                         if (OGCDHelper.CanUse(actionID, true, out uint oGCDAction)) return oGCDAction;
@@ -483,10 +483,10 @@ namespace XIVSlothCombo.Combos.PvE
                         } //END_RDM_ST_MANAFICATIONEMBOLDEN
 
                         //Normal Combo
-                        if (InMeleeRange()|| Config.RDM_ST_MeleeEnforced)
+                        if (InMeleeRange() || Config.RDM_ST_MeleeEnforced)
                         {
                             if ((lastComboMove is Riposte or EnchantedRiposte)
-                                && LevelChecked(Zwerchhau) 
+                                && LevelChecked(Zwerchhau)
                                 && comboTime > 0f)
                                 return OriginalHook(Zwerchhau);
 
@@ -522,9 +522,10 @@ namespace XIVSlothCombo.Combos.PvE
 
                                 if (HasCharges(Acceleration)) return Acceleration;
                             }
-                            return OriginalHook(Riposte);
-                        }
 
+                            if (InMeleeRange())
+                                return OriginalHook(Riposte);
+                        }
                     }
                 }
                 //END_RDM_ST_MELEECOMBO

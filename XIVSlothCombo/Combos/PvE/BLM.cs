@@ -118,6 +118,7 @@ namespace XIVSlothCombo.Combos.PvE
                 BLM_Adv_Cooldowns = new("BLM_Adv_Cooldowns"),
                 BLM_Adv_Thunder = new("BLM_Adv_Thunder"),
                 BLM_Adv_Rotation_Options = new("BLM_Adv_Rotation_Options"),
+                BLM_Advanced_OpenerSelection = new("BLM_Advanced_OpenerSelection"),
                 BLM_ST_Adv_ThunderHP = new("BLM_ST_Adv_ThunderHP"),
                 BLM_AoE_Adv_ThunderHP = new("BLM_AoE_Adv_ThunderHP"),
                 BLM_AoE_Adv_ThunderUptime = new("BLM_AoE_Adv_ThunderUptime"),
@@ -199,15 +200,15 @@ namespace XIVSlothCombo.Combos.PvE
                         }
 
                         // Use Xenoglossy to weave ogcd
-                        if (gauge.HasPolyglotStacks() && !HasEffect(Buffs.Triplecast) && !HasEffect(All.Buffs.Swiftcast) &&
-                            ((level >= 70 && level < 80) ||
-                            GetCooldownRemainingTime(Manafont) < 1 ||
+                        if (gauge.HasPolyglotStacks() && !HasEffect(Buffs.Triplecast) && !HasEffect(All.Buffs.Swiftcast) && level < 80 &&
+                            (GetCooldownRemainingTime(Manafont) < 1 ||
                             GetCooldownRemainingTime(LeyLines) < 1 ||
                             GetCooldownRemainingTime(Amplifier) < 1 ||
                             GetCooldownRemainingTime(Sharpcast) < 1))
-                            return LevelChecked(Xenoglossy)
-                                ? Xenoglossy
-                                : Foul;
+                            return Xenoglossy;
+
+                        if (gauge.HasPolyglotStacks() && !HasEffect(Buffs.Triplecast) && !HasEffect(All.Buffs.Swiftcast) && level >= 70 && level < 80)
+                            return Foul;
 
                         // Sharpcast
                         if (ActionReady(Sharpcast) && !HasEffect(Buffs.Sharpcast) &&
@@ -491,7 +492,6 @@ namespace XIVSlothCombo.Combos.PvE
                         // Weave Buffs
                         if (IsEnabled(CustomComboPreset.BLM_Adv_Cooldowns) && CanSpellWeave(actionID) && WasLastAction(Xenoglossy))
                         {
-
                             if (Config.BLM_Adv_Cooldowns_Choice[1] &&
                                 ActionReady(Sharpcast) && !HasEffect(Buffs.Sharpcast) && !WasLastAction(Thunder3))
                                 return Sharpcast;
@@ -549,8 +549,7 @@ namespace XIVSlothCombo.Combos.PvE
                     {
                         if (gauge.InAstralFire)
                         {
-                            if (IsEnabled(CustomComboPreset.BLM_Adv_UseFirestarter) &&
-                                HasEffect(Buffs.Firestarter) && GetBuffRemainingTime(Buffs.Firestarter) <= 20)
+                            if (HasEffect(Buffs.Firestarter) && GetBuffRemainingTime(Buffs.Firestarter) <= 20)
                                 return Fire3;
 
                             return (currentMP < MP.FireI)
@@ -588,9 +587,7 @@ namespace XIVSlothCombo.Combos.PvE
                             return Triplecast;
 
                         // Fire III proc or Swiftcast Fire III during Transpose lines(< 3 Astral Fire stacks)
-                        if (gauge.AstralFireStacks < 3 || 
-                            (IsEnabled(CustomComboPreset.BLM_Adv_UseFirestarter) && 
-                            HasEffect(Buffs.Firestarter) && GetBuffRemainingTime(Buffs.Firestarter) < 20))
+                        if (gauge.AstralFireStacks < 3 || (HasEffect(Buffs.Firestarter) && GetBuffRemainingTime(Buffs.Firestarter) < 20))
                             return Fire3;
 
                         // Spend Sharpcast on Thunder before using Fire
