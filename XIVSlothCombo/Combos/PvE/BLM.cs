@@ -118,7 +118,6 @@ namespace XIVSlothCombo.Combos.PvE
                 BLM_Adv_Cooldowns = new("BLM_Adv_Cooldowns"),
                 BLM_Adv_Thunder = new("BLM_Adv_Thunder"),
                 BLM_Adv_Rotation_Options = new("BLM_Adv_Rotation_Options"),
-                BLM_Advanced_OpenerSelection = new("BLM_Advanced_OpenerSelection"),
                 BLM_ST_Adv_ThunderHP = new("BLM_ST_Adv_ThunderHP"),
                 BLM_AoE_Adv_ThunderHP = new("BLM_AoE_Adv_ThunderHP"),
                 BLM_AoE_Adv_ThunderUptime = new("BLM_AoE_Adv_ThunderUptime"),
@@ -549,7 +548,8 @@ namespace XIVSlothCombo.Combos.PvE
                     {
                         if (gauge.InAstralFire)
                         {
-                            if (HasEffect(Buffs.Firestarter) && GetBuffRemainingTime(Buffs.Firestarter) <= 20)
+                            if (IsEnabled(CustomComboPreset.BLM_Adv_UseFirestarter) &&
+                                HasEffect(Buffs.Firestarter) && GetBuffRemainingTime(Buffs.Firestarter) <= 20)
                                 return Fire3;
 
                             return (currentMP < MP.FireI)
@@ -587,7 +587,9 @@ namespace XIVSlothCombo.Combos.PvE
                             return Triplecast;
 
                         // Fire III proc or Swiftcast Fire III during Transpose lines(< 3 Astral Fire stacks)
-                        if (gauge.AstralFireStacks < 3 || (HasEffect(Buffs.Firestarter) && GetBuffRemainingTime(Buffs.Firestarter) < 20))
+                        if (gauge.AstralFireStacks < 3 || 
+                            (IsEnabled(CustomComboPreset.BLM_Adv_UseFirestarter) && 
+                            HasEffect(Buffs.Firestarter) && GetBuffRemainingTime(Buffs.Firestarter) < 20))
                             return Fire3;
 
                         // Spend Sharpcast on Thunder before using Fire
