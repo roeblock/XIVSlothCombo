@@ -55,6 +55,10 @@
 		<TargetFramework>net8.0-windows7.0</TargetFramework>
 	</PropertyGroup>
 
+	<PropertyGroup>
+		<EnableWindowsTargeting>true</EnableWindowsTargeting>
+	</PropertyGroup>
+
 	<ItemGroup>
 		<Content Include="..\res\plugin\xivslothcombo.png" Link="images\xivslothcombo.png" CopyToOutputDirectory="PreserveNewest" Visible="false" />
 	</ItemGroup>
