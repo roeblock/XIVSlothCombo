@@ -1,4 +1,4 @@
-﻿using Dalamud.Game.ClientState.Objects.SubKinds;
+using Dalamud.Game.ClientState.Objects.SubKinds;
 using Dalamud.Interface;
 using Dalamud.Interface.Colors;
 using Dalamud.Interface.Utility;
@@ -1295,6 +1295,15 @@ namespace XIVSlothCombo.Window.Functions
             {
                 UserConfig.DrawHorizontalRadioButton(BLM.Config.BLM_Adv_Rotation_Options, "Standard Rotation", "Uses Standard Rotation.", 0);
                 UserConfig.DrawHorizontalRadioButton(BLM.Config.BLM_Adv_Rotation_Options, "Double Transpose Rotation", "Uses Double Transpose rotation.\nOnly works at Lv.90.", 1);
+
+                if (BLM.Config.BLM_Adv_Rotation_Options == 0)
+                {
+                    ImGui.Indent();
+                    UserConfig.DrawAdditionalBoolChoice(BLM.Config.BLM_Adv_Xeno_Burst, "Use Xenoglossy for burst", "Will save Xenoglossy for every minute burst window.");
+                    ImGui.Unindent();
+                    ImGui.Spacing();
+                }
+
             }
 
             if (preset is CustomComboPreset.BLM_Adv_Cooldowns)
